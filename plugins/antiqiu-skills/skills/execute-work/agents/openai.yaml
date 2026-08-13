@@ -1,0 +1,4 @@
+interface:
+  display_name: "Execute Work"
+  short_description: "Carry out an accepted plan and verify the result"
+  default_prompt: "Use $execute-work to carry this plan through verified completion."

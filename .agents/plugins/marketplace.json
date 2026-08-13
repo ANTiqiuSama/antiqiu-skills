@@ -1,0 +1,20 @@
+{
+  "name": "antiqiu-skills",
+  "interface": {
+    "displayName": "ANTiqiu Skills"
+  },
+  "plugins": [
+    {
+      "name": "antiqiu-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/antiqiu-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

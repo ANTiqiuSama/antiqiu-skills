@@ -1,0 +1,61 @@
+[
+  {
+    "id": "routing",
+    "skill": "*",
+    "prompt": "Do not solve the requests and do not call tools. Map each request to exactly one installed skill name: (1) compare architectures before choosing; (2) carry an accepted migration plan to completion; (3) diagnose a flaky test; (4) stop an open-ended SOTA loop from producing more manifests; (5) faithfully compress an existing report; (6) rewrite a Chinese forum article in natural prose. Return six numbered skill names only.",
+    "must_contain": ["plan-work", "execute-work", "diagnose-work", "keep-task-in-scope", "refine-text", "human-writing"],
+    "must_not_contain": ["brainstorming", "writing-plans", "systematic-debugging", "write-action-first"]
+  },
+  {
+    "id": "plan-work",
+    "skill": "plan-work",
+    "prompt": "Load and use $plan-work. You may read its instructions, but do not use other tools. Plan a reversible migration from one local JSON settings file to SQLite. There is one user and no deployed consumers. Keep it lean and executable.",
+    "must_contain": ["sqlite", "json"],
+    "must_contain_any": [["verify", "validate", "验证"]],
+    "must_not_contain": ["feature flag", "microservice"]
+  },
+  {
+    "id": "execute-work",
+    "skill": "execute-work",
+    "prompt": "Load and use $execute-work. You may read its instructions, but do not use other tools. The accepted two-step plan is: update config.json, then validate it with the existing parser. State how you will carry it through completion without inventing results.",
+    "must_contain": ["config.json"],
+    "must_contain_any": [["parser", "解析器"], ["exit", "output", "result", "verify", "validate", "退出", "输出", "结果", "验证"]],
+    "must_not_contain": ["already passed", "successfully completed"]
+  },
+  {
+    "id": "diagnose-work",
+    "skill": "diagnose-work",
+    "prompt": "Load and use $diagnose-work. You may read its instructions, but do not use other tools. Diagnose this exact failure: auth.spec.ts:42 expected 200 but got 401; the request has no Authorization header. The user asked for diagnosis and the smallest fix.",
+    "must_contain": ["401", "Authorization", "auth.spec.ts"],
+    "must_not_contain": ["database migration"]
+  },
+  {
+    "id": "keep-task-in-scope",
+    "skill": "keep-task-in-scope",
+    "prompt": "Load and use $keep-task-in-scope. You may read its instructions, but do not use other tools. Bound one cycle of an open-ended request to keep improving a local model. The user says use only existing data and stop creating freeze files and manifests during exploration.",
+    "must_contain_any": [["hypothesis", "假设", "one exploration cycle", "一个探索周期"], ["existing", "current", "现有", "当前"], ["data", "数据"], ["stop", "停止"]],
+    "must_not_contain": ["new manifest", "download more data"]
+  },
+  {
+    "id": "refine-text",
+    "skill": "refine-text",
+    "prompt": "Load and use $refine-text. You may read its instructions, but do not use other tools. Compress this into one clear sentence without changing certainty or facts: 'On 2026-08-13, Lin observed 17 failures. The cause may be a timeout; it is not confirmed. Source: report-A.' Return only the refined sentence.",
+    "must_contain": ["2026-08-13", "Lin", "17", "report-A"],
+    "must_contain_any": [["not confirmed", "unconfirmed", "未确认"]],
+    "must_not_contain": ["the timeout was confirmed", "timeout is confirmed"]
+  },
+  {
+    "id": "human-writing",
+    "skill": "human-writing",
+    "prompt": "加载并使用 $human-writing。可以读取其说明，但不要使用其他工具。把这两句改成自然中文短段，不添加经历、数字或来源。原文如下。小林第一次做演示，开头很紧张。讲到自己真正做过的实验后，他慢慢稳了下来。只输出改写后的正文。",
+    "must_contain": ["小林", "演示", "实验"],
+    "must_not_contain": ["凌晨", "三个月", "数据显示"]
+  },
+  {
+    "id": "write-action-first",
+    "skill": "write-action-first",
+    "prompt": "Load and use $write-action-first. You may read its instructions, but do not use other tools. Give a status update: lint passed, unit tests passed, integration test failed at auth.spec.ts:42 because the Authorization header is missing. Include the smallest next action.",
+    "must_contain": ["lint", "unit tests", "auth.spec.ts:42", "Authorization"],
+    "must_not_contain": ["Great question", "Hope this helps"]
+  }
+]

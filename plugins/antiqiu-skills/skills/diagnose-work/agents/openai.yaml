@@ -1,0 +1,4 @@
+interface:
+  display_name: "Diagnose Work"
+  short_description: "Test failures and review feedback against evidence"
+  default_prompt: "Use $diagnose-work to find the cause and judge the proposed fix."

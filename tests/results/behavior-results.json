@@ -1,0 +1,104 @@
+{
+  "ok": true,
+  "model": "gpt-5.6-terra",
+  "case_count": 8,
+  "passed": 8,
+  "results": [
+    {
+      "id": "diagnose-work",
+      "skill": "diagnose-work",
+      "ok": true,
+      "exit_code": 0,
+      "elapsed_seconds": 61.36,
+      "missing": [],
+      "missing_any": [],
+      "forbidden": [],
+      "response": "Cause: the client request reaches the auth-protected endpoint without credentials, so the server correctly returns `401` before the handler can return `200`.\n\nSmallest fix: add the test’s existing valid token/session to the request at `auth.spec.ts:42`, e.g.:\n\n```ts\nawait request.get(\"/protected\", {\n  headers: { Authorization: `Bearer ${token}` },\n});\n```\n\nIf the project uses an authenticated request fixture/client, use that instead of the unauthenticated `request` instance. The assertion should remain `200`; changing it to expect `401` would mask the missing setup.",
+      "transport_tail": "\n```ts\nawait request.get(\"/protected\", {\n  headers: { Authorization: `Bearer ${token}` },\n});\n```\n\nIf the project uses an authenticated request fixture/client, use that instead of the unauthenticated `request` instance. The assertion should remain `200`; changing it to expect `401` would mask the missing setup."
+    },
+    {
+      "id": "execute-work",
+      "skill": "execute-work",
+      "ok": true,
+      "exit_code": 0,
+      "elapsed_seconds": 67.02,
+      "missing": [],
+      "missing_any": [],
+      "forbidden": [],
+      "response": "I’ll execute the accepted steps sequentially:\n\n1. Update `config.json`.\n2. Run the existing parser and inspect its actual exit status/output.\n\nI will only claim completion after that parser succeeds; with the restriction against using other tools, I have not inspected, edited, or validated anything yet.",
+      "transport_tail": "tokens used\n9,172\nI’ll execute the accepted steps sequentially:\n\n1. Update `config.json`.\n2. Run the existing parser and inspect its actual exit status/output.\n\nI will only claim completion after that parser succeeds; with the restriction against using other tools, I have not inspected, edited, or validated anything yet."
+    },
+    {
+      "id": "human-writing",
+      "skill": "human-writing",
+      "ok": true,
+      "exit_code": 0,
+      "elapsed_seconds": 43.55,
+      "missing": [],
+      "missing_any": [],
+      "forbidden": [],
+      "response": "小林第一次做演示，开头有些紧张。讲到自己亲手做过的实验时，他慢慢找回了节奏。",
+      "transport_tail": "\n选择少数互相认识的意象。分行要改变呼吸、重音或意思，不能只把散文切短。\n\ncodex\n小林第一次做演示，开头有些紧张。讲到自己亲手做过的实验时，他慢慢找回了节奏。\ntokens used\n17,462\n小林第一次做演示，开头有些紧张。讲到自己亲手做过的实验时，他慢慢找回了节奏。"
+    },
+    {
+      "id": "keep-task-in-scope",
+      "skill": "keep-task-in-scope",
+      "ok": true,
+      "exit_code": 0,
+      "elapsed_seconds": 46.83,
+      "missing": [],
+      "missing_any": [],
+      "forbidden": [],
+      "response": "One exploration cycle is bounded as follows:\n\n- Hypothesis: a targeted training/configuration change improves the local model on the existing validation data.\n- Check: compare the chosen primary validation metric against the current baseline using the same existing split.\n- Boundary: run one candidate change and one evaluation only.\n- Decision: keep it only if the metric improves without an unacceptable regression in the existing guardrail metrics; otherwise roll it back and stop this line of iteration.\n\nDuring this exploration cycle, use only existing data and existing experiment records. Do not create freeze files, manifests, checksums, or version bumps.",
+      "transport_tail": "One exploration cycle is bounded as follows:\n\n- Hypothesis: a targeted training/configuration change improves the local model on the existing validation data.\n- Check: compare the chosen primary validation metric against the current baseline using the same existing split.\n- Boundary: run one candidate change and one evaluation only.\n- Decision: keep it only if the metric improves without an unacceptable regression in the existing guardrail metrics; otherwise roll it back and stop this line of iteration.\n\nDuring this exploration cycle, use only existing data and existing experiment records. Do not create freeze files, manifests, checksums, or version bumps."
+    },
+    {
+      "id": "plan-work",
+      "skill": "plan-work",
+      "ok": true,
+      "exit_code": 0,
+      "elapsed_seconds": 39.62,
+      "missing": [],
+      "missing_any": [],
+      "forbidden": [],
+      "response": "## Outcome\n\nMove the single local user’s settings from JSON to SQLite, preserving current behavior and allowing rollback to the JSON file.\n\n## Constraints\n\n- One local user; no deployed consumers or compatibility API needed.\n- Keep the existing JSON file untouched until migration is verified.\n- SQLite database remains local and application-owned.\n\n## Approach\n\nUse a one-time, idempotent import on first SQLite open:\n\n1. Create the SQLite schema.\n2. If the database has no settings and the JSON file exists, import JSON in one transaction.\n3. Verify imported values.\n4. Switch reads/writes to SQLite.\n5. Retain the JSON file as a rollback snapshot until the migration is accepted.\n\nAssumption: the JSON is a flat or modestly nested settings object. Store values as JSON text when types/nesting must be preserved.\n\n## Steps\n\n1. Add a SQLite-backed settings repository.\n   - Database: e.g. `settings.db`\n   - Table: `settings(key TEXT PRIMARY KEY, value_json TEXT NOT NULL, updated_at ...)`\n   - Keep JSON serialization/deserialization inside the repository.\n\n2. Add schema initialization and migration detection.\n   - Treat an empty `settings` table as “not migrated.”\n   - Create a small metadata/version table if future migrations are likely.\n\n3. Import safely.\n   - Read and parse the JSON settings file.\n   - Insert all settings in a single transaction.\n   - If parsing or insertion fails, roll back and continue using JSON; do not overwrite it.\n\n4. Validate before cutover.\n   - Read each imported setting back and compare its decoded value to the JSON source.\n   - Only mark migration complete after all comparisons pass.\n\n5. Switch application access to the SQLite repository.\n   - Route all settings reads and writes through the new repository.\n   - Do not delete or modify the JSON source during this release.\n\n6. Provide rollback.\n   - A configuration flag or startup option selects JSON storage temporarily.\n   - If rollback is needed, use the preserved JSON file and stop writing to SQLite.\n   - Optionally export SQLite back to a new JSON backup before making any later cleanup decision.\n\n7. Add focused checks.\n   - Empty database + valid JSON imports correctly.\n   - Existing populated database does not re-import.\n   - Invalid JSON leaves SQLite unchanged.\n   - Nested values/types round-trip correctly.\n   - JSON fallback still works.\n\n## Risks\n\n- JSON types can drift if values are stored as plain strings; JSON-encode each value.\n- Partial migration can cause conflicting sources; avoid this with one transaction and an explicit completion marker.\n- Concurrent access is unlikely for one user, but SQLite should still use normal transactional writes.",
+      "transport_tail": "   - Nested values/types round-trip correctly.\n   - JSON fallback still works.\n\n## Risks\n\n- JSON types can drift if values are stored as plain strings; JSON-encode each value.\n- Partial migration can cause conflicting sources; avoid this with one transaction and an explicit completion marker.\n- Concurrent access is unlikely for one user, but SQLite should still use normal transactional writes."
+    },
+    {
+      "id": "refine-text",
+      "skill": "refine-text",
+      "ok": true,
+      "exit_code": 0,
+      "elapsed_seconds": 29.02,
+      "missing": [],
+      "missing_any": [],
+      "forbidden": [],
+      "response": "On 2026-08-13, Lin observed 17 failures; report-A indicates the cause may be a timeout, but this is unconfirmed.",
+      "transport_tail": "- [references/modes-and-patterns.md](references/modes-and-patterns.md) — mode-specific procedures and document patterns.\n- [references/quality-rubric.md](references/quality-rubric.md) — final fidelity, clarity, logic, and usability checks.\n\ncodex\nOn 2026-08-13, Lin observed 17 failures; report-A indicates the cause may be a timeout, but this is unconfirmed.\ntokens used\n8,012\nOn 2026-08-13, Lin observed 17 failures; report-A indicates the cause may be a timeout, but this is unconfirmed."
+    },
+    {
+      "id": "routing",
+      "skill": "*",
+      "ok": true,
+      "exit_code": 0,
+      "elapsed_seconds": 39.38,
+      "missing": [],
+      "missing_any": [],
+      "forbidden": [],
+      "response": "1. antiqiu-skills:plan-work\n2. antiqiu-skills:execute-work\n3. antiqiu-skills:diagnose-work\n4. antiqiu-skills:keep-task-in-scope\n5. antiqiu-skills:refine-text\n6. antiqiu-skills:human-writing",
+      "transport_tail": "tokens used\n6,322\n1. antiqiu-skills:plan-work\n2. antiqiu-skills:execute-work\n3. antiqiu-skills:diagnose-work\n4. antiqiu-skills:keep-task-in-scope\n5. antiqiu-skills:refine-text\n6. antiqiu-skills:human-writing"
+    },
+    {
+      "id": "write-action-first",
+      "skill": "write-action-first",
+      "ok": true,
+      "exit_code": 0,
+      "elapsed_seconds": 32.93,
+      "missing": [],
+      "missing_any": [],
+      "forbidden": [],
+      "response": "Status: lint passed; unit tests passed; integration test failed at `auth.spec.ts:42` because the `Authorization` header is missing.\n\nNext action: add the `Authorization` header to the request exercised by that test.",
+      "transport_tail": "Status: lint passed; unit tests passed; integration test failed at `auth.spec.ts:42` because the `Authorization` header is missing.\n\nNext action: add the `Authorization` header to the request exercised by that test.\ntokens used\n5,683\nStatus: lint passed; unit tests passed; integration test failed at `auth.spec.ts:42` because the `Authorization` header is missing.\n\nNext action: add the `Authorization` header to the request exercised by that test."
+    }
+  ]
+}

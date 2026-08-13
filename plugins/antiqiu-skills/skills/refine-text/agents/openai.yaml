@@ -1,0 +1,4 @@
+interface:
+  display_name: "Refine Text"
+  short_description: "Distill and strengthen any text without losing intent"
+  default_prompt: "Use $refine-text to turn the following draft into a clear, faithful, audience-ready version."

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Keep Task in Scope"
+  short_description: "Keep optional work off the critical path"
+  default_prompt: "Use $keep-task-in-scope to keep this task focused on the requested deliverable."
+policy:
+  allow_implicit_invocation: true

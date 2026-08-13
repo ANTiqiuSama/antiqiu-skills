@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Work"
+  short_description: "Frame unclear work and create a lean execution plan"
+  default_prompt: "Use $plan-work to turn this request into an executable direction."

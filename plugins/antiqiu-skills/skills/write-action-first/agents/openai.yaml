@@ -1,0 +1,6 @@
+interface:
+  display_name: "Action-First Writing"
+  short_description: "Make responses clear, focused, and immediately actionable"
+  default_prompt: "Use $write-action-first to make this response easy to scan and act on."
+policy:
+  allow_implicit_invocation: false

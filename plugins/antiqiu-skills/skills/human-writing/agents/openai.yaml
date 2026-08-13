@@ -1,0 +1,4 @@
+interface:
+  display_name: "活人感写作"
+  short_description: "创作或改写自然、有依据、有中文韵律的作品"
+  default_prompt: "使用 $human-writing 创作或改写这份中文内容，保留原意与事实，让文字自然、有依据，也有中文韵律。"
