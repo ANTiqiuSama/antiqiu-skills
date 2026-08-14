@@ -19,6 +19,7 @@ EXPECTED = {
     "keep-task-in-scope",
     "plan-work",
     "refine-text",
+    "trim-agent-instructions",
     "write-action-first",
 }
 LEGACY = {

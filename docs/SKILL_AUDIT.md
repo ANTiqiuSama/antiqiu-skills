@@ -16,7 +16,7 @@
 
 ## 结论
 
-纳入总库的通用个人层从 10 个收敛为 7 个。三组合并均发生在职责连续且重复加载成本真实存在的地方：
+2026-08-13 的通用个人层从 10 个收敛为 7 个。三组合并均发生在职责连续且重复加载成本真实存在的地方：
 
 ```text
 brainstorming + writing-plans
@@ -32,6 +32,8 @@ receiving-code-review + systematic-debugging
 没有继续合并 `refine-text`、`human-writing` 和 `write-action-first`。三者表面上都碰文字，实际产物不同：第一个改已有材料，第二个创作自然中文作品，第三个只整理聊天回复。把它们合在一起会让中文文风规则误伤技术文档，也会让“行动优先”擅自改写用户原文。
 
 `hatch-pet` 是 Codex 宠物制作专用工具链，与通用工作流没有重复。它不进入本仓库、不参与统计，也不会在本地同步时被修改或停用。
+
+2026-08-14 新增 `trim-agent-instructions`，用于维护已经存在的 Agent 指令链。它是新增的专项能力，不计入上面的 10→7 历史合并；当前公开总包因此有 8 个 Skill。
 
 ## 逐项分析
 
@@ -49,7 +51,7 @@ receiving-code-review + systematic-debugging
 - **真实价值**：让步骤包含产物、依赖、触及范围和最小验证，而不是写一份抽象待办清单。
 - **重复**：前半段与 `brainstorming` 的收敛产物重复，后半段容易和 `executing-plans` 同时触发。
 - **潜在冲突**：对一两个可逆动作也写正式计划，形成流程替代执行。
-- **处理**：并入 `plan-work`。保留按风险选择“无计划、短清单、详细计划”的判断。
+- **处理**：并入 `plan-work`。保留按风险选择“无计划、短清单、详细计划”的判断，并明确“迁移”这个名称本身不能证明需要迁移框架；单个本地消费者默认一次性转换和可恢复备份。
 
 ### 3. `executing-plans`
 
@@ -115,6 +117,15 @@ receiving-code-review + systematic-debugging
 - **潜在冲突**：自动命中所有状态更新和说明文时，会把解释压得过短，或擅自给已完成任务制造下一步。
 - **处理**：保留为显式输出模式，并设置 `allow_implicit_invocation: false`。它只改变聊天呈现，不改变产物和判断。
 
+### 新增：`trim-agent-instructions`
+
+- **作用**：判断已有 Agent 指令是否仍有行为价值，并在实际继承链中保留、删除、缩短或改进规则。
+- **真实价值**：把“文件变短”改成“无价值规则退出上下文”，同时保住目录特定约束、真实风险和当前优先级。
+- **与 `refine-text` 的边界**：`trim-agent-instructions` 先判断规则语义该不该存在；`refine-text` 只在语义确定后优化表达。
+- **与 `keep-task-in-scope` 的边界**：前者处理 Agent 指令这一种产物；后者只在审计扩张成宽泛治理、重复实验或辅助流程时约束范围。
+- **与 `execute-work` 的边界**：前者给出领域判断；方向已定且修改跨多个验证步骤时，后者负责持续落实。
+- **处理**：保留为窄范围隐式 Skill。默认静态取证；只有高影响且结论不确定、结果会改变决定时才做一次真正隔离的行为对照。不引入固定评分、强制子代理、统一删减比例或内部来源内容。
+
 ## 停用目录
 
 以下 7 项已经没有有效 `SKILL.md`，本次不重新启用：
@@ -139,6 +150,6 @@ receiving-code-review + systematic-debugging
 
 一次任务默认只选一个阶段型 Skill：`plan-work`、`execute-work` 或 `diagnose-work`。
 
-领域 Skill 可以和阶段型 Skill 配合，但职责不交叉。例如“分析并重写一篇中文报告”可以先用 `refine-text` 锁定事实，再在用户明确要求自然中文作品时使用 `human-writing`；不需要同时让两个 Skill各自重新分析全文。
+领域 Skill 可以和阶段型 Skill 配合，但职责不交叉。例如“精简并落实 AGENTS.md”可以由 `trim-agent-instructions` 判断每条规则，再由 `execute-work` 完成多步修改与验证；“分析并重写一篇中文报告”可以先用 `refine-text` 锁定事实，再在用户明确要求自然中文作品时使用 `human-writing`。不需要让相邻 Skill 各自重新分析同一份材料。
 
 `keep-task-in-scope` 是长期任务的范围门，不是第四个常规阶段。`write-action-first` 是显式呈现层，不参与实现决策。

@@ -17,7 +17,7 @@ Ask only for a missing answer that changes the outcome, architecture, cost, or r
 
 ## Converge on one direction
 
-Compare alternatives by evidence, feasibility, lifecycle cost, dependencies, reversibility, and failure impact. Recommend one path and name the decisive reason. Keep unsupported possibilities out of the chosen design.
+Compare alternatives by evidence, feasibility, lifecycle cost, dependencies, reversibility, and failure impact. Recommend one path and name the decisive reason. Keep unsupported possibilities out of the chosen design. Treat labels such as “migration” as descriptions, not evidence for a migration framework: for one local consumer, default to a one-time conversion plus a recoverable backup; add reusable migration or rollout machinery only when current consumers or demonstrated repeated changes require it.
 
 ## Produce an execution brief
 

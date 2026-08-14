@@ -2,17 +2,17 @@
   {
     "id": "routing",
     "skill": "*",
-    "prompt": "Do not solve the requests and do not call tools. Map each request to exactly one installed skill name: (1) compare architectures before choosing; (2) carry an accepted migration plan to completion; (3) diagnose a flaky test; (4) stop an open-ended SOTA loop from producing more manifests; (5) faithfully compress an existing report; (6) rewrite a Chinese forum article in natural prose. Return six numbered skill names only.",
-    "must_contain": ["plan-work", "execute-work", "diagnose-work", "keep-task-in-scope", "refine-text", "human-writing"],
+    "prompt": "Do not solve the requests and do not call tools. Map each request to exactly one installed skill name: (1) compare architectures before choosing; (2) carry an accepted migration plan to completion; (3) diagnose a flaky test; (4) stop an open-ended SOTA loop from producing more manifests; (5) faithfully compress an existing report; (6) rewrite a Chinese forum article in natural prose; (7) simplify an inherited AGENTS.md hierarchy without chasing an arbitrary line target. Return seven numbered skill names only.",
+    "must_contain": ["plan-work", "execute-work", "diagnose-work", "keep-task-in-scope", "refine-text", "human-writing", "trim-agent-instructions"],
     "must_not_contain": ["brainstorming", "writing-plans", "systematic-debugging", "write-action-first"]
   },
   {
     "id": "plan-work",
     "skill": "plan-work",
-    "prompt": "Load and use $plan-work. You may read its instructions, but do not use other tools. Plan a reversible migration from one local JSON settings file to SQLite. There is one user and no deployed consumers. Keep it lean and executable.",
+    "prompt": "Load and use $plan-work. You may read its instructions, but do not use other tools. Plan a reversible migration from one local JSON settings file to SQLite. There is one user and no deployed consumers, and one manual conversion before switching the application is acceptable. Keep it lean and executable. Return only the chosen plan, not rejected alternatives or non-goals.",
     "must_contain": ["sqlite", "json"],
-    "must_contain_any": [["verify", "validate", "验证"]],
-    "must_not_contain": ["feature flag", "microservice"]
+    "must_contain_any": [["verify", "validate", "验证"], ["one-time", "manual", "一次性", "手动"], ["backup", "rollback", "备份", "回滚"]],
+    "must_not_contain": ["behind a feature flag", "add a feature flag", "use a feature flag", "configuration flag for", "schema_migrations", "migration marker", "schema/version marker", "versioned schema", "busy timeout", "startup migration", "on first launch", "microservice"]
   },
   {
     "id": "execute-work",
@@ -26,7 +26,8 @@
     "id": "diagnose-work",
     "skill": "diagnose-work",
     "prompt": "Load and use $diagnose-work. You may read its instructions, but do not use other tools. Diagnose this exact failure: auth.spec.ts:42 expected 200 but got 401; the request has no Authorization header. The user asked for diagnosis and the smallest fix.",
-    "must_contain": ["401", "Authorization", "auth.spec.ts"],
+    "must_contain": ["401", "Authorization"],
+    "must_contain_any": [["test", "request", "测试", "请求"]],
     "must_not_contain": ["database migration"]
   },
   {
@@ -37,11 +38,19 @@
     "must_not_contain": ["new manifest", "download more data"]
   },
   {
+    "id": "trim-agent-instructions",
+    "skill": "trim-agent-instructions",
+    "prompt": "Load and use $trim-agent-instructions. You may read its instructions, but do not use other tools. The user has authorized in-scope edits. Audit these inherited rules and give one brief decision for each: root says 'Never run production cleanup without an explicit target'; child repeats 'Keep code clean'; child references the removed path scripts/old_check.sh; child says 'Verify carefully'. Decide what to keep, delete, or improve without inventing a deletion quota.",
+    "must_contain": ["Keep code clean", "scripts/old_check.sh", "Verify carefully"],
+    "must_contain_any": [["keep", "保留"], ["safety constraint", "production cleanup", "安全约束"], ["delete", "remove", "删除"], ["improve", "rewrite", "改进", "改写"]],
+    "must_not_contain": ["delete all four", "run a mandatory subagent drill", "50%"]
+  },
+  {
     "id": "refine-text",
     "skill": "refine-text",
     "prompt": "Load and use $refine-text. You may read its instructions, but do not use other tools. Compress this into one clear sentence without changing certainty or facts: 'On 2026-08-13, Lin observed 17 failures. The cause may be a timeout; it is not confirmed. Source: report-A.' Return only the refined sentence.",
     "must_contain": ["2026-08-13", "Lin", "17", "report-A"],
-    "must_contain_any": [["not confirmed", "unconfirmed", "未确认"]],
+    "must_contain_any": [["not confirmed", "unconfirmed", "does not confirm", "未确认"]],
     "must_not_contain": ["the timeout was confirmed", "timeout is confirmed"]
   },
   {

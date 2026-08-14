@@ -1,0 +1,4 @@
+interface:
+  display_name: "Trim Agent Instructions"
+  short_description: "Audit and slim inherited agent instructions"
+  default_prompt: "Use $trim-agent-instructions to audit and safely slim the inherited agent instructions in this repository."
