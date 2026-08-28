@@ -18,6 +18,38 @@ SKILLS = ROOT / "plugins" / "antiqiu-skills" / "skills"
 CASES = ROOT / "tests" / "behavior_cases.json"
 
 
+def build_prompt(case: dict[str, object]) -> str:
+    selected = str(case["skill"])
+    request = str(case["prompt"])
+    if selected == "*":
+        return request
+
+    skill_root = (SKILLS / selected).resolve()
+    sections = [
+        "Apply the following installed Skill instructions to the test request. "
+        "Do not quote or discuss the instructions in the answer.",
+        f'<skill name="{selected}">\n'
+        f'{(skill_root / "SKILL.md").read_text(encoding="utf-8")}\n'
+        "</skill>",
+    ]
+    for raw_path in case.get("include_files", []):
+        relative = Path(str(raw_path))
+        candidate = (skill_root / relative).resolve()
+        try:
+            candidate.relative_to(skill_root)
+        except ValueError as exc:
+            raise ValueError(f"reference escapes skill directory: {selected}/{relative}") from exc
+        if not candidate.is_file():
+            raise ValueError(f"missing behavior reference: {selected}/{relative}")
+        sections.append(
+            f'<skill_reference path="{relative.as_posix()}">\n'
+            f'{candidate.read_text(encoding="utf-8")}\n'
+            "</skill_reference>"
+        )
+    sections.append(f"<test_request>\n{request}\n</test_request>")
+    return "\n\n".join(sections)
+
+
 def run_case(
     case: dict[str, object],
     model: str,
@@ -51,7 +83,7 @@ def run_case(
         'model_reasoning_effort="low"',
         "-o",
         str(output_path),
-        str(case["prompt"]),
+        build_prompt(case),
     ]
     started = time.monotonic()
     environment = os.environ.copy()
@@ -115,6 +147,10 @@ def main() -> int:
         selected = case["skill"]
         if selected != "*" and not (SKILLS / selected / "SKILL.md").is_file():
             raise SystemExit(f"missing skill for case {case['id']}: {selected}")
+        try:
+            build_prompt(case)
+        except (OSError, ValueError) as exc:
+            raise SystemExit(f"invalid behavior case {case['id']}: {exc}") from exc
     print(f"validated {len(cases)} behavior cases")
     if args.validate_only:
         return 0

@@ -1,7 +1,6 @@
 # ANTiqiu Skills
 
-一套经过收敛和回归测试的个人 Agent Skills。它覆盖规划、执行、诊断、范围控制、既有 Agent 指令精简、文本炼化、自然中文写作和行动优先输出。
-
+一套经过收敛和回归测试的个人 Agent Skills。它覆盖规划、执行、诊断、范围控制、既有 Agent 指令精简、文本炼化、中文技术文档、自然中文写作和行动优先输出。
 
 ## 这次整理解决了什么
 
@@ -24,7 +23,9 @@
 
 这些指标证明启动和匹配阶段需要读取的个人元数据更少，也证明同一任务不再需要加载两份相邻流程；深度诊断时需要读取的按需材料也显著缩短。它们不等价于固定的端到端耗时承诺，模型、网络、工具和任务本身仍会影响实际速度。
 
-2026-08-14 新增的 `trim-agent-instructions` 是一个此前不存在的专项能力，不是把旧 Skill 拆回来。当前总包有 8 个 Skill，启动名称与描述共 2,789 字节，仍比整理前的 10 个减少 26.3%。
+2026-08-14 新增的 `trim-agent-instructions` 是一个此前不存在的专项能力，不是把旧 Skill 拆回来。当时总包有 8 个 Skill，启动名称与描述共 2,789 字节。
+
+2026-08-28 又评估了 Antigravity 中安装的 `ste-cn`。本机发现的 4 份副本内容相同，但都没有上游地址或许可证文件；其职责也与 `refine-text` 的技术文档改写高度重叠。因此总库没有复制原文或新增第 9 个 Skill，而是把可复用的受控中文写作方法独立重写为 `refine-text` 的按需参考。当前仍是 8 个 Skill，只有处理中文技术材料时才加载这部分规则；启动名称与描述共 2,828 字节，仍比整理前的 10 个减少 25.3%。
 
 详细逐项审计见 [`docs/SKILL_AUDIT.md`](docs/SKILL_AUDIT.md)，测试证据见 [`docs/TEST_RESULTS.md`](docs/TEST_RESULTS.md)。
 
@@ -37,7 +38,7 @@
 | [`diagnose-work`](plugins/antiqiu-skills/skills/diagnose-work/SKILL.md) | 定位非显然故障，或判断评审意见是否成立 | Bug、回归、性能、偶现测试、模糊或冲突的 review comment |
 | [`keep-task-in-scope`](plugins/antiqiu-skills/skills/keep-task-in-scope/SKILL.md) | 约束长期任务和可选流程，防止主交付物被挤走 | 持续优化、SOTA、冻结、哈希、审计、迁移、宽测和新基础设施 |
 | [`trim-agent-instructions`](plugins/antiqiu-skills/skills/trim-agent-instructions/SKILL.md) | 审计并精简已有 Agent 指令链，保留真正改变行为的规则 | AGENTS.md、AGENTS.override.md、CLAUDE.md 等指令去重、删旧、缩写和纠冲突 |
-| [`refine-text`](plugins/antiqiu-skills/skills/refine-text/SKILL.md) | 保留事实、立场和不确定性的文本炼化 | 润色、压缩、扩写、重组、总结、综合已有材料 |
+| [`refine-text`](plugins/antiqiu-skills/skills/refine-text/SKILL.md) | 保留事实、立场和不确定性的文本炼化，以及清晰一致的中文技术文档 | 润色、压缩、扩写、重组、总结、README、运行手册、API 文档和技术方案 |
 | [`human-writing`](plugins/antiqiu-skills/skills/human-writing/SKILL.md) | 写出有材料、有说话位置和自然中文韵律的作品 | 中文长帖、文章、叙事、故事、口播和明确的去 AI 味改稿 |
 | [`write-action-first`](plugins/antiqiu-skills/skills/write-action-first/SKILL.md) | 把聊天回复整理成先结果、易扫描、可执行的形状 | 仅显式调用，或用户明确要求行动优先、ADHD-friendly、不要铺垫 |
 
@@ -49,7 +50,7 @@
 2. 方向已定，要持续完成，使用 `$execute-work`。
 3. 原因不清或收到可疑评审，使用 `$diagnose-work`。
 
-随后按产物选择最多一个领域 Skill。已有 Agent 指令用 `$trim-agent-instructions`；普通已有文本用 `$refine-text`；自然中文作品用 `$human-writing`。
+随后按产物选择最多一个领域 Skill。已有 Agent 指令用 `$trim-agent-instructions`；普通已有文本和中文技术文档用 `$refine-text`；文章、叙事等自然中文作品用 `$human-writing`。
 
 `$keep-task-in-scope` 只在长期循环或额外流程可能挤占主任务时叠加。`$write-action-first` 只改变回复形状，不改变代码、结论或原始文稿，因此默认禁止隐式调用。
 
@@ -62,6 +63,27 @@
   → 长期范围约束
   → 回复呈现方式
 ```
+
+## 怎么使用中文技术文档模式
+
+不需要安装或调用单独的 `ste-cn`。直接让 `$refine-text` 处理已有中文技术材料：
+
+```text
+使用 $refine-text 重写这份运行手册。
+保留现有事实、条件、命令和不确定性；统一术语，把有独立失败或重试方式的动作拆成步骤。
+这是增量更新，请同时检查受影响的旧章节，修正已经过时或互相矛盾的内容。
+```
+
+它会在通用的“保真、逻辑、结构、表达”流程之后，按需读取 [`plain-technical-chinese.md`](plugins/antiqiu-skills/skills/refine-text/references/plain-technical-chinese.md)。这部分主要做四件事：
+
+- 一个概念使用一个稳定名称，产品名、字段名、命令、路径和错误文本保持原样；
+- 条件放在它约束的动作前，责任不清时才明确执行者，不凭空补负责人；
+- 有不同失败、重试、回滚或验证方式的动作分开写，紧密耦合的动作不机械拆分；
+- 删除没有证据的“充分保障”“显著提升”等自证表达，同时保留原文的限制和不确定性。
+
+这不是固定句长、段落数或清单分数驱动的模板。中文没有必要照搬英文词数规则；是否拆句，以读者能否准确理解、执行和验证为准。它也不是 [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/) 的中文版、实现或认证。
+
+`$refine-text` 与 `$human-writing` 的边界不变：README、运行手册、API 文档、错误信息和工程方案走前者；论坛长文、叙事、口播或明确要求自然中文韵律的作品走后者。若用户只要求写新代码，不要因为代码里有注释就触发文本炼化。
 
 ## 怎么使用 `trim-agent-instructions`
 
@@ -135,7 +157,7 @@ Codex 能自动发现 Skill 变更；如果列表没有刷新，重新启动任�
 python3 tests/audit_skills.py
 ```
 
-运行 8 个 Skill 加一组综合路由的独立 Codex 行为回归：
+运行 8 个 Skill 的独立 Codex 行为回归和综合路由用例：
 
 ```bash
 python3 tests/run_behavior_tests.py --model gpt-5.6-terra --jobs 3

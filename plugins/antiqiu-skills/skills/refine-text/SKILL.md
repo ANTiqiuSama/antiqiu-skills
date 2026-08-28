@@ -1,6 +1,6 @@
 ---
 name: refine-text
-description: Refine existing text while preserving intent, facts, constraints, citations, and uncertainty. Use for 炼化、打磨、润色、提炼、压缩、扩写、改写、总结、重组, or synthesis of drafts, notes, transcripts, proposals, reports, and research summaries; skip ordinary coding and natural-Chinese authorship requests handled by human-writing.
+description: Refine existing text while preserving intent, facts, constraints, citations, and uncertainty. Use for 炼化、打磨、润色、提炼、压缩、扩写、改写、总结、重组, synthesis, and plain Chinese technical documents such as README, runbooks, API docs, error messages, or engineering proposals; skip ordinary coding and natural-Chinese authorship requests handled by human-writing.
 ---
 
 # Refine Text
@@ -60,6 +60,8 @@ For an unspecified request such as "refine this" or "polish this," default to ba
 
 Read [references/modes-and-patterns.md](references/modes-and-patterns.md) when the requested mode or document type materially affects the output structure.
 
+For Chinese README files, runbooks, API docs, engineering proposals, error messages, or other instruction-heavy technical material, read [references/plain-technical-chinese.md](references/plain-technical-chinese.md). Apply it after the meaning and logic passes so surface rules cannot erase facts or qualifiers.
+
 ### 4. Refine in passes
 
 Apply these passes in order:
@@ -82,6 +84,8 @@ Check the result against [references/quality-rubric.md](references/quality-rubri
 - the conclusion and next action are easy to find;
 - tone and terminology are consistent;
 - unresolved ambiguity remains visible.
+
+For Chinese technical material, also verify that terminology is stable, conditions precede the actions they govern, and separately recoverable or verifiable actions are not hidden inside one long step.
 
 If the source is too incomplete to support a polished final, produce the strongest faithful version and list only the blocking gaps.
 
@@ -110,4 +114,5 @@ Do not upload, publish, message, or share the text unless the user explicitly as
 ## Bundled references
 
 - [references/modes-and-patterns.md](references/modes-and-patterns.md) — mode-specific procedures and document patterns.
+- [references/plain-technical-chinese.md](references/plain-technical-chinese.md) — controlled, plain Chinese for technical explanations and procedures.
 - [references/quality-rubric.md](references/quality-rubric.md) — final fidelity, clarity, logic, and usability checks.

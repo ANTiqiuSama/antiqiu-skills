@@ -11,8 +11,8 @@
     "skill": "plan-work",
     "prompt": "Load and use $plan-work. You may read its instructions, but do not use other tools. Plan a reversible migration from one local JSON settings file to SQLite. There is one user and no deployed consumers, and one manual conversion before switching the application is acceptable. Keep it lean and executable. Return only the chosen plan, not rejected alternatives or non-goals.",
     "must_contain": ["sqlite", "json"],
-    "must_contain_any": [["verify", "validate", "验证"], ["one-time", "manual", "一次性", "手动"], ["backup", "rollback", "备份", "回滚"]],
-    "must_not_contain": ["behind a feature flag", "add a feature flag", "use a feature flag", "configuration flag for", "schema_migrations", "migration marker", "schema/version marker", "versioned schema", "busy timeout", "startup migration", "on first launch", "microservice"]
+    "must_contain_any": [["verify", "validate", "验证"], ["one-time", "manual", "one conversion", "single conversion", "一次性", "手动"], ["backup", "rollback", "备份", "回滚"]],
+    "must_not_contain": ["behind a feature flag", "add a feature flag", "use a feature flag", "configuration flag for", "schema_migrations", "schema-version", "schema version", "schema_version", "schema/version", "version record", "migration marker", "versioned schema", "busy timeout", "startup migration", "on first launch", "keep the JSON implementation", "two persistence", "non-goals", "future schema", "microservice"]
   },
   {
     "id": "execute-work",
@@ -42,7 +42,7 @@
     "skill": "trim-agent-instructions",
     "prompt": "Load and use $trim-agent-instructions. You may read its instructions, but do not use other tools. The user has authorized in-scope edits. Audit these inherited rules and give one brief decision for each: root says 'Never run production cleanup without an explicit target'; child repeats 'Keep code clean'; child references the removed path scripts/old_check.sh; child says 'Verify carefully'. Decide what to keep, delete, or improve without inventing a deletion quota.",
     "must_contain": ["Keep code clean", "scripts/old_check.sh", "Verify carefully"],
-    "must_contain_any": [["keep", "保留"], ["safety constraint", "production cleanup", "安全约束"], ["delete", "remove", "删除"], ["improve", "rewrite", "改进", "改写"]],
+    "must_contain_any": [["keep", "保留"], ["safety constraint", "safety-relevant", "production cleanup", "destructive production", "安全约束"], ["delete", "remove", "删除"], ["improve", "rewrite", "改进", "改写"]],
     "must_not_contain": ["delete all four", "run a mandatory subagent drill", "50%"]
   },
   {
@@ -52,6 +52,15 @@
     "must_contain": ["2026-08-13", "Lin", "17", "report-A"],
     "must_contain_any": [["not confirmed", "unconfirmed", "does not confirm", "未确认"]],
     "must_not_contain": ["the timeout was confirmed", "timeout is confirmed"]
+  },
+  {
+    "id": "refine-text-technical-cn",
+    "skill": "refine-text",
+    "include_files": ["references/plain-technical-chinese.md"],
+    "prompt": "加载并使用 $refine-text。可以读取它的说明，但不要使用其他工具。把下面已有运行手册改成可执行的编号步骤；保留执行者、条件、对象和不确定性，不添加指标或结论。原文：值班工程师确认主库健康后，分析订单服务日志，打开旁路开关，然后重启订单服务。当前没有证据证明这些操作能提高系统稳定性。只输出改写后的正文。",
+    "must_contain": ["值班工程师", "主库", "订单服务", "日志", "旁路开关"],
+    "must_contain_any": [["没有证据", "尚无证据", "无证据"], ["1.", "1、"]],
+    "must_not_contain": ["确保系统稳定性", "显著提升", "需要说明的是"]
   },
   {
     "id": "human-writing",
