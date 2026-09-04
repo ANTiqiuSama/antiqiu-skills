@@ -1,5 +1,14 @@
 [
   {
+    "id": "herdr-orchestrator",
+    "skill": "herdr-orchestrator",
+    "include_files": ["references/paper-workflow.md", "references/providers.md", "references/recovery.md"],
+    "prompt": "Load and use $herdr-orchestrator. You may read its instructions, but do not call tools. Design a Herdr workflow where Codex and Claude independently debate a paper, Antigravity/Gemini applies accepted edits and creates figures, and no model may invent citations or experiment results. The coordinator must distinguish lifecycle state from delivery evidence. Return a concise role and acceptance plan.",
+    "must_contain": ["Codex", "Claude", "Antigravity"],
+    "must_contain_any": [["artifact", "产物"], ["acceptance", "验收"], ["citation", "引用"], ["experiment", "实验"]],
+    "must_not_contain": ["done means delivered", "all citations are verified", "the experiments are complete"]
+  },
+  {
     "id": "routing",
     "skill": "*",
     "prompt": "Do not solve the requests and do not call tools. Map each request to exactly one installed skill name: (1) compare architectures before choosing; (2) carry an accepted migration plan to completion; (3) diagnose a flaky test; (4) stop an open-ended SOTA loop from producing more manifests; (5) faithfully compress an existing report; (6) rewrite a Chinese forum article in natural prose; (7) simplify an inherited AGENTS.md hierarchy without chasing an arbitrary line target. Return seven numbered skill names only.",

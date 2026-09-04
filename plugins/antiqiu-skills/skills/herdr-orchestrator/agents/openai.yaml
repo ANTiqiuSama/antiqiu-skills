@@ -1,0 +1,4 @@
+interface:
+  display_name: "Herdr Orchestrator"
+  short_description: "Coordinate cross-vendor agents in Herdr safely"
+  default_prompt: "Use $herdr-orchestrator to coordinate this task across Herdr agents with explicit scope and evidence gates."

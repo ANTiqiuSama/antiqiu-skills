@@ -1,7 +1,7 @@
 {
   "name": "antiqiu-skills",
-  "version": "1.2.0",
-  "description": "A focused personal skill set for planning, execution, diagnosis, scope control, agent-instruction maintenance, and writing.",
+  "version": "1.3.0",
+  "description": "A focused personal skill set for reliable work, writing, and Herdr orchestration.",
   "author": {
     "name": "ANTiqiuSama",
     "url": "https://github.com/ANTiqiuSama"
@@ -10,7 +10,7 @@
   "interface": {
     "displayName": "ANTiqiu Skills",
     "shortDescription": "Focused workflows for reliable, low-friction agent work.",
-    "longDescription": "Eight tested skills covering lean planning, autonomous execution, evidence-first diagnosis, scope control, agent-instruction maintenance, faithful text refinement with plain Chinese technical writing, natural Chinese writing, and action-first responses.",
+    "longDescription": "Nine focused skills covering lean planning, execution, diagnosis, scope control, instruction maintenance, faithful text refinement, natural Chinese writing, action-first responses, and evidence-based Herdr orchestration.",
     "developerName": "ANTiqiuSama",
     "category": "Productivity",
     "capabilities": [],

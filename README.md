@@ -1,6 +1,6 @@
 # ANTiqiu Skills
 
-一套经过收敛和回归测试的个人 Agent Skills。它覆盖规划、执行、诊断、范围控制、既有 Agent 指令精简、文本炼化、中文技术文档、自然中文写作和行动优先输出。
+一套经过收敛和验证的个人 Agent Skills。它覆盖规划、执行、诊断、范围控制、既有 Agent 指令精简、文本炼化、中文技术文档、自然中文写作、行动优先输出，以及 Herdr 跨厂商 Agent 编排。
 
 ## 这次整理解决了什么
 
@@ -25,11 +25,13 @@
 
 2026-08-14 新增的 `trim-agent-instructions` 是一个此前不存在的专项能力，不是把旧 Skill 拆回来。当时总包有 8 个 Skill，启动名称与描述共 2,789 字节。
 
-2026-08-28 又评估了 Antigravity 中安装的 `ste-cn`。本机发现的 4 份副本内容相同，但都没有上游地址或许可证文件；其职责也与 `refine-text` 的技术文档改写高度重叠。因此总库没有复制原文或新增第 9 个 Skill，而是把可复用的受控中文写作方法独立重写为 `refine-text` 的按需参考。当前仍是 8 个 Skill，只有处理中文技术材料时才加载这部分规则；启动名称与描述共 2,828 字节，仍比整理前的 10 个减少 25.3%。
+2026-08-28 又评估了 Antigravity 中安装的 `ste-cn`。本机发现的 4 份副本内容相同，但都没有上游地址或许可证文件；其职责也与 `refine-text` 的技术文档改写高度重叠。因此总库没有复制原文或增加重复 Skill，而是把可复用的受控中文写作方法独立重写为 `refine-text` 的按需参考。只有处理中文技术材料时才加载这部分规则。
+
+2026-09-04 新增 `herdr-orchestrator`。它不复制内部 Skill，而是根据 Herdr 当前 CLI、公开概念和实际排障经验重新设计。它把跨厂商 Agent 的角色、写入边界、证据验收和故障恢复固化成可复用流程。人类教程见 [`docs/HERDR_TUTORIAL_ZH.md`](docs/HERDR_TUTORIAL_ZH.md)。
 
 详细逐项审计见 [`docs/SKILL_AUDIT.md`](docs/SKILL_AUDIT.md)，测试证据见 [`docs/TEST_RESULTS.md`](docs/TEST_RESULTS.md)。
 
-## 当前 8 个 Skills
+## 当前 9 个 Skills
 
 | Skill | 负责什么 | 典型触发 |
 | --- | --- | --- |
@@ -41,6 +43,7 @@
 | [`refine-text`](plugins/antiqiu-skills/skills/refine-text/SKILL.md) | 保留事实、立场和不确定性的文本炼化，以及清晰一致的中文技术文档 | 润色、压缩、扩写、重组、总结、README、运行手册、API 文档和技术方案 |
 | [`human-writing`](plugins/antiqiu-skills/skills/human-writing/SKILL.md) | 写出有材料、有说话位置和自然中文韵律的作品 | 中文长帖、文章、叙事、故事、口播和明确的去 AI 味改稿 |
 | [`write-action-first`](plugins/antiqiu-skills/skills/write-action-first/SKILL.md) | 把聊天回复整理成先结果、易扫描、可执行的形状 | 仅显式调用，或用户明确要求行动优先、ADHD-friendly、不要铺垫 |
+| [`herdr-orchestrator`](plugins/antiqiu-skills/skills/herdr-orchestrator/SKILL.md) | 用 Herdr 编排跨厂商 Agent，并按产物和验收证据收尾 | Herdr、Codex/Claude/Antigravity 协作、跨模型辩论、长任务恢复 |
 
 ## 怎么选择
 
@@ -50,7 +53,7 @@
 2. 方向已定，要持续完成，使用 `$execute-work`。
 3. 原因不清或收到可疑评审，使用 `$diagnose-work`。
 
-随后按产物选择最多一个领域 Skill。已有 Agent 指令用 `$trim-agent-instructions`；普通已有文本和中文技术文档用 `$refine-text`；文章、叙事等自然中文作品用 `$human-writing`。
+随后按产物选择最多一个领域 Skill。已有 Agent 指令用 `$trim-agent-instructions`；普通已有文本和中文技术文档用 `$refine-text`；文章、叙事等自然中文作品用 `$human-writing`；明确要求 Herdr 跨进程编排时用 `$herdr-orchestrator`。
 
 `$keep-task-in-scope` 只在长期循环或额外流程可能挤占主任务时叠加。`$write-action-first` 只改变回复形状，不改变代码、结论或原始文稿，因此默认禁止隐式调用。
 
@@ -157,7 +160,7 @@ Codex 能自动发现 Skill 变更；如果列表没有刷新，重新启动任�
 python3 tests/audit_skills.py
 ```
 
-运行 8 个 Skill 的独立 Codex 行为回归和综合路由用例：
+运行全部 Skill 的独立 Codex 行为回归和综合路由用例：
 
 ```bash
 python3 tests/run_behavior_tests.py --model gpt-5.6-terra --jobs 3

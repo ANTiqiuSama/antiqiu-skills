@@ -2,7 +2,7 @@
 
 ## 审计边界
 
-基础合并审计以 2026-08-13 本机文件为准；2026-08-28 追加检查 Antigravity 安装的 `ste-cn`，并复核它与当前 8 个公开 Skill 的边界。
+基础合并审计以 2026-08-13 本机文件为准；2026-08-28 追加检查 Antigravity 安装的 `ste-cn`；2026-09-04 新增原创的 `herdr-orchestrator`。当前共有 9 个公开 Skill。
 
 | 层级 | 发现结果 | 处理方式 |
 | --- | ---: | --- |
@@ -33,9 +33,9 @@ receiving-code-review + systematic-debugging
 
 `hatch-pet` 是 Codex 宠物制作专用工具链，与通用工作流没有重复。它不进入本仓库、不参与统计，也不会在本地同步时被修改或停用。
 
-2026-08-14 新增 `trim-agent-instructions`，用于维护已经存在的 Agent 指令链。它是新增的专项能力，不计入上面的 10→7 历史合并；当前公开总包因此有 8 个 Skill。
+2026-08-14 新增 `trim-agent-instructions`，用于维护已经存在的 Agent 指令链。它是新增的专项能力，不计入上面的 10→7 历史合并。
 
-2026-08-28 没有把 `ste-cn` 作为第 9 个 Skill 发布。它的目标产物、保真要求、术语控制和技术步骤改写都属于 `refine-text` 已有职责。有效规则被独立重写成按需参考，固定中文字符门槛和来源不明的 ASD-STE100“中文转化”说法没有进入总库。
+2026-08-28 没有把 `ste-cn` 作为独立 Skill 发布。它的目标产物、保真要求、术语控制和技术步骤改写都属于 `refine-text` 已有职责。有效规则被独立重写成按需参考，固定中文字符门槛和来源不明的 ASD-STE100“中文转化”说法没有进入总库。
 
 ## 逐项分析
 
@@ -128,6 +128,14 @@ receiving-code-review + systematic-debugging
 - **与 `execute-work` 的边界**：前者给出领域判断；方向已定且修改跨多个验证步骤时，后者负责持续落实。
 - **处理**：保留为窄范围隐式 Skill。默认静态取证；只有高影响且结论不确定、结果会改变决定时才做一次真正隔离的行为对照。不引入固定评分、强制子代理、统一删减比例或内部来源内容。
 
+### 新增：`herdr-orchestrator`
+
+- **作用**：在 Herdr 中组织跨厂商 Agent，明确协调、评审和写入角色，并按产物和验收证据判断完成。
+- **真实价值**：解决 `idle/done` 被误当成交付、`--wait` 超时后重复派活、自定义 Claude 端点未注入 tab、Antigravity 集成与 `agy` 命令混淆，以及多个 Agent 同时修改一个工作副本的问题。
+- **边界**：只在用户明确提到 Herdr 或要求跨 CLI 编排时触发。普通子 Agent 委托和单个小任务不触发。
+- **公开性处理**：正文根据本机 Herdr 0.8.2 的 `herdr --skill`、公开产品概念和实际排障经验独立编写。内部链接、端点、模型 ID、令牌和无公开许可的 Skill 原文均未进入仓库。
+- **配套教程**：[`HERDR_TUTORIAL_ZH.md`](HERDR_TUTORIAL_ZH.md) 面向人类读者，Skill 本身只保留运行时决策和按需参考。
+
 ## `ste-cn` 融合评估
 
 ### 本机事实
@@ -155,7 +163,7 @@ receiving-code-review + systematic-debugging
 
 ### 最终形态
 
-融合后的能力位于 `refine-text/references/plain-technical-chinese.md`。只有中文技术文档命中时才读取；其他炼化请求不承担这部分上下文成本。Skill 总数保持 8 个，也避免 `ste-cn` 和 `refine-text` 同时匹配同一请求。
+融合后的能力位于 `refine-text/references/plain-technical-chinese.md`。只有中文技术文档命中时才读取；其他炼化请求不承担这部分上下文成本。`ste-cn` 没有增加独立 Skill，也避免它和 `refine-text` 同时匹配同一请求。
 
 ## 停用目录
 

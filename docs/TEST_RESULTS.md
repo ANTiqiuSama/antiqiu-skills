@@ -1,14 +1,27 @@
 # Test results
 
-验证日期：2026-08-28。范围是本仓库当前的 8 个通用 Skill；`hatch-pet` 按用户要求排除，未修改也未纳入统计。
+最近验证日期：2026-09-04。`hatch-pet` 按用户要求排除，未修改也未纳入统计。
 
-## 最终结果
+## 2026-09-04 增量结果
+
+本轮新增 `herdr-orchestrator` 和人类教程。
+
+| 层级 | 结果 | 证据 |
+| --- | --- | --- |
+| 静态审计 | 通过 | 9 个 Skill；启动元数据 3,304 字节；相对最初 3,784 字节减少 12.7% |
+| 官方 Skill 校验器 | 通过 | `herdr-orchestrator` 返回 `Skill is valid!` |
+| 官方插件校验器 | 通过 | `Plugin validation passed`；清单版本为 1.3.0 |
+| JSON 与差异检查 | 通过 | `behavior_cases.json` 可解析；`git diff --check` 无输出 |
+| 公开性扫描 | 通过 | 新增文件没有内部文档地址、内部模型 ID 或 Relay 地址 |
+| 隔离 Codex 行为回归 | 未运行 | 已加入 Herdr 论文编排用例；本轮只执行小于 60 秒的结构门禁 |
+
+## 2026-08-28 基线结果
 
 | 层级 | 结果 | 证据 |
 | --- | --- | --- |
 | 静态审计 | 通过 | 8 个 Skill；启动元数据 3,784→2,828 字节，减少 25.3%；三组重叠正文 186→118 行，减少 36.6%；诊断支持材料 636→63 行，减少 90.1% |
 | 官方 Skill 校验器 | 本轮变更 2/2 通过 | `refine-text` 与因回归发现而收紧的 `plan-work` 均返回 `Skill is valid!`；其余 6 个 Skill 未修改 |
-| 官方插件校验器 | 通过 | `Plugin validation passed`；清单版本为 1.2.0 |
+| 官方插件校验器 | 通过 | `Plugin validation passed`；当时清单版本为 1.2.0 |
 | 隔离 Codex 行为回归 | 10/10 通过 | `gpt-5.6-terra`；原 9 个用例全部通过，新增 1 个中文技术运行手册用例通过 |
 | `human-writing` 检查器 | 沿用既有结果 | 该 Skill 本轮未修改；2026-08-13 的自然段落正例退出 0，含禁用项的反例退出 1 |
 | 本地安装同步 | 本轮未执行 | 用户要求融合并上传 GitHub；没有覆盖或删除 Antigravity 当前安装的 `ste-cn` |
@@ -57,6 +70,7 @@ python3 -B tests/run_behavior_tests.py \
 - `human-writing`：自然改写中文短段，不虚构经历、数字或来源。
 - `write-action-first`：显式调用时先报告测试结果、失败点和最小动作。
 - 综合路由：7 个可隐式调用的 Skill 分工正确；旧名称和显式专用的 `write-action-first` 不参与隐式匹配。
+- `herdr-orchestrator`：论文跨模型辩论、单写入者、产物验收和引用/实验事实边界。用例已加入，尚未执行模型回归。
 
 ## 测试脚本修正记录
 
