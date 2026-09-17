@@ -18,6 +18,7 @@ EXPECTED = {
     "human-writing",
     "herdr-orchestrator",
     "keep-task-in-scope",
+    "native-hybrid-agents",
     "plan-work",
     "refine-text",
     "trim-agent-instructions",

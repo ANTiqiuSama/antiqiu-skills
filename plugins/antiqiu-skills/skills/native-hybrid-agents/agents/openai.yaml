@@ -1,0 +1,4 @@
+interface:
+  display_name: "本机 Antigravity 与 Grok 协作"
+  short_description: "通过本机 CLI 委派 Flash High 文本任务、Grok 辩论与实现"
+  default_prompt: "使用 $native-hybrid-agents 拆分独立任务，让 Antigravity 处理简单文本，Grok 提供独立质疑或实现建议，由主 agent 整合验收。"

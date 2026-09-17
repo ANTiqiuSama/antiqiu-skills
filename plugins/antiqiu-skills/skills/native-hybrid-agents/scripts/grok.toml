@@ -1,0 +1,71 @@
+# Isolated Grok debate worker; credentials are reused locally by the launcher.
+[cli]
+auto_update = false
+use_leader = false
+
+[models]
+default = "grok-4.6"
+default_reasoning_effort = "high"
+max_completion_tokens = 2000
+max_retries = 0
+
+[features]
+codebase_indexing = false
+repo_status_in_system_prompt = false
+session_search = false
+session_recap = false
+turn_summary = false
+title_refresh = false
+auto_wake = false
+backend_tools = false
+web_fetch = false
+telemetry = false
+
+[harness]
+disable_workspace_teleport = true
+
+[telemetry]
+trace_upload = false
+mixpanel_enabled = false
+
+[memory]
+enabled = false
+
+[memory_v2]
+enabled = false
+capture_enabled = false
+file_writes_enabled = false
+
+[managed_mcps]
+enabled = false
+gateway_tools_enabled = false
+
+[workflows]
+enabled = false
+
+[skills]
+ignore = ["/"]
+
+[compat.claude]
+skills = false
+rules = false
+agents = false
+mcps = false
+hooks = false
+sessions = false
+
+[compat.cursor]
+skills = false
+rules = false
+agents = false
+mcps = false
+hooks = false
+sessions = false
+
+[compat.codex]
+skills = false
+rules = false
+agents = false
+mcps = false
+hooks = false
+sessions = false

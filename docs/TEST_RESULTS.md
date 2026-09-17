@@ -27,6 +27,23 @@
 | 本地安装同步 | 本轮未执行 | 用户要求融合并上传 GitHub；没有覆盖或删除 Antigravity 当前安装的 `ste-cn` |
 | Git 差异检查 | 通过 | `git diff --check` 无输出 |
 
+## 1.4.0 本机双模型 Skill 验证（2026-09-17）
+
+新增 `native-hybrid-agents` 的验证范围为随包启动器、隔离配置、安装路径可迁移性及两个原生 CLI 的实际文本调用。
+
+- 19 项离线测试通过，约 7.7 秒；覆盖初始化前的输入限制、权限与模型不符、工具调用拒绝、临时目录清理、流式进展与退出等待、参数边界，以及搬到新目录且无登录时的失败行为。
+- Antigravity 虚构文本调用通过：`gemini-3.8-flash-high`，high 推理，`isolation_verified=true`，没有工具调用，约 21.5 秒。
+- Grok 虚构辩题调用通过：请求 `grok-4.6`，回执用量模型 `grok-4.6-build`，OAuth，`end_turn`，没有工具调用，约 45.6 秒。
+- 两项真实诊断分别使用显式 55 秒上限；日常 Grok 默认仍不设推理时限。测试材料均为虚构文本，未提交登录缓存或原始运行日志。
+- 仓库静态审计和 Skill 结构校验通过，当前共 10 个 Skill。上述证据只覆盖已测试的环境和调用；未运行所有 Skill 的整套模型行为回归，也未在其他操作系统上实测。
+
+离线检查命令：
+
+```bash
+python3 -B -m unittest discover \
+  -s plugins/antiqiu-skills/skills/native-hybrid-agents/scripts -p 'test_*.py'
+```
+
 ## 可复现命令
 
 静态审计：

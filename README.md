@@ -1,6 +1,6 @@
 # ANTiqiu Skills
 
-一套经过收敛和验证的个人 Agent Skills。它覆盖规划、执行、诊断、范围控制、既有 Agent 指令精简、文本炼化、中文技术文档、自然中文写作、行动优先输出，以及 Herdr 跨厂商 Agent 编排。
+一套经过收敛和验证的个人 Agent Skills。它覆盖规划、执行、诊断、范围控制、既有 Agent 指令精简、文本炼化、中文技术文档、自然中文写作、行动优先输出、Herdr 跨厂商 Agent 编排，以及本机 Antigravity/Grok CLI 协作。
 
 ## 这次整理解决了什么
 
@@ -31,7 +31,7 @@
 
 详细逐项审计见 [`docs/SKILL_AUDIT.md`](docs/SKILL_AUDIT.md)，测试证据见 [`docs/TEST_RESULTS.md`](docs/TEST_RESULTS.md)。
 
-## 当前 9 个 Skills
+## 当前 10 个 Skills
 
 | Skill | 负责什么 | 典型触发 |
 | --- | --- | --- |
@@ -44,6 +44,7 @@
 | [`human-writing`](plugins/antiqiu-skills/skills/human-writing/SKILL.md) | 写出有材料、有说话位置和自然中文韵律的作品 | 中文长帖、文章、叙事、故事、口播和明确的去 AI 味改稿 |
 | [`write-action-first`](plugins/antiqiu-skills/skills/write-action-first/SKILL.md) | 把聊天回复整理成先结果、易扫描、可执行的形状 | 仅显式调用，或用户明确要求行动优先、ADHD-friendly、不要铺垫 |
 | [`herdr-orchestrator`](plugins/antiqiu-skills/skills/herdr-orchestrator/SKILL.md) | 用 Herdr 编排跨厂商 Agent，并按产物和验收证据收尾 | Herdr、Codex/Claude/Antigravity 协作、跨模型辩论、长任务恢复 |
+| [`native-hybrid-agents`](plugins/antiqiu-skills/skills/native-hybrid-agents/SKILL.md) | 直接调用本机 Antigravity Flash High 和 Grok，由主 agent 整合结果 | 独立文本任务、自动 debate、实现建议；无需代理服务 |
 
 ## 怎么选择
 
@@ -53,7 +54,7 @@
 2. 方向已定，要持续完成，使用 `$execute-work`。
 3. 原因不清或收到可疑评审，使用 `$diagnose-work`。
 
-随后按产物选择最多一个领域 Skill。已有 Agent 指令用 `$trim-agent-instructions`；普通已有文本和中文技术文档用 `$refine-text`；文章、叙事等自然中文作品用 `$human-writing`；明确要求 Herdr 跨进程编排时用 `$herdr-orchestrator`。
+随后按产物选择最多一个领域 Skill。已有 Agent 指令用 `$trim-agent-instructions`；普通已有文本和中文技术文档用 `$refine-text`；文章、叙事等自然中文作品用 `$human-writing`；明确要求 Herdr 跨进程编排时用 `$herdr-orchestrator`，直接使用本机 Antigravity/Grok CLI 时用 `$native-hybrid-agents`。
 
 `$keep-task-in-scope` 只在长期循环或额外流程可能挤占主任务时叠加。`$write-action-first` 只改变回复形状，不改变代码、结论或原始文稿，因此默认禁止隐式调用。
 
@@ -138,6 +139,12 @@ plugins/antiqiu-skills/skills/refine-text 目录下的 Skill。
 ```
 
 Codex 能自动发现 Skill 变更；如果列表没有刷新，重新启动任务或 Codex。
+
+## 本机 Antigravity 与 Grok
+
+`native-hybrid-agents` 随包提供 Python 启动器、隔离配置和离线测试，使用当前用户在本机 CLI 的登录。需要 macOS/Linux、Python 3.11+，以及分别安装并登录的 `agy` 和 `grok`。包中不包含账号、令牌、个人路径或代理服务配置。
+
+Antigravity 使用 Flash High 处理简单文本；Grok 优先 debate 和实现建议，默认推理无限时限。两个入口只接收主 agent 审核过的可外发文本，返回结果供主 agent 落地。本机 CLI 仍访问模型服务，不是离线推理。安装、调用与诊断命令见 [Skill 正文](plugins/antiqiu-skills/skills/native-hybrid-agents/SKILL.md)。
 
 ## 从旧名称迁移
 

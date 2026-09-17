@@ -1,7 +1,7 @@
 {
   "name": "antiqiu-skills",
-  "version": "1.3.0",
-  "description": "A focused personal skill set for reliable work, writing, and Herdr orchestration.",
+  "version": "1.4.0",
+  "description": "Focused skills for reliable work, writing, Herdr orchestration, and native agent CLIs.",
   "author": {
     "name": "ANTiqiuSama",
     "url": "https://github.com/ANTiqiuSama"
@@ -10,7 +10,7 @@
   "interface": {
     "displayName": "ANTiqiu Skills",
     "shortDescription": "Focused workflows for reliable, low-friction agent work.",
-    "longDescription": "Nine focused skills covering lean planning, execution, diagnosis, scope control, instruction maintenance, faithful text refinement, natural Chinese writing, action-first responses, and evidence-based Herdr orchestration.",
+    "longDescription": "Ten focused skills covering lean planning, execution, diagnosis, scope control, instruction maintenance, faithful text refinement, natural Chinese writing, action-first responses, Herdr orchestration, and direct Antigravity/Grok CLI delegation.",
     "developerName": "ANTiqiuSama",
     "category": "Productivity",
     "capabilities": [],
