@@ -1,0 +1,20 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 56,
+  "code_pages": [
+    57,
+    58
+  ],
+  "all_pages": [
+    56,
+    57,
+    58
+  ],
+  "changes": [
+    "原百分比公式width/pi*100会合计200%；改为value/sum(values)*100。",
+    "设置半径下界0以显示源码bottom=10的中心留白，微调前两个标签位置避免碰撞。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

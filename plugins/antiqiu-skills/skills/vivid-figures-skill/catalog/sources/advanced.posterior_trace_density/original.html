@@ -1,0 +1,76 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from matplotlib.gridspec import GridSpec</span>
+<span id="L4"><a href="#L4">   4</a> from scipy.stats import gaussian_kde</span>
+<span id="L5"><a href="#L5">   5</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> setup_style()</span>
+<span id="L8"><a href="#L8">   8</a> np.random.seed(42)</span>
+<span id="L9"><a href="#L9">   9</a> </span>
+<span id="L10"><a href="#L10">  10</a> # === 模拟 4 条 MCMC 链，2 个参数 ===</span>
+<span id="L11"><a href="#L11">  11</a> n_chains = 4; n_iter = 2000</span>
+<span id="L12"><a href="#L12">  12</a> params = [&#x27;μ&#x27;, &#x27;σ&#x27;]</span>
+<span id="L13"><a href="#L13">  13</a> true_vals = [1.5, 0.7]</span>
+<span id="L14"><a href="#L14">  14</a> # 每条链有点初始偏移然后收敛</span>
+<span id="L15"><a href="#L15">  15</a> chains = np.zeros((2, n_chains, n_iter))</span>
+<span id="L16"><a href="#L16">  16</a> for p in range(2):</span>
+<span id="L17"><a href="#L17">  17</a>     for c in range(n_chains):</span>
+<span id="L18"><a href="#L18">  18</a>         init = true_vals[p] + np.random.normal(0, 0.6) * (1 if c &lt; 2 else 0.4)</span>
+<span id="L19"><a href="#L19">  19</a>         for i in range(n_iter):</span>
+<span id="L20"><a href="#L20">  20</a>             init = init + 0.95 * (true_vals[p] - init) * 0.05 + np.random.normal(0, 0.08)</span>
+<span id="L21"><a href="#L21">  21</a>             chains[p, c, i] = init</span>
+<span id="L22"><a href="#L22">  22</a> </span>
+<span id="L23"><a href="#L23">  23</a> # === 2 行 2 列：每行一个参数 ===</span>
+<span id="L24"><a href="#L24">  24</a> fig = plt.figure(figsize=(9, 5))</span>
+<span id="L25"><a href="#L25">  25</a> gs = GridSpec(2, 2, width_ratios=[3, 1.5], hspace=0.35, wspace=0.1)</span>
+<span id="L26"><a href="#L26">  26</a> </span>
+<span id="L27"><a href="#L27">  27</a> burnin = 200</span>
+<span id="L28"><a href="#L28">  28</a> for p in range(2):</span>
+<span id="L29"><a href="#L29">  29</a>     # 左：trace plot</span>
+<span id="L30"><a href="#L30">  30</a>     ax_trace = fig.add_subplot(gs[p, 0])</span>
+<span id="L31"><a href="#L31">  31</a>     for c in range(n_chains):</span>
+<span id="L32"><a href="#L32">  32</a>         ax_trace.plot(np.arange(n_iter), chains[p, c],</span>
+<span id="L33"><a href="#L33">  33</a>                       color=PALETTE[c % len(PALETTE)], linewidth=0.5, alpha=0.75,</span>
+<span id="L34"><a href="#L34">  34</a>                       label=f&#x27;链 {c+1}&#x27; if p == 0 else None)</span>
+<span id="L35"><a href="#L35">  35</a>     ax_trace.axvline(burnin, color=COLORS[&#x27;ref_line&#x27;], linestyle=&#x27;:&#x27;, linewidth=1, alpha=0.6)</span>
+<span id="L36"><a href="#L36">  36</a>     ax_trace.text(burnin + 20, ax_trace.get_ylim()[0] + (ax_trace.get_ylim()[1] - ax_trace.get_ylim()[0]) * 0.05,</span>
+<span id="L37"><a href="#L37">  37</a>                   f&#x27;burn-in={burnin}&#x27;, fontsize=7, color=COLORS[&#x27;ref_line&#x27;], style=&#x27;italic&#x27;)</span>
+<span id="L38"><a href="#L38">  38</a>     ax_trace.axhline(true_vals[p], color=COLORS[&#x27;highlight&#x27;], linestyle=&#x27;--&#x27;, linewidth=1, alpha=0.7)</span>
+<span id="L39"><a href="#L39">  39</a>     ax_trace.set_ylabel(params[p], fontsize=11, fontweight=&#x27;bold&#x27;)</span>
+<span id="L40"><a href="#L40">  40</a>     if p == 1:</span>
+<span id="L41"><a href="#L41">  41</a>         ax_trace.set_xlabel(&#x27;迭代步数&#x27;, fontsize=10)</span>
+<span id="L42"><a href="#L42">  42</a>     ax_trace.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L43"><a href="#L43">  43</a>     ax_trace.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L44"><a href="#L44">  44</a>     ax_trace.grid(axis=&#x27;y&#x27;, alpha=0.1, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L45"><a href="#L45">  45</a>     if p == 0:</span>
+<span id="L46"><a href="#L46">  46</a>         ax_trace.legend(loc=&#x27;upper right&#x27;, frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=7, ncol=4, columnspacing=1)</span>
+<span id="L47"><a href="#L47">  47</a> </span>
+<span id="L48"><a href="#L48">  48</a>     # 右：边际密度（合并所有链，去除 burn-in）</span>
+<span id="L49"><a href="#L49">  49</a>     ax_dens = fig.add_subplot(gs[p, 1], sharey=ax_trace)</span>
+<span id="L50"><a href="#L50">  50</a>     pooled = chains[p, :, burnin:].flatten()</span>
+<span id="L51"><a href="#L51">  51</a>     yg = np.linspace(pooled.min(), pooled.max(), 200)</span>
+<span id="L52"><a href="#L52">  52</a>     density = gaussian_kde(pooled)(yg)</span>
+<span id="L53"><a href="#L53">  53</a>     ax_dens.fill_betweenx(yg, 0, density, color=_lighten(PALETTE[0], 0.4),</span>
+<span id="L54"><a href="#L54">  54</a>                           alpha=0.7, linewidth=0)</span>
+<span id="L55"><a href="#L55">  55</a>     ax_dens.plot(density, yg, color=PALETTE[0], linewidth=1.5)</span>
+<span id="L56"><a href="#L56">  56</a>     # 95% HPDI</span>
+<span id="L57"><a href="#L57">  57</a>     sorted_x = np.sort(pooled)</span>
+<span id="L58"><a href="#L58">  58</a>     ci_lo, ci_hi = np.percentile(sorted_x, [2.5, 97.5])</span>
+<span id="L59"><a href="#L59">  59</a>     ax_dens.axhline(ci_lo, color=COLORS[&#x27;ref_line&#x27;], linestyle=&#x27;:&#x27;, linewidth=0.8, alpha=0.6)</span>
+<span id="L60"><a href="#L60">  60</a>     ax_dens.axhline(ci_hi, color=COLORS[&#x27;ref_line&#x27;], linestyle=&#x27;:&#x27;, linewidth=0.8, alpha=0.6)</span>
+<span id="L61"><a href="#L61">  61</a>     ax_dens.axhline(pooled.mean(), color=COLORS[&#x27;highlight&#x27;], linestyle=&#x27;--&#x27;, linewidth=1.1, alpha=0.8)</span>
+<span id="L62"><a href="#L62">  62</a> </span>
+<span id="L63"><a href="#L63">  63</a>     # 假装计算 Rhat（实际 Rhat 需要严谨实现，这里展示标注样式）</span>
+<span id="L64"><a href="#L64">  64</a>     rhat_value = 1.005 + np.random.uniform(-0.001, 0.003)</span>
+<span id="L65"><a href="#L65">  65</a>     info_text = f&#x27;$\\hat{{\\theta}}$ = {pooled.mean():.3f}\n95% HPDI: [{ci_lo:.2f}, {ci_hi:.2f}]\n$\\hat{{R}}$ = {rhat_value:.3f}&#x27;</span>
+<span id="L66"><a href="#L66">  66</a>     ax_dens.text(0.95, 0.95, info_text, transform=ax_dens.transAxes,</span>
+<span id="L67"><a href="#L67">  67</a>                  fontsize=7.5, va=&#x27;top&#x27;, ha=&#x27;right&#x27;,</span>
+<span id="L68"><a href="#L68">  68</a>                  bbox=dict(boxstyle=&#x27;round,pad=0.3&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L69"><a href="#L69">  69</a>                            edgecolor=COLORS[&#x27;grid&#x27;], alpha=0.95, linewidth=0.4))</span>
+<span id="L70"><a href="#L70">  70</a> </span>
+<span id="L71"><a href="#L71">  71</a>     ax_dens.set_xticks([])</span>
+<span id="L72"><a href="#L72">  72</a>     ax_dens.tick_params(axis=&#x27;y&#x27;, labelleft=False)</span>
+<span id="L73"><a href="#L73">  73</a>     for sp in [&#x27;top&#x27;, &#x27;right&#x27;, &#x27;bottom&#x27;]: ax_dens.spines[sp].set_visible(False)</span>
+<span id="L74"><a href="#L74">  74</a> </span>
+<span id="L75"><a href="#L75">  75</a> save_fig(fig, &#x27;figures/fig_posterior_trace.pdf&#x27;)</span>
+</pre>

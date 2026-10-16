@@ -1,0 +1,54 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> years = np.arange(2015, 2025)</span>
+<span id="L7"><a href="#L7">   7</a> data = {</span>
+<span id="L8"><a href="#L8">   8</a>     &#x27;线上渠道&#x27;: np.array([15, 20, 28, 35, 42, 48, 55, 60, 65, 68]),</span>
+<span id="L9"><a href="#L9">   9</a>     &#x27;线下门店&#x27;: np.array([60, 55, 48, 42, 38, 35, 30, 28, 25, 22]),</span>
+<span id="L10"><a href="#L10">  10</a>     &#x27;其他渠道&#x27;: np.array([25, 25, 24, 23, 20, 17, 15, 12, 10, 10]),</span>
+<span id="L11"><a href="#L11">  11</a> }</span>
+<span id="L12"><a href="#L12">  12</a> </span>
+<span id="L13"><a href="#L13">  13</a> fig, ax = plt.subplots(figsize=(8, 5))</span>
+<span id="L14"><a href="#L14">  14</a> </span>
+<span id="L15"><a href="#L15">  15</a> # 渐变填充层叠</span>
+<span id="L16"><a href="#L16">  16</a> cumsum = np.zeros(len(years))</span>
+<span id="L17"><a href="#L17">  17</a> for i, (name, vals) in enumerate(data.items()):</span>
+<span id="L18"><a href="#L18">  18</a>     # 多层渐变填充</span>
+<span id="L19"><a href="#L19">  19</a>     for layer, alpha in enumerate([0.35, 0.20, 0.10]):</span>
+<span id="L20"><a href="#L20">  20</a>         ax.fill_between(years, cumsum + layer * 0.3, cumsum + vals - layer * 0.3,</span>
+<span id="L21"><a href="#L21">  21</a>                         alpha=alpha, color=PALETTE[i], linewidth=0)</span>
+<span id="L22"><a href="#L22">  22</a>     # 原色边框轮廓线</span>
+<span id="L23"><a href="#L23">  23</a>     ax.plot(years, cumsum + vals, color=PALETTE[i], linewidth=1.5, alpha=0.8, label=name)</span>
+<span id="L24"><a href="#L24">  24</a>     cumsum += vals</span>
+<span id="L25"><a href="#L25">  25</a> </span>
+<span id="L26"><a href="#L26">  26</a> # 事件标记线</span>
+<span id="L27"><a href="#L27">  27</a> events = {2020: &#x27;疫情爆发&#x27;, 2022: &#x27;政策调整&#x27;}</span>
+<span id="L28"><a href="#L28">  28</a> for year, event in events.items():</span>
+<span id="L29"><a href="#L29">  29</a>     ax.axvline(x=year, color=COLORS[&#x27;ref_line&#x27;], linestyle=&#x27;:&#x27;, linewidth=1, alpha=0.6)</span>
+<span id="L30"><a href="#L30">  30</a>     ax.text(year + 0.1, cumsum.max() * 0.95, event, fontsize=8, color=COLORS[&#x27;ref_line&#x27;],</span>
+<span id="L31"><a href="#L31">  31</a>             rotation=90, va=&#x27;top&#x27;, ha=&#x27;left&#x27;,</span>
+<span id="L32"><a href="#L32">  32</a>             bbox=dict(boxstyle=&#x27;round,pad=0.2&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L33"><a href="#L33">  33</a>                       edgecolor=COLORS[&#x27;ref_line&#x27;], alpha=0.8, linewidth=0.5))</span>
+<span id="L34"><a href="#L34">  34</a> </span>
+<span id="L35"><a href="#L35">  35</a> # 端点数值标注</span>
+<span id="L36"><a href="#L36">  36</a> cumsum_end = np.zeros(1)</span>
+<span id="L37"><a href="#L37">  37</a> for i, (name, vals) in enumerate(data.items()):</span>
+<span id="L38"><a href="#L38">  38</a>     y_pos = cumsum_end + vals[-1] / 2</span>
+<span id="L39"><a href="#L39">  39</a>     ax.text(years[-1] + 0.3, y_pos[0], f&#x27;{vals[-1]}%&#x27;,</span>
+<span id="L40"><a href="#L40">  40</a>             fontsize=8, color=PALETTE[i], fontweight=&#x27;bold&#x27;, va=&#x27;center&#x27;,</span>
+<span id="L41"><a href="#L41">  41</a>             bbox=dict(boxstyle=&#x27;round,pad=0.15&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L42"><a href="#L42">  42</a>                       edgecolor=PALETTE[i], alpha=0.8, linewidth=0.5))</span>
+<span id="L43"><a href="#L43">  43</a>     cumsum_end += vals[-1]</span>
+<span id="L44"><a href="#L44">  44</a> </span>
+<span id="L45"><a href="#L45">  45</a> ax.set_xlabel(&#x27;年份&#x27;, fontsize=11)</span>
+<span id="L46"><a href="#L46">  46</a> ax.set_ylabel(&#x27;占比 (%)&#x27;, fontsize=11)</span>
+<span id="L47"><a href="#L47">  47</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=9, loc=&#x27;best&#x27;)</span>
+<span id="L48"><a href="#L48">  48</a> ax.set_xlim(years[0], years[-1] + 0.8)</span>
+<span id="L49"><a href="#L49">  49</a> ax.grid(alpha=0.12, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L50"><a href="#L50">  50</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L51"><a href="#L51">  51</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L52"><a href="#L52">  52</a> fig.tight_layout()</span>
+<span id="L53"><a href="#L53">  53</a> save_fig(fig, &#x27;figures/fig_area.pdf&#x27;)</span>
+</pre>

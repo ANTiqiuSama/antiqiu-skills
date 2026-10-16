@@ -1,0 +1,20 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 113,
+  "code_pages": [
+    113,
+    114,
+    115
+  ],
+  "all_pages": [
+    113,
+    114,
+    115
+  ],
+  "changes": [
+    "原标题称直方图，但代码绘制随机半径阶梯面积；按真实编码命名，不当作频数图。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

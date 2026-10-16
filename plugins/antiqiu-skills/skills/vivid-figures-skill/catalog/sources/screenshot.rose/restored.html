@@ -1,0 +1,38 @@
+<!doctype html><meta charset="utf-8"><title>南丁格尔玫瑰图 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>南丁格尔玫瑰图</h1><p>代码截图恢复与适配 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;南丁格尔玫瑰图</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [57, 58].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 小明的代码美学 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> values=np.array([30,35,40,45,50,55,60,65,70])</span>
+<span id="L18"><a href="#L18">  18</a> labels=[f&#x27;类别{i+1}&#x27; for i in range(len(values))]</span>
+<span id="L19"><a href="#L19">  19</a> width=2*np.pi*values/sum(values)</span>
+<span id="L20"><a href="#L20">  20</a> colors=[&#x27;#dc9eb5&#x27;,&#x27;#e3d0d7&#x27;,&#x27;#b0a3c0&#x27;]*3</span>
+<span id="L21"><a href="#L21">  21</a> fig,ax=plt.subplots(subplot_kw={&#x27;projection&#x27;:&#x27;polar&#x27;},figsize=(8,5),dpi=150)</span>
+<span id="L22"><a href="#L22">  22</a> start_x=0</span>
+<span id="L23"><a href="#L23">  23</a> for i,value in enumerate(values):</span>
+<span id="L24"><a href="#L24">  24</a>     start_x+=.5*width[i]</span>
+<span id="L25"><a href="#L25">  25</a>     ax.bar(start_x,value,width=width[i],bottom=10.,linewidth=2,edgecolor=&#x27;white&#x27;,color=colors[i])</span>
+<span id="L26"><a href="#L26">  26</a>     # Correct the screenshot&#x27;s percentage formula (width / 2pi, not width / pi).</span>
+<span id="L27"><a href="#L27">  27</a>     label=f&#x27;{labels[i]}\n{value/values.sum()*100:.1f}% | {value}&#x27;</span>
+<span id="L28"><a href="#L28">  28</a>     offset=[12,-4,0,0,0,0,0,0,0][i]</span>
+<span id="L29"><a href="#L29">  29</a>     ax.text(start_x,value*.75+10+offset,label,color=&#x27;white&#x27;,fontsize=7,ha=&#x27;center&#x27;,va=&#x27;center&#x27;,fontweight=&#x27;bold&#x27;,</span>
+<span id="L30"><a href="#L30">  30</a>             bbox=dict(facecolor=&#x27;#75879655&#x27;,edgecolor=&#x27;none&#x27;,boxstyle=&#x27;round,pad=.5&#x27;))</span>
+<span id="L31"><a href="#L31">  31</a>     start_x+=.5*width[i]</span>
+<span id="L32"><a href="#L32">  32</a> ax.set(xticks=[],yticks=[],ylim=(0,85))</span>
+<span id="L33"><a href="#L33">  33</a> ax.spines[&#x27;polar&#x27;].set_visible(False)</span>
+<span id="L34"><a href="#L34">  34</a> ax.set_theta_direction(1);ax.set_theta_offset(np.pi*.5)</span>
+<span id="L35"><a href="#L35">  35</a> fig.text(.18,.5,&#x27;南丁格尔\n玫瑰图&#x27;,fontsize=24,ha=&#x27;center&#x27;,va=&#x27;center&#x27;,fontweight=&#x27;bold&#x27;,color=&#x27;#515a85&#x27;)</span>
+<span id="L36"><a href="#L36">  36</a> fig.subplots_adjust(left=.32,right=.98,top=.98,bottom=.02)</span>
+<span id="L37"><a href="#L37">  37</a> plt.show()</span>
+<span id="L38"><a href="#L38">  38</a> </span></pre>

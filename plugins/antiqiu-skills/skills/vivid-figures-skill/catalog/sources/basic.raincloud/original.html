@@ -1,0 +1,64 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from scipy.stats import gaussian_kde</span>
+<span id="L4"><a href="#L4">   4</a> import matplotlib.colors as mcolors</span>
+<span id="L5"><a href="#L5">   5</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L6"><a href="#L6">   6</a> setup_style()</span>
+<span id="L7"><a href="#L7">   7</a> </span>
+<span id="L8"><a href="#L8">   8</a> np.random.seed(42)</span>
+<span id="L9"><a href="#L9">   9</a> groups = [&#x27;组A&#x27;, &#x27;组B&#x27;, &#x27;组C&#x27;, &#x27;组D&#x27;]</span>
+<span id="L10"><a href="#L10">  10</a> data = [np.random.normal(loc, s, 80) for loc, s in [(80, 5), (85, 3), (78, 8), (90, 4)]]</span>
+<span id="L11"><a href="#L11">  11</a> </span>
+<span id="L12"><a href="#L12">  12</a> # ★ 自适应高度</span>
+<span id="L13"><a href="#L13">  13</a> _fig_h = max(4, len(groups) * 1.2 + 1)</span>
+<span id="L14"><a href="#L14">  14</a> fig, ax = plt.subplots(figsize=(8, _fig_h))</span>
+<span id="L15"><a href="#L15">  15</a> </span>
+<span id="L16"><a href="#L16">  16</a> for i, (name, d) in enumerate(zip(groups, data)):</span>
+<span id="L17"><a href="#L17">  17</a>     pos = i</span>
+<span id="L18"><a href="#L18">  18</a> </span>
+<span id="L19"><a href="#L19">  19</a>     # 渐变半小提琴（右侧）</span>
+<span id="L20"><a href="#L20">  20</a>     kde = gaussian_kde(d, bw_method=0.3)</span>
+<span id="L21"><a href="#L21">  21</a>     yr = np.linspace(d.min() - 4, d.max() + 4, 300)</span>
+<span id="L22"><a href="#L22">  22</a>     density = kde(yr)</span>
+<span id="L23"><a href="#L23">  23</a>     density_norm = density / density.max() * 0.35</span>
+<span id="L24"><a href="#L24">  24</a> </span>
+<span id="L25"><a href="#L25">  25</a>     for layer in range(6):</span>
+<span id="L26"><a href="#L26">  26</a>         frac = layer / 6</span>
+<span id="L27"><a href="#L27">  27</a>         alpha = 0.35 - frac * 0.05</span>
+<span id="L28"><a href="#L28">  28</a>         ax.fill_betweenx(yr, pos + frac * 0.02, pos + density_norm * (1 - frac * 0.12),</span>
+<span id="L29"><a href="#L29">  29</a>                          alpha=alpha, color=PALETTE[i], linewidth=0)</span>
+<span id="L30"><a href="#L30">  30</a>     # 原色边框轮廓</span>
+<span id="L31"><a href="#L31">  31</a>     ax.plot(pos + density_norm, yr, color=PALETTE[i], linewidth=1.2, alpha=0.8)</span>
+<span id="L32"><a href="#L32">  32</a> </span>
+<span id="L33"><a href="#L33">  33</a>     # 箱线图（左侧，窄）</span>
+<span id="L34"><a href="#L34">  34</a>     bp = ax.boxplot(d, positions=[pos - 0.18], widths=0.12, vert=True, patch_artist=True,</span>
+<span id="L35"><a href="#L35">  35</a>                     boxprops=dict(facecolor=_lighten(PALETTE[i], 0.4),</span>
+<span id="L36"><a href="#L36">  36</a>                                   edgecolor=PALETTE[i], linewidth=1.2),</span>
+<span id="L37"><a href="#L37">  37</a>                     medianprops=dict(color=COLORS[&#x27;text&#x27;], linewidth=1.8),</span>
+<span id="L38"><a href="#L38">  38</a>                     whiskerprops=dict(linewidth=1, color=PALETTE[i]),</span>
+<span id="L39"><a href="#L39">  39</a>                     capprops=dict(linewidth=1, color=COLORS[&#x27;ref_line&#x27;]),</span>
+<span id="L40"><a href="#L40">  40</a>                     flierprops=dict(marker=&#x27;&#x27;, markersize=0))</span>
+<span id="L41"><a href="#L41">  41</a> </span>
+<span id="L42"><a href="#L42">  42</a>     # 抖动散点（最左侧）</span>
+<span id="L43"><a href="#L43">  43</a>     jitter = np.random.uniform(-0.08, 0.08, len(d))</span>
+<span id="L44"><a href="#L44">  44</a>     ax.scatter(pos - 0.38 + jitter, d, s=6, alpha=0.2, color=PALETTE[i], edgecolor=&#x27;none&#x27;)</span>
+<span id="L45"><a href="#L45">  45</a> </span>
+<span id="L46"><a href="#L46">  46</a>     # 均值菱形</span>
+<span id="L47"><a href="#L47">  47</a>     ax.scatter(pos - 0.18, d.mean(), marker=&#x27;D&#x27;, s=45, color=PALETTE[i],</span>
+<span id="L48"><a href="#L48">  48</a>                edgecolor=&#x27;white&#x27;, linewidth=1.2, zorder=5)</span>
+<span id="L49"><a href="#L49">  49</a> </span>
+<span id="L50"><a href="#L50">  50</a>     # 均值数值标注</span>
+<span id="L51"><a href="#L51">  51</a>     ax.text(pos - 0.32, d.mean(), f&#x27;{d.mean():.1f}&#x27;, fontsize=7, color=PALETTE[i],</span>
+<span id="L52"><a href="#L52">  52</a>             ha=&#x27;right&#x27;, va=&#x27;center&#x27;, fontweight=&#x27;bold&#x27;,</span>
+<span id="L53"><a href="#L53">  53</a>             bbox=dict(boxstyle=&#x27;round,pad=0.15&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L54"><a href="#L54">  54</a>                       edgecolor=&#x27;none&#x27;, alpha=0.7))</span>
+<span id="L55"><a href="#L55">  55</a> </span>
+<span id="L56"><a href="#L56">  56</a> ax.set_xticks(range(len(groups)))</span>
+<span id="L57"><a href="#L57">  57</a> ax.set_xticklabels(groups, fontsize=10)</span>
+<span id="L58"><a href="#L58">  58</a> ax.set_ylabel(&#x27;数值&#x27;, fontsize=11)</span>
+<span id="L59"><a href="#L59">  59</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L60"><a href="#L60">  60</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L61"><a href="#L61">  61</a> ax.grid(axis=&#x27;y&#x27;, alpha=0.12, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L62"><a href="#L62">  62</a> fig.tight_layout()</span>
+<span id="L63"><a href="#L63">  63</a> save_fig(fig, &#x27;figures/fig_raincloud.pdf&#x27;)</span>
+</pre>

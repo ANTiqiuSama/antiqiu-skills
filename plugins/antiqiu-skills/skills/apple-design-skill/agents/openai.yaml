@@ -1,0 +1,5 @@
+interface:
+  display_name: "Apple Design Skill"
+  short_description: "Apple design, HIG, motion, and platform guidance"
+  brand_color: "#0071E3"
+  default_prompt: "Use $apple-design-skill to apply Apple design guidance within this product's existing design system and platform constraints."

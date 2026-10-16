@@ -1,6 +1,15 @@
 # Test results
 
-最近验证日期：2026-09-04。`hatch-pet` 按用户要求排除，未修改也未纳入统计。
+最近验证日期：2026-10-16。
+
+## 2026-10-16 本机 Skills 同步
+
+- 同步 17 个用户级 Skill，共 1,457 个源文件；与本机文件逐一直接比较一致，未计算额外哈希。系统及插件缓存不在范围内。
+- 保留仓库原有的其他 9 个 Skill，插件版本 1.5.0，共 26 个 Skill。
+- `python tests/audit_skills.py` 通过；26 份 YAML 名称和描述另用 YAML 解析器核对一致，Python 语法检查和 3 份 PowerShell 脚本解析通过。
+- 活跃文档相对链接检查通过。Vivid 的历史源码快照 `catalog/sources/shap-composites/template-original.md` 保留一条原有相对链接提示；当前模板脚本位于 `templates/shap-composites/plot_shap_composites.py`。未改写来源快照。
+- 未发现常见格式的 GitHub/API 密钥、私钥或本机认证文件；Python 缓存未收录。Git 忽略规则未漏掉本次源文件。
+- 本次为文件同步和打包验证，未重跑外部模型、真实账号服务、研究实验或全部 Skill 的运行验收。以下旧测试结果仅属于对应历史版本。
 
 ## 2026-09-04 增量结果
 

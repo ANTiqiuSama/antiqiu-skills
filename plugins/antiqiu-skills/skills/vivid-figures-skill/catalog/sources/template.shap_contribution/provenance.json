@@ -1,0 +1,9 @@
+{
+  "source_type": "image_only_reconstruction",
+  "reference_sha256": "702258f41e3bd57a8d56599bf27af4662a34800e5e0db2712fcf8ccc5960a0cb",
+  "original_code_provided": false,
+  "original_data_provided": false,
+  "author": "unverified",
+  "demo": "synthetic model with exact analytic interventional SHAP; seed 20260916",
+  "execution_mode": "contribution"
+}

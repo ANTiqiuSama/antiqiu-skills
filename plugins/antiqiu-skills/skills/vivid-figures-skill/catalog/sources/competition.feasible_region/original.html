@@ -1,0 +1,59 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from matplotlib.colors import ListedColormap</span>
+<span id="L4"><a href="#L4">   4</a> from matplotlib.lines import Line2D</span>
+<span id="L5"><a href="#L5">   5</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L6"><a href="#L6">   6</a> setup_style()</span>
+<span id="L7"><a href="#L7">   7</a> </span>
+<span id="L8"><a href="#L8">   8</a> # ── 数据：两个决策变量网格 + 每点是否可行（真实项目从求解结果读；此处可复现演示）</span>
+<span id="L9"><a href="#L9">   9</a> # 例：x=螺距 pitch∈[0.35,0.55]m, y=盘入圈数 turns∈[1,16]，可行=不碰撞</span>
+<span id="L10"><a href="#L10">  10</a> px = np.linspace(0.35, 0.55, 120)</span>
+<span id="L11"><a href="#L11">  11</a> ty = np.linspace(1.0, 16.0, 120)</span>
+<span id="L12"><a href="#L12">  12</a> X, Y = np.meshgrid(px, ty)</span>
+<span id="L13"><a href="#L13">  13</a> # feasible[i,j]=1 表示该(pitch,turns)组合满足约束（真实项目用求解器逐点判定）</span>
+<span id="L14"><a href="#L14">  14</a> margin = (X - 0.44) * 40 - (Y - 8.0) * 0.6            # 演示用的约束裕度函数</span>
+<span id="L15"><a href="#L15">  15</a> feasible = (margin &gt;= 0).astype(float)</span>
+<span id="L16"><a href="#L16">  16</a> </span>
+<span id="L17"><a href="#L17">  17</a> fig, ax = plt.subplots(figsize=(6.6, 5.2))</span>
+<span id="L18"><a href="#L18">  18</a> # 两档填充：可行=主色浅版、违反=灰浅版（语义清晰，不用花哨渐变）</span>
+<span id="L19"><a href="#L19">  19</a> cmap2 = ListedColormap([_lighten(COLORS[&#x27;down&#x27;], 0.72), _lighten(PALETTE[0], 0.55)])</span>
+<span id="L20"><a href="#L20">  20</a> ax.contourf(X, Y, feasible, levels=[-0.5, 0.5, 1.5], cmap=cmap2, zorder=2)</span>
+<span id="L21"><a href="#L21">  21</a> # 可行域边界线（margin=0 那条）</span>
+<span id="L22"><a href="#L22">  22</a> ax.contour(X, Y, margin, levels=[0], colors=[PALETTE[0]], linewidths=2.0, zorder=4)</span>
+<span id="L23"><a href="#L23">  23</a> </span>
+<span id="L24"><a href="#L24">  24</a> # 关键阈值参考线（如题给的临界螺距）+ 线旁短标签（不写文字框）</span>
+<span id="L25"><a href="#L25">  25</a> p_crit = 0.44</span>
+<span id="L26"><a href="#L26">  26</a> ax.axvline(p_crit, ls=&#x27;--&#x27;, lw=1.4, color=PALETTE[1], zorder=5)</span>
+<span id="L27"><a href="#L27">  27</a> ax.text(p_crit + 0.003, ty.max(), f&#x27;临界螺距 {p_crit}&#x27;, rotation=90, fontsize=8.4,</span>
+<span id="L28"><a href="#L28">  28</a>         ha=&#x27;left&#x27;, va=&#x27;top&#x27;, color=PALETTE[1], fontweight=&#x27;bold&#x27;)</span>
+<span id="L29"><a href="#L29">  29</a> </span>
+<span id="L30"><a href="#L30">  30</a> # 最优点：白描边让它从填充里跳出来 + 一个短标签</span>
+<span id="L31"><a href="#L31">  31</a> opt_x, opt_y = 0.45, 11.5</span>
+<span id="L32"><a href="#L32">  32</a> ax.scatter([opt_x], [opt_y], s=150, marker=&#x27;*&#x27;, color=PALETTE[4], zorder=8,</span>
+<span id="L33"><a href="#L33">  33</a>            edgecolors=&#x27;white&#x27;, linewidths=1.2)</span>
+<span id="L34"><a href="#L34">  34</a> ax.text(opt_x + 0.004, opt_y, &#x27; 最优&#x27;, fontsize=8.6, va=&#x27;center&#x27;,</span>
+<span id="L35"><a href="#L35">  35</a>         color=PALETTE[4], fontweight=&#x27;bold&#x27;)</span>
+<span id="L36"><a href="#L36">  36</a> </span>
+<span id="L37"><a href="#L37">  37</a> # 可行/违反用图例说明（不在图内写整句），图例去框</span>
+<span id="L38"><a href="#L38">  38</a> legend_items = [</span>
+<span id="L39"><a href="#L39">  39</a>     Line2D([], [], marker=&#x27;s&#x27;, ls=&#x27;&#x27;, markersize=10, markerfacecolor=_lighten(PALETTE[0], 0.55),</span>
+<span id="L40"><a href="#L40">  40</a>            markeredgecolor=PALETTE[0], label=&#x27;可行域&#x27;),</span>
+<span id="L41"><a href="#L41">  41</a>     Line2D([], [], marker=&#x27;s&#x27;, ls=&#x27;&#x27;, markersize=10, markerfacecolor=_lighten(COLORS[&#x27;down&#x27;], 0.72),</span>
+<span id="L42"><a href="#L42">  42</a>            markeredgecolor=COLORS[&#x27;down&#x27;], label=&#x27;违反约束&#x27;),</span>
+<span id="L43"><a href="#L43">  43</a>     Line2D([], [], color=PALETTE[0], lw=2.0, label=&#x27;可行边界&#x27;),</span>
+<span id="L44"><a href="#L44">  44</a> ]</span>
+<span id="L45"><a href="#L45">  45</a> ax.legend(handles=legend_items, frameon=False, fontsize=8.6, loc=&#x27;lower left&#x27;,</span>
+<span id="L46"><a href="#L46">  46</a>           handlelength=1.6, labelspacing=0.3, borderpad=0.25)</span>
+<span id="L47"><a href="#L47">  47</a> </span>
+<span id="L48"><a href="#L48">  48</a> ax.set_xlabel(&#x27;螺距 $p$ (m)&#x27;, fontsize=10.4)</span>
+<span id="L49"><a href="#L49">  49</a> ax.set_ylabel(&#x27;盘入圈数&#x27;, fontsize=10.4)</span>
+<span id="L50"><a href="#L50">  50</a> ax.set_xticks([0.35, 0.40, 0.44, 0.50, 0.55])        # 临界值 0.44 进刻度</span>
+<span id="L51"><a href="#L51">  51</a> ax.set_yticks([1, 4, 8, 12, 16])</span>
+<span id="L52"><a href="#L52">  52</a> ax.tick_params(labelsize=9.0)</span>
+<span id="L53"><a href="#L53">  53</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L54"><a href="#L54">  54</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L55"><a href="#L55">  55</a> ax.set_title(&#x27;(a) 参数平面可行域与最优解&#x27;, fontsize=11.4, fontweight=&#x27;bold&#x27;, loc=&#x27;left&#x27;, pad=6)</span>
+<span id="L56"><a href="#L56">  56</a> </span>
+<span id="L57"><a href="#L57">  57</a> fig.subplots_adjust(left=0.10, right=0.97, bottom=0.10, top=0.93)</span>
+<span id="L58"><a href="#L58">  58</a> save_fig(fig, &#x27;figures/fig_feasible_region.pdf&#x27;)</span>
+</pre>

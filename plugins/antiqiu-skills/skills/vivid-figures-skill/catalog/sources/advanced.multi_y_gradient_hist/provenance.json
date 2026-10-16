@@ -1,0 +1,8 @@
+{
+  "source_type": "image_only_reconstruction",
+  "reference_sha256": "0f0eafbe150ca2ca6a74c22bfa0b2e64adec0d0e3b7d17bdda9f8e01c5826b71",
+  "author": "unverified",
+  "original_code_provided": false,
+  "original_data_provided": false,
+  "demo": "controlled synthetic samples; group seeds 17,53,11; standardized to reference-displayed mean and std; not recovered observations"
+}

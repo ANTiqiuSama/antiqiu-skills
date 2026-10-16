@@ -1,0 +1,72 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L2"><a href="#L2">   2</a> setup_style()</span>
+<span id="L3"><a href="#L3">   3</a> import matplotlib.pyplot as plt</span>
+<span id="L4"><a href="#L4">   4</a> import matplotlib.colors as mcolors</span>
+<span id="L5"><a href="#L5">   5</a> import numpy as np</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> np.random.seed(42)</span>
+<span id="L8"><a href="#L8">   8</a> method1 = np.random.normal(50, 10, 100)</span>
+<span id="L9"><a href="#L9">   9</a> method2 = method1 + np.random.normal(0.5, 3, 100)</span>
+<span id="L10"><a href="#L10">  10</a> mean_vals = (method1 + method2) / 2</span>
+<span id="L11"><a href="#L11">  11</a> diff_vals = method1 - method2</span>
+<span id="L12"><a href="#L12">  12</a> mean_diff = np.mean(diff_vals)</span>
+<span id="L13"><a href="#L13">  13</a> std_diff = np.std(diff_vals)</span>
+<span id="L14"><a href="#L14">  14</a> </span>
+<span id="L15"><a href="#L15">  15</a> fig, ax = plt.subplots(figsize=(7, 5.5))</span>
+<span id="L16"><a href="#L16">  16</a> </span>
+<span id="L17"><a href="#L17">  17</a> # Subtle grid</span>
+<span id="L18"><a href="#L18">  18</a> ax.grid(alpha=0.15, linestyle=&#x27;-&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L19"><a href="#L19">  19</a> ax.set_axisbelow(True)</span>
+<span id="L20"><a href="#L20">  20</a> </span>
+<span id="L21"><a href="#L21">  21</a> # Gradient CI band (fading from center outward)</span>
+<span id="L22"><a href="#L22">  22</a> x_range = np.linspace(mean_vals.min() - 2, mean_vals.max() + 2, 200)</span>
+<span id="L23"><a href="#L23">  23</a> upper = mean_diff + 1.96 * std_diff</span>
+<span id="L24"><a href="#L24">  24</a> lower = mean_diff - 1.96 * std_diff</span>
+<span id="L25"><a href="#L25">  25</a> # Inner band (darker)</span>
+<span id="L26"><a href="#L26">  26</a> ax.fill_between(x_range, mean_diff - 0.5 * std_diff, mean_diff + 0.5 * std_diff,</span>
+<span id="L27"><a href="#L27">  27</a>                 alpha=0.15, color=PALETTE[0], label=&#x27;±0.5 SD&#x27;)</span>
+<span id="L28"><a href="#L28">  28</a> # Middle band</span>
+<span id="L29"><a href="#L29">  29</a> ax.fill_between(x_range, mean_diff - 1.0 * std_diff, mean_diff + 1.0 * std_diff,</span>
+<span id="L30"><a href="#L30">  30</a>                 alpha=0.10, color=PALETTE[0])</span>
+<span id="L31"><a href="#L31">  31</a> # Outer band (lightest)</span>
+<span id="L32"><a href="#L32">  32</a> ax.fill_between(x_range, lower, upper, alpha=0.06, color=PALETTE[3], label=&#x27;±1.96 SD (95% CI)&#x27;)</span>
+<span id="L33"><a href="#L33">  33</a> </span>
+<span id="L34"><a href="#L34">  34</a> # Scatter points</span>
+<span id="L35"><a href="#L35">  35</a> ax.scatter(mean_vals, diff_vals, color=PALETTE[0], alpha=0.55, s=30,</span>
+<span id="L36"><a href="#L36">  36</a>            edgecolors=&#x27;white&#x27;, linewidths=0.5, zorder=3)</span>
+<span id="L37"><a href="#L37">  37</a> </span>
+<span id="L38"><a href="#L38">  38</a> # Mean line</span>
+<span id="L39"><a href="#L39">  39</a> ax.axhline(mean_diff, color=PALETTE[0], linestyle=&#x27;-&#x27;, linewidth=1.8,</span>
+<span id="L40"><a href="#L40">  40</a>            label=f&#x27;Mean bias: {mean_diff:.2f}&#x27;)</span>
+<span id="L41"><a href="#L41">  41</a> # Limits of agreement</span>
+<span id="L42"><a href="#L42">  42</a> ax.axhline(upper, color=PALETTE[3], linestyle=&#x27;--&#x27;, linewidth=1.2,</span>
+<span id="L43"><a href="#L43">  43</a>            label=f&#x27;+1.96 SD: {upper:.2f}&#x27;)</span>
+<span id="L44"><a href="#L44">  44</a> ax.axhline(lower, color=PALETTE[3], linestyle=&#x27;--&#x27;, linewidth=1.2,</span>
+<span id="L45"><a href="#L45">  45</a>            label=f&#x27;-1.96 SD: {lower:.2f}&#x27;)</span>
+<span id="L46"><a href="#L46">  46</a> </span>
+<span id="L47"><a href="#L47">  47</a> # Proportional bias regression line</span>
+<span id="L48"><a href="#L48">  48</a> z = np.polyfit(mean_vals, diff_vals, 1)</span>
+<span id="L49"><a href="#L49">  49</a> p = np.poly1d(z)</span>
+<span id="L50"><a href="#L50">  50</a> x_fit = np.linspace(mean_vals.min(), mean_vals.max(), 100)</span>
+<span id="L51"><a href="#L51">  51</a> ax.plot(x_fit, p(x_fit), color=COLORS[&#x27;highlight&#x27;], linewidth=1.5, linestyle=&#x27;-.&#x27;,</span>
+<span id="L52"><a href="#L52">  52</a>         label=f&#x27;Prop. bias (slope={z[0]:.3f})&#x27;, zorder=4)</span>
+<span id="L53"><a href="#L53">  53</a> </span>
+<span id="L54"><a href="#L54">  54</a> # Outlier labels (points beyond ±1.96 SD)</span>
+<span id="L55"><a href="#L55">  55</a> outliers = np.where((diff_vals &gt; upper) | (diff_vals &lt; lower))[0]</span>
+<span id="L56"><a href="#L56">  56</a> for idx in outliers:</span>
+<span id="L57"><a href="#L57">  57</a>     ax.annotate(f&#x27;#{idx}&#x27;, xy=(mean_vals[idx], diff_vals[idx]),</span>
+<span id="L58"><a href="#L58">  58</a>                 xytext=(mean_vals[idx] + 1.5, diff_vals[idx] + 0.8),</span>
+<span id="L59"><a href="#L59">  59</a>                 fontsize=7, color=COLORS[&#x27;down&#x27;],</span>
+<span id="L60"><a href="#L60">  60</a>                 arrowprops=dict(arrowstyle=&#x27;-&gt;&#x27;, color=COLORS[&#x27;down&#x27;], lw=0.8),</span>
+<span id="L61"><a href="#L61">  61</a>                 bbox=dict(boxstyle=&#x27;round,pad=0.3&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L62"><a href="#L62">  62</a>                           edgecolor=COLORS[&#x27;down&#x27;], alpha=0.9))</span>
+<span id="L63"><a href="#L63">  63</a> </span>
+<span id="L64"><a href="#L64">  64</a> ax.set_xlabel(&#x27;Mean of two methods&#x27;, fontsize=11)</span>
+<span id="L65"><a href="#L65">  65</a> ax.set_ylabel(&#x27;Difference (Method 1 − Method 2)&#x27;, fontsize=11)</span>
+<span id="L66"><a href="#L66">  66</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=7.5, loc=&#x27;upper left&#x27;,</span>
+<span id="L67"><a href="#L67">  67</a>           fancybox=True)</span>
+<span id="L68"><a href="#L68">  68</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L69"><a href="#L69">  69</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L70"><a href="#L70">  70</a> fig.tight_layout()</span>
+<span id="L71"><a href="#L71">  71</a> save_fig(fig, &#x27;figures/fig_bland_altman.pdf&#x27;)</span>
+</pre>

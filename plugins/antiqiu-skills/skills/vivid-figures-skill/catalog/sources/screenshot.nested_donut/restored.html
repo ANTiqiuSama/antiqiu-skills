@@ -1,0 +1,42 @@
+<!doctype html><meta charset="utf-8"><title>嵌套环形图 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>嵌套环形图</h1><p>代码截图恢复与适配 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;嵌套环形图</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [60, 61, 62].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 小明的代码美学 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> colors=[&#x27;#dc9eb5&#x27;,&#x27;#b8b2b9&#x27;,&#x27;#b0a3c0&#x27;,&#x27;#e3d0d7&#x27;,&#x27;#ebe8f0&#x27;]</span>
+<span id="L18"><a href="#L18">  18</a> main_name=[&#x27;类别A&#x27;,&#x27;类别B&#x27;,&#x27;类别C&#x27;]</span>
+<span id="L19"><a href="#L19">  19</a> sub_name=[&#x27;子类A-1&#x27;,&#x27;子类A-2&#x27;,&#x27;子类B-1&#x27;,&#x27;子类C-1&#x27;,&#x27;子类C-2&#x27;,&#x27;子类C-3&#x27;]</span>
+<span id="L20"><a href="#L20">  20</a> value_list=[[100.,120.],[37.],[29.,10.,20.]]</span>
+<span id="L21"><a href="#L21">  21</a> fig,ax=plt.subplots(subplot_kw={&#x27;projection&#x27;:&#x27;polar&#x27;},figsize=(8,5),dpi=150)</span>
+<span id="L22"><a href="#L22">  22</a> size=.2</span>
+<span id="L23"><a href="#L23">  23</a> ax.set_ylim(0,.8);ax.set_axis_off()</span>
+<span id="L24"><a href="#L24">  24</a> sum_vals=sum(map(sum,value_list))</span>
+<span id="L25"><a href="#L25">  25</a> main_divided=[sum(v)/sum_vals*2*np.pi for v in value_list]</span>
+<span id="L26"><a href="#L26">  26</a> main_x=np.cumsum([0]+main_divided[:-1])</span>
+<span id="L27"><a href="#L27">  27</a> main_colors=colors[:len(value_list)]</span>
+<span id="L28"><a href="#L28">  28</a> main_bars=ax.bar(main_x,width=main_divided,bottom=size,height=size,color=main_colors,edgecolor=&#x27;white&#x27;,linewidth=1,align=&#x27;edge&#x27;)</span>
+<span id="L29"><a href="#L29">  29</a> sub_values=[v for group in value_list for v in group]</span>
+<span id="L30"><a href="#L30">  30</a> sub_divided=[v/sum_vals*2*np.pi for v in sub_values]</span>
+<span id="L31"><a href="#L31">  31</a> sub_x=np.cumsum([0]+sub_divided[:-1])</span>
+<span id="L32"><a href="#L32">  32</a> sub_colors=[main_colors[i] for i,group in enumerate(value_list) for _ in group]</span>
+<span id="L33"><a href="#L33">  33</a> sub_bars=ax.bar(sub_x,width=sub_divided,bottom=2*size,height=size*.5,color=sub_colors,alpha=.5,edgecolor=&#x27;white&#x27;,linewidth=2,align=&#x27;edge&#x27;)</span>
+<span id="L34"><a href="#L34">  34</a> for bars,names,values,offset,face in [(main_bars,main_name,list(map(sum,value_list)),-.1,&#x27;#75879655&#x27;),(sub_bars,sub_name,sub_values,.1,&#x27;#75879677&#x27;)]:</span>
+<span id="L35"><a href="#L35">  35</a>     for bar,label,val in zip(bars,names,values):</span>
+<span id="L36"><a href="#L36">  36</a>         angle=bar.get_x()+bar.get_width()/2</span>
+<span id="L37"><a href="#L37">  37</a>         distance=bar.get_height()+bar.get_y()+offset</span>
+<span id="L38"><a href="#L38">  38</a>         ax.text(angle,distance,f&#x27;{label}\n{val/sum_vals*100:.1f}% | {val:.0f}&#x27;,color=&#x27;white&#x27;,fontsize=8,ha=&#x27;center&#x27;,va=&#x27;center&#x27;,fontweight=&#x27;bold&#x27;,bbox=dict(facecolor=face,edgecolor=&#x27;none&#x27;,boxstyle=&#x27;round,pad=.5&#x27;))</span>
+<span id="L39"><a href="#L39">  39</a> fig.text(.16,.5,&#x27;嵌套环形图&#x27;,fontsize=23,ha=&#x27;center&#x27;,va=&#x27;center&#x27;,fontweight=&#x27;bold&#x27;,color=&#x27;#515a85&#x27;)</span>
+<span id="L40"><a href="#L40">  40</a> fig.subplots_adjust(left=.28,right=1,top=1,bottom=.02)</span>
+<span id="L41"><a href="#L41">  41</a> plt.show()</span>
+<span id="L42"><a href="#L42">  42</a> </span></pre>

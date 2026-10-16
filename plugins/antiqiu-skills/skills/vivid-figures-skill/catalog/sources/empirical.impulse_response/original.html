@@ -1,0 +1,69 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> # === Example data (replace with actual IRF results) ===</span>
+<span id="L7"><a href="#L7">   7</a> periods = np.arange(0, 16)</span>
+<span id="L8"><a href="#L8">   8</a> responses = {</span>
+<span id="L9"><a href="#L9">   9</a>     &#x27;数字经济 → 数字经济&#x27;: {&#x27;irf&#x27;: [1.0, 0.8, 0.5, 0.3, 0.15, 0.08, 0.04, 0.02, 0.01, 0.005, 0, 0, 0, 0, 0, 0],</span>
+<span id="L10"><a href="#L10">  10</a>                           &#x27;lower&#x27;: None, &#x27;upper&#x27;: None},</span>
+<span id="L11"><a href="#L11">  11</a>     &#x27;算力基础设施 → 数字经济&#x27;: {&#x27;irf&#x27;: [0, 0.15, 0.25, 0.30, 0.28, 0.22, 0.16, 0.11, 0.07, 0.04, 0.02, 0.01, 0, 0, 0, 0],</span>
+<span id="L12"><a href="#L12">  12</a>                               &#x27;lower&#x27;: None, &#x27;upper&#x27;: None},</span>
+<span id="L13"><a href="#L13">  13</a>     &#x27;数字经济 → 算力基础设施&#x27;: {&#x27;irf&#x27;: [0, 0.05, 0.12, 0.18, 0.20, 0.18, 0.14, 0.10, 0.07, 0.04, 0.02, 0.01, 0, 0, 0, 0],</span>
+<span id="L14"><a href="#L14">  14</a>                               &#x27;lower&#x27;: None, &#x27;upper&#x27;: None},</span>
+<span id="L15"><a href="#L15">  15</a>     &#x27;算力基础设施 → 算力基础设施&#x27;: {&#x27;irf&#x27;: [1.0, 0.7, 0.4, 0.2, 0.1, 0.05, 0.02, 0.01, 0, 0, 0, 0, 0, 0, 0, 0],</span>
+<span id="L16"><a href="#L16">  16</a>                                   &#x27;lower&#x27;: None, &#x27;upper&#x27;: None},</span>
+<span id="L17"><a href="#L17">  17</a> }</span>
+<span id="L18"><a href="#L18">  18</a> </span>
+<span id="L19"><a href="#L19">  19</a> # Generate CI bands</span>
+<span id="L20"><a href="#L20">  20</a> for key in responses:</span>
+<span id="L21"><a href="#L21">  21</a>     irf = np.array(responses[key][&#x27;irf&#x27;])</span>
+<span id="L22"><a href="#L22">  22</a>     noise = np.abs(irf) * 0.3 + 0.02</span>
+<span id="L23"><a href="#L23">  23</a>     responses[key][&#x27;lower&#x27;] = irf - noise</span>
+<span id="L24"><a href="#L24">  24</a>     responses[key][&#x27;upper&#x27;] = irf + noise</span>
+<span id="L25"><a href="#L25">  25</a> </span>
+<span id="L26"><a href="#L26">  26</a> n_panels = len(responses)</span>
+<span id="L27"><a href="#L27">  27</a> ncols = 2</span>
+<span id="L28"><a href="#L28">  28</a> nrows = (n_panels + 1) // 2</span>
+<span id="L29"><a href="#L29">  29</a> fig, axes = plt.subplots(nrows, ncols, figsize=(10, 4 * nrows), sharex=True)</span>
+<span id="L30"><a href="#L30">  30</a> axes = axes.flatten()</span>
+<span id="L31"><a href="#L31">  31</a> </span>
+<span id="L32"><a href="#L32">  32</a> for idx, (title, data) in enumerate(responses.items()):</span>
+<span id="L33"><a href="#L33">  33</a>     ax = axes[idx]</span>
+<span id="L34"><a href="#L34">  34</a>     irf = np.array(data[&#x27;irf&#x27;])</span>
+<span id="L35"><a href="#L35">  35</a>     lower = np.array(data[&#x27;lower&#x27;])</span>
+<span id="L36"><a href="#L36">  36</a>     upper = np.array(data[&#x27;upper&#x27;])</span>
+<span id="L37"><a href="#L37">  37</a> </span>
+<span id="L38"><a href="#L38">  38</a>     # Gradient CI bands (3 layers)</span>
+<span id="L39"><a href="#L39">  39</a>     for layer, alpha in enumerate([0.08, 0.15, 0.25]):</span>
+<span id="L40"><a href="#L40">  40</a>         shrink = (1 - layer * 0.3)</span>
+<span id="L41"><a href="#L41">  41</a>         mid = irf</span>
+<span id="L42"><a href="#L42">  42</a>         ax.fill_between(periods, mid - (mid - lower) * shrink, mid + (upper - mid) * shrink,</span>
+<span id="L43"><a href="#L43">  43</a>                         alpha=alpha, color=PALETTE[idx % len(PALETTE)])</span>
+<span id="L44"><a href="#L44">  44</a> </span>
+<span id="L45"><a href="#L45">  45</a>     # IRF line</span>
+<span id="L46"><a href="#L46">  46</a>     ax.plot(periods, irf, &#x27;-o&#x27;, color=PALETTE[idx % len(PALETTE)], linewidth=2,</span>
+<span id="L47"><a href="#L47">  47</a>             markersize=4, markeredgecolor=&#x27;white&#x27;, markeredgewidth=0.8, zorder=5)</span>
+<span id="L48"><a href="#L48">  48</a> </span>
+<span id="L49"><a href="#L49">  49</a>     # Zero reference</span>
+<span id="L50"><a href="#L50">  50</a>     ax.axhline(0, color=COLORS[&#x27;ref_line&#x27;], linewidth=0.8, linestyle=&#x27;--&#x27;, alpha=0.5)</span>
+<span id="L51"><a href="#L51">  51</a> </span>
+<span id="L52"><a href="#L52">  52</a>     # Significance shading (where CI doesn&#x27;t cross zero)</span>
+<span id="L53"><a href="#L53">  53</a>     for t in range(len(periods)):</span>
+<span id="L54"><a href="#L54">  54</a>         if lower[t] &gt; 0 or upper[t] &lt; 0:</span>
+<span id="L55"><a href="#L55">  55</a>             ax.axvspan(t - 0.4, t + 0.4, alpha=0.04, color=PALETTE[idx % len(PALETTE)])</span>
+<span id="L56"><a href="#L56">  56</a> </span>
+<span id="L57"><a href="#L57">  57</a>     ax.set_title(title, fontsize=9, fontweight=&#x27;bold&#x27;, loc=&#x27;center&#x27;, pad=3)</span>
+<span id="L58"><a href="#L58">  58</a>     ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L59"><a href="#L59">  59</a>     ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L60"><a href="#L60">  60</a>     ax.set_ylabel(&#x27;响应&#x27;, fontsize=9)</span>
+<span id="L61"><a href="#L61">  61</a> </span>
+<span id="L62"><a href="#L62">  62</a> for idx in range(n_panels, len(axes)):</span>
+<span id="L63"><a href="#L63">  63</a>     axes[idx].set_visible(False)</span>
+<span id="L64"><a href="#L64">  64</a> </span>
+<span id="L65"><a href="#L65">  65</a> axes[-2].set_xlabel(&#x27;期数&#x27;, fontsize=10)</span>
+<span id="L66"><a href="#L66">  66</a> axes[-1].set_xlabel(&#x27;期数&#x27;, fontsize=10)</span>
+<span id="L67"><a href="#L67">  67</a> fig.tight_layout()</span>
+<span id="L68"><a href="#L68">  68</a> save_fig(fig, &#x27;figures/fig_irf.pdf&#x27;)</span>
+</pre>

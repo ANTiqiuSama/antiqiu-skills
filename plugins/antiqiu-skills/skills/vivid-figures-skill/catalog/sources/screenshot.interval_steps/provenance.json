@@ -1,0 +1,19 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 84,
+  "code_pages": [
+    85,
+    86
+  ],
+  "all_pages": [
+    84,
+    85,
+    86
+  ],
+  "changes": [
+    "原区间宽度随机生成，卡片与示例明确标为示意区间；真实置信区间必须由真实统计估计替换。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

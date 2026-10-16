@@ -1,0 +1,58 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> import matplotlib.colors as mcolors</span>
+<span id="L4"><a href="#L4">   4</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, smart_labels, auto_legend</span>
+<span id="L5"><a href="#L5">   5</a> setup_style()</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> # === Example data (replace with your PCA results) ===</span>
+<span id="L8"><a href="#L8">   8</a> np.random.seed(42)</span>
+<span id="L9"><a href="#L9">   9</a> n_samples, n_features = 80, 12</span>
+<span id="L10"><a href="#L10">  10</a> feature_names = [&#x27;市场规模&#x27;, &#x27;供应链成熟度&#x27;, &#x27;短期恢复能力&#x27;, &#x27;响应梯度元素&#x27;,</span>
+<span id="L11"><a href="#L11">  11</a>                  &#x27;长期恢复速度&#x27;, &#x27;研发投入强度&#x27;, &#x27;短期恢复弹性&#x27;, &#x27;产能利用率&#x27;,</span>
+<span id="L12"><a href="#L12">  12</a>                  &#x27;短期集中度&#x27;, &#x27;专利授权量&#x27;, &#x27;产业链完整度&#x27;, &#x27;客户集中度&#x27;]</span>
+<span id="L13"><a href="#L13">  13</a> </span>
+<span id="L14"><a href="#L14">  14</a> # Simulated PCA scores and loadings</span>
+<span id="L15"><a href="#L15">  15</a> scores = np.random.randn(n_samples, 2) * 2</span>
+<span id="L16"><a href="#L16">  16</a> loadings = np.random.randn(n_features, 2)</span>
+<span id="L17"><a href="#L17">  17</a> loadings = loadings / np.abs(loadings).max(axis=0) * 3  # scale to [-3, 3]</span>
+<span id="L18"><a href="#L18">  18</a> explained_var = [66.3, 11.4]  # explained variance %</span>
+<span id="L19"><a href="#L19">  19</a> </span>
+<span id="L20"><a href="#L20">  20</a> fig, ax = plt.subplots(figsize=(8, 7))</span>
+<span id="L21"><a href="#L21">  21</a> </span>
+<span id="L22"><a href="#L22">  22</a> # Scatter: sample scores (gray, semi-transparent)</span>
+<span id="L23"><a href="#L23">  23</a> ax.scatter(scores[:, 0], scores[:, 1], s=25, alpha=0.35, color=COLORS[&#x27;gray&#x27;],</span>
+<span id="L24"><a href="#L24">  24</a>            edgecolors=&#x27;white&#x27;, linewidths=0.3, zorder=2)</span>
+<span id="L25"><a href="#L25">  25</a> </span>
+<span id="L26"><a href="#L26">  26</a> # Loading arrows</span>
+<span id="L27"><a href="#L27">  27</a> arrow_colors = []</span>
+<span id="L28"><a href="#L28">  28</a> for i, (name, lx, ly) in enumerate(zip(feature_names, loadings[:, 0], loadings[:, 1])):</span>
+<span id="L29"><a href="#L29">  29</a>     magnitude = np.sqrt(lx**2 + ly**2)</span>
+<span id="L30"><a href="#L30">  30</a>     color = PALETTE[0]</span>
+<span id="L31"><a href="#L31">  31</a>     arrow_colors.append(color)</span>
+<span id="L32"><a href="#L32">  32</a>     ax.annotate(&#x27;&#x27;, xy=(lx, ly), xytext=(0, 0),</span>
+<span id="L33"><a href="#L33">  33</a>                 arrowprops=dict(arrowstyle=&#x27;-&gt;&#x27;, color=color, lw=1.5, alpha=0.7))</span>
+<span id="L34"><a href="#L34">  34</a> </span>
+<span id="L35"><a href="#L35">  35</a> # ── 特征名标签 —— smart_labels 自动推开重叠标签</span>
+<span id="L36"><a href="#L36">  36</a> # Offset labels slightly beyond arrow tips</span>
+<span id="L37"><a href="#L37">  37</a> label_xs = [lx * 1.08 for lx in loadings[:, 0]]</span>
+<span id="L38"><a href="#L38">  38</a> label_ys = [ly * 1.08 for ly in loadings[:, 1]]</span>
+<span id="L39"><a href="#L39">  39</a> smart_labels(ax, label_xs, label_ys, feature_names,</span>
+<span id="L40"><a href="#L40">  40</a>              colors=arrow_colors, fontsize=8.5, fontweight=&#x27;bold&#x27;,</span>
+<span id="L41"><a href="#L41">  41</a>              offset=(5, 0),</span>
+<span id="L42"><a href="#L42">  42</a>              bbox=dict(boxstyle=&#x27;round,pad=0.2&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L43"><a href="#L43">  43</a>                        edgecolor=PALETTE[0], alpha=0.8, linewidth=0.5),</span>
+<span id="L44"><a href="#L44">  44</a>              arrowprops=dict(arrowstyle=&#x27;-&#x27;, color=COLORS[&#x27;grid&#x27;], lw=0.4),</span>
+<span id="L45"><a href="#L45">  45</a>              force_text=0.8, force_points=0.5)</span>
+<span id="L46"><a href="#L46">  46</a> </span>
+<span id="L47"><a href="#L47">  47</a> # Reference lines</span>
+<span id="L48"><a href="#L48">  48</a> ax.axhline(0, color=COLORS[&#x27;ref_line&#x27;], linewidth=0.5, alpha=0.4)</span>
+<span id="L49"><a href="#L49">  49</a> ax.axvline(0, color=COLORS[&#x27;ref_line&#x27;], linewidth=0.5, alpha=0.4)</span>
+<span id="L50"><a href="#L50">  50</a> </span>
+<span id="L51"><a href="#L51">  51</a> ax.set_xlabel(f&#x27;PC1 ({explained_var[0]:.1f}%)&#x27;, fontsize=11)</span>
+<span id="L52"><a href="#L52">  52</a> ax.set_ylabel(f&#x27;PC2 ({explained_var[1]:.1f}%)&#x27;, fontsize=11)</span>
+<span id="L53"><a href="#L53">  53</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L54"><a href="#L54">  54</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L55"><a href="#L55">  55</a> ax.grid(alpha=0.1, linestyle=&#x27;--&#x27;)</span>
+<span id="L56"><a href="#L56">  56</a> fig.tight_layout()</span>
+<span id="L57"><a href="#L57">  57</a> save_fig(fig, &#x27;figures/fig_pca_biplot.pdf&#x27;)</span>
+</pre>

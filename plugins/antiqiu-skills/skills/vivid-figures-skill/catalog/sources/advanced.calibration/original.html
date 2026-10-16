@@ -1,0 +1,79 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L2"><a href="#L2">   2</a> setup_style()</span>
+<span id="L3"><a href="#L3">   3</a> import matplotlib.pyplot as plt</span>
+<span id="L4"><a href="#L4">   4</a> import matplotlib.gridspec as gridspec</span>
+<span id="L5"><a href="#L5">   5</a> import numpy as np</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> np.random.seed(42)</span>
+<span id="L8"><a href="#L8">   8</a> bins = np.linspace(0, 1, 11)</span>
+<span id="L9"><a href="#L9">   9</a> bin_centers = (bins[:-1] + bins[1:]) / 2</span>
+<span id="L10"><a href="#L10">  10</a> model_a = np.clip(bin_centers + np.random.uniform(-0.05, 0.05, 10), 0, 1)</span>
+<span id="L11"><a href="#L11">  11</a> model_b = np.clip(bin_centers ** 0.7 + np.random.uniform(-0.03, 0.03, 10), 0, 1)</span>
+<span id="L12"><a href="#L12">  12</a> </span>
+<span id="L13"><a href="#L13">  13</a> # Simulated predicted probabilities for histogram</span>
+<span id="L14"><a href="#L14">  14</a> pred_probs_a = np.clip(np.random.beta(2, 2, 500), 0, 1)</span>
+<span id="L15"><a href="#L15">  15</a> pred_probs_b = np.clip(np.random.beta(1.5, 3, 500), 0, 1)</span>
+<span id="L16"><a href="#L16">  16</a> </span>
+<span id="L17"><a href="#L17">  17</a> # Brier scores</span>
+<span id="L18"><a href="#L18">  18</a> brier_a = 0.023</span>
+<span id="L19"><a href="#L19">  19</a> brier_b = 0.089</span>
+<span id="L20"><a href="#L20">  20</a> </span>
+<span id="L21"><a href="#L21">  21</a> fig = plt.figure(figsize=(6, 7))</span>
+<span id="L22"><a href="#L22">  22</a> gs = gridspec.GridSpec(2, 1, height_ratios=[3, 1], hspace=0.08)</span>
+<span id="L23"><a href="#L23">  23</a> </span>
+<span id="L24"><a href="#L24">  24</a> # Top: Calibration curve</span>
+<span id="L25"><a href="#L25">  25</a> ax_cal = fig.add_subplot(gs[0])</span>
+<span id="L26"><a href="#L26">  26</a> ax_cal.grid(alpha=0.15, linestyle=&#x27;-&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L27"><a href="#L27">  27</a> ax_cal.set_axisbelow(True)</span>
+<span id="L28"><a href="#L28">  28</a> </span>
+<span id="L29"><a href="#L29">  29</a> # Perfect calibration line</span>
+<span id="L30"><a href="#L30">  30</a> ax_cal.plot([0, 1], [0, 1], &#x27;k--&#x27;, linewidth=0.8, alpha=0.5, label=&#x27;Perfect&#x27;)</span>
+<span id="L31"><a href="#L31">  31</a> </span>
+<span id="L32"><a href="#L32">  32</a> # Gradient CI band for Model A</span>
+<span id="L33"><a href="#L33">  33</a> ci_width_a = np.random.uniform(0.03, 0.07, 10)</span>
+<span id="L34"><a href="#L34">  34</a> ax_cal.fill_between(bin_centers, model_a - ci_width_a, model_a + ci_width_a,</span>
+<span id="L35"><a href="#L35">  35</a>                      alpha=0.15, color=PALETTE[0])</span>
+<span id="L36"><a href="#L36">  36</a> ax_cal.plot(bin_centers, model_a, &#x27;o-&#x27;, color=PALETTE[0], linewidth=2.2,</span>
+<span id="L37"><a href="#L37">  37</a>             markersize=7, label=f&#x27;Ours (Brier={brier_a:.3f})&#x27;,</span>
+<span id="L38"><a href="#L38">  38</a>             markeredgecolor=&#x27;white&#x27;, markeredgewidth=1.0)</span>
+<span id="L39"><a href="#L39">  39</a> </span>
+<span id="L40"><a href="#L40">  40</a> # Gradient CI band for Model B</span>
+<span id="L41"><a href="#L41">  41</a> ci_width_b = np.random.uniform(0.04, 0.09, 10)</span>
+<span id="L42"><a href="#L42">  42</a> ax_cal.fill_between(bin_centers, model_b - ci_width_b, model_b + ci_width_b,</span>
+<span id="L43"><a href="#L43">  43</a>                      alpha=0.12, color=PALETTE[3])</span>
+<span id="L44"><a href="#L44">  44</a> ax_cal.plot(bin_centers, model_b, &#x27;s--&#x27;, color=PALETTE[3], linewidth=2.0,</span>
+<span id="L45"><a href="#L45">  45</a>             markersize=7, label=f&#x27;Baseline (Brier={brier_b:.3f})&#x27;,</span>
+<span id="L46"><a href="#L46">  46</a>             markeredgecolor=&#x27;white&#x27;, markeredgewidth=1.0)</span>
+<span id="L47"><a href="#L47">  47</a> </span>
+<span id="L48"><a href="#L48">  48</a> # Brier score annotation box</span>
+<span id="L49"><a href="#L49">  49</a> ax_cal.annotate(f&#x27;Brier Score\nOurs: {brier_a:.3f}\nBaseline: {brier_b:.3f}&#x27;,</span>
+<span id="L50"><a href="#L50">  50</a>                 xy=(0.05, 0.88), xycoords=&#x27;axes fraction&#x27;,</span>
+<span id="L51"><a href="#L51">  51</a>                 fontsize=8.5, va=&#x27;top&#x27;,</span>
+<span id="L52"><a href="#L52">  52</a>                 bbox=dict(boxstyle=&#x27;round,pad=0.4&#x27;, facecolor=_lighten(PALETTE[0], 0.7),</span>
+<span id="L53"><a href="#L53">  53</a>                           edgecolor=PALETTE[0], alpha=0.9))</span>
+<span id="L54"><a href="#L54">  54</a> </span>
+<span id="L55"><a href="#L55">  55</a> ax_cal.set_ylabel(&#x27;Fraction of positives&#x27;, fontsize=11)</span>
+<span id="L56"><a href="#L56">  56</a> ax_cal.set_xlim(0, 1)</span>
+<span id="L57"><a href="#L57">  57</a> ax_cal.set_ylim(0, 1)</span>
+<span id="L58"><a href="#L58">  58</a> ax_cal.set_aspect(&#x27;equal&#x27;)</span>
+<span id="L59"><a href="#L59">  59</a> ax_cal.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8.5, loc=&#x27;lower right&#x27;)</span>
+<span id="L60"><a href="#L60">  60</a> ax_cal.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L61"><a href="#L61">  61</a> ax_cal.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L62"><a href="#L62">  62</a> ax_cal.set_xticklabels([])</span>
+<span id="L63"><a href="#L63">  63</a> </span>
+<span id="L64"><a href="#L64">  64</a> # Bottom: Histogram of predicted probabilities</span>
+<span id="L65"><a href="#L65">  65</a> ax_hist = fig.add_subplot(gs[1])</span>
+<span id="L66"><a href="#L66">  66</a> ax_hist.hist(pred_probs_a, bins=20, alpha=0.5, color=PALETTE[0], label=&#x27;Ours&#x27;,</span>
+<span id="L67"><a href="#L67">  67</a>              edgecolor=&#x27;white&#x27;, linewidth=0.5)</span>
+<span id="L68"><a href="#L68">  68</a> ax_hist.hist(pred_probs_b, bins=20, alpha=0.4, color=PALETTE[3], label=&#x27;Baseline&#x27;,</span>
+<span id="L69"><a href="#L69">  69</a>              edgecolor=&#x27;white&#x27;, linewidth=0.5)</span>
+<span id="L70"><a href="#L70">  70</a> ax_hist.set_xlabel(&#x27;Mean predicted probability&#x27;, fontsize=11)</span>
+<span id="L71"><a href="#L71">  71</a> ax_hist.set_ylabel(&#x27;Count&#x27;, fontsize=10)</span>
+<span id="L72"><a href="#L72">  72</a> ax_hist.set_xlim(0, 1)</span>
+<span id="L73"><a href="#L73">  73</a> ax_hist.legend(frameon=False, fontsize=8)</span>
+<span id="L74"><a href="#L74">  74</a> ax_hist.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L75"><a href="#L75">  75</a> ax_hist.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L76"><a href="#L76">  76</a> </span>
+<span id="L77"><a href="#L77">  77</a> fig.tight_layout()</span>
+<span id="L78"><a href="#L78">  78</a> save_fig(fig, &#x27;figures/fig_calibration.pdf&#x27;)</span>
+</pre>

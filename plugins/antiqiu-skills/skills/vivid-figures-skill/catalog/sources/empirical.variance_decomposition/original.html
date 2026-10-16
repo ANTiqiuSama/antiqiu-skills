@@ -1,0 +1,52 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> # === Example data ===</span>
+<span id="L7"><a href="#L7">   7</a> periods = np.arange(1, 21)</span>
+<span id="L8"><a href="#L8">   8</a> # Variance decomposition (rows = components, cols = periods)</span>
+<span id="L9"><a href="#L9">   9</a> own = np.array([100, 95, 90, 87, 85, 83, 82, 81, 80, 79, 78, 77, 76, 75, 74, 73, 72, 71, 70, 69])</span>
+<span id="L10"><a href="#L10">  10</a> var2 = np.array([0, 3, 5, 7, 8, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16])</span>
+<span id="L11"><a href="#L11">  11</a> var3 = 100 - own - var2</span>
+<span id="L12"><a href="#L12">  12</a> names = [&#x27;自身冲击&#x27;, &#x27;GPR指数&#x27;, &#x27;GSCPI&#x27;]</span>
+<span id="L13"><a href="#L13">  13</a> </span>
+<span id="L14"><a href="#L14">  14</a> fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 7), height_ratios=[1, 1], sharex=True)</span>
+<span id="L15"><a href="#L15">  15</a> </span>
+<span id="L16"><a href="#L16">  16</a> # Top panel: full stacked area</span>
+<span id="L17"><a href="#L17">  17</a> ax1.stackplot(periods, own, var2, var3,</span>
+<span id="L18"><a href="#L18">  18</a>               colors=[_lighten(PALETTE[0], 0.3), _lighten(PALETTE[1], 0.3), _lighten(PALETTE[2], 0.3)],</span>
+<span id="L19"><a href="#L19">  19</a>               alpha=0.8, labels=names)</span>
+<span id="L20"><a href="#L20">  20</a> ax1.plot(periods, own, color=PALETTE[0], linewidth=1.5)</span>
+<span id="L21"><a href="#L21">  21</a> ax1.plot(periods, own + var2, color=PALETTE[1], linewidth=1.5)</span>
+<span id="L22"><a href="#L22">  22</a> ax1.set_ylabel(&#x27;方差贡献比例 (%)&#x27;, fontsize=10)</span>
+<span id="L23"><a href="#L23">  23</a> ax1.set_ylim(0, 100)</span>
+<span id="L24"><a href="#L24">  24</a> ax1.legend(fontsize=8, frameon=False, labelspacing=0.35, handlelength=1.6, loc=&#x27;center right&#x27;)</span>
+<span id="L25"><a href="#L25">  25</a> ax1.text(-0.05, 1.06, &#x27;(a) 完整方差分解&#x27;, transform=ax1.transAxes, fontsize=10, fontweight=&#x27;bold&#x27;)</span>
+<span id="L26"><a href="#L26">  26</a> ax1.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L27"><a href="#L27">  27</a> ax1.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L28"><a href="#L28">  28</a> </span>
+<span id="L29"><a href="#L29">  29</a> # Bottom panel: zoom into minor components only</span>
+<span id="L30"><a href="#L30">  30</a> ax2.fill_between(periods, 0, var2, alpha=0.4, color=PALETTE[1], label=names[1])</span>
+<span id="L31"><a href="#L31">  31</a> ax2.fill_between(periods, var2, var2 + var3, alpha=0.4, color=PALETTE[2], label=names[2])</span>
+<span id="L32"><a href="#L32">  32</a> ax2.plot(periods, var2, color=PALETTE[1], linewidth=2, marker=&#x27;o&#x27;, markersize=4,</span>
+<span id="L33"><a href="#L33">  33</a>          markeredgecolor=&#x27;white&#x27;, markeredgewidth=0.8)</span>
+<span id="L34"><a href="#L34">  34</a> ax2.plot(periods, var2 + var3, color=PALETTE[2], linewidth=2, marker=&#x27;s&#x27;, markersize=4,</span>
+<span id="L35"><a href="#L35">  35</a>          markeredgecolor=&#x27;white&#x27;, markeredgewidth=0.8)</span>
+<span id="L36"><a href="#L36">  36</a> </span>
+<span id="L37"><a href="#L37">  37</a> # Value labels at end</span>
+<span id="L38"><a href="#L38">  38</a> ax2.text(periods[-1] + 0.3, var2[-1], f&#x27;{var2[-1]:.1f}%&#x27;, va=&#x27;center&#x27;, fontsize=8,</span>
+<span id="L39"><a href="#L39">  39</a>          color=PALETTE[1], fontweight=&#x27;bold&#x27;)</span>
+<span id="L40"><a href="#L40">  40</a> ax2.text(periods[-1] + 0.3, var2[-1] + var3[-1], f&#x27;{var3[-1]:.1f}%&#x27;, va=&#x27;center&#x27;, fontsize=8,</span>
+<span id="L41"><a href="#L41">  41</a>          color=PALETTE[2], fontweight=&#x27;bold&#x27;)</span>
+<span id="L42"><a href="#L42">  42</a> </span>
+<span id="L43"><a href="#L43">  43</a> ax2.set_ylabel(&#x27;方差贡献比例 (%)&#x27;, fontsize=10)</span>
+<span id="L44"><a href="#L44">  44</a> ax2.set_xlabel(&#x27;预测期&#x27;, fontsize=11)</span>
+<span id="L45"><a href="#L45">  45</a> ax2.legend(fontsize=8, frameon=False, labelspacing=0.35, handlelength=1.6, loc=&#x27;upper left&#x27;)</span>
+<span id="L46"><a href="#L46">  46</a> ax2.text(-0.05, 1.06, &#x27;(b) 非自身冲击成分（放大）&#x27;, transform=ax2.transAxes, fontsize=10, fontweight=&#x27;bold&#x27;)</span>
+<span id="L47"><a href="#L47">  47</a> ax2.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L48"><a href="#L48">  48</a> ax2.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L49"><a href="#L49">  49</a> </span>
+<span id="L50"><a href="#L50">  50</a> fig.tight_layout()</span>
+<span id="L51"><a href="#L51">  51</a> save_fig(fig, &#x27;figures/fig_variance_decomp.pdf&#x27;)</span>
+</pre>

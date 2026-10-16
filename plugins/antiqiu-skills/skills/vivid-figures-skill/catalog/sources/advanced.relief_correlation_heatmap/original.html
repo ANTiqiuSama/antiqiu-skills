@@ -1,0 +1,180 @@
+<!doctype html><meta charset="utf-8"><title>立体方块相关性热图</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}</style><h1>立体方块相关性热图</h1><p><a href="SOURCE.md">来源与编码</a> · <a href="original.py">完整源码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;Oblique relief correlation matrix reconstructed from a user reference image.</span>
+<span id="L2"><a href="#L2">   2</a> Square cell faces retain matrix layout; two shaded walls connect to the base.</span>
+<span id="L3"><a href="#L3">   3</a> Color encodes signed Pearson r. Extrusion length is 0.12 + 1.4*(r+1)/2;</span>
+<span id="L4"><a href="#L4">   4</a> this height rule is a declared template choice, not recovered from the image.</span>
+<span id="L5"><a href="#L5">   5</a> &quot;&quot;&quot;</span>
+<span id="L6"><a href="#L6">   6</a> from pathlib import Path</span>
+<span id="L7"><a href="#L7">   7</a> import argparse</span>
+<span id="L8"><a href="#L8">   8</a> import csv</span>
+<span id="L9"><a href="#L9">   9</a> import json</span>
+<span id="L10"><a href="#L10">  10</a> import sys</span>
+<span id="L11"><a href="#L11">  11</a> import numpy as np</span>
+<span id="L12"><a href="#L12">  12</a> import matplotlib</span>
+<span id="L13"><a href="#L13">  13</a> matplotlib.use(&#x27;Agg&#x27;)</span>
+<span id="L14"><a href="#L14">  14</a> import matplotlib.pyplot as plt</span>
+<span id="L15"><a href="#L15">  15</a> from matplotlib.patches import Polygon</span>
+<span id="L16"><a href="#L16">  16</a> from matplotlib.colors import Normalize, LinearSegmentedColormap</span>
+<span id="L17"><a href="#L17">  17</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L18"><a href="#L18">  18</a> </span>
+<span id="L19"><a href="#L19">  19</a> for base in (Path.cwd(), *Path.cwd().parents, *Path(__file__).resolve().parents):</span>
+<span id="L20"><a href="#L20">  20</a>     found=next((p for p in (base/&#x27;_utils&#x27;,base/&#x27;original/resources/assets/shared-scripts&#x27;)</span>
+<span id="L21"><a href="#L21">  21</a>                 if (p/&#x27;vivid_config.py&#x27;).is_file()),None)</span>
+<span id="L22"><a href="#L22">  22</a>     if found is not None:</span>
+<span id="L23"><a href="#L23">  23</a>         sys.path.insert(0,str(found));break</span>
+<span id="L24"><a href="#L24">  24</a> else:</span>
+<span id="L25"><a href="#L25">  25</a>     raise RuntimeError(&#x27;Run Vivid bootstrap in the workspace before using this recipe.&#x27;)</span>
+<span id="L26"><a href="#L26">  26</a> from plot_utils import setup_style</span>
+<span id="L27"><a href="#L27">  27</a> from palette_maps import palette_cmap</span>
+<span id="L28"><a href="#L28">  28</a> </span>
+<span id="L29"><a href="#L29">  29</a> </span>
+<span id="L30"><a href="#L30">  30</a> def validate_correlation(matrix, labels):</span>
+<span id="L31"><a href="#L31">  31</a>     matrix=np.asarray(matrix,dtype=float)</span>
+<span id="L32"><a href="#L32">  32</a>     if (matrix.ndim!=2 or matrix.shape[0]!=matrix.shape[1]</span>
+<span id="L33"><a href="#L33">  33</a>             or not 2&lt;=matrix.shape[0]&lt;=40 or len(labels)!=len(matrix)):</span>
+<span id="L34"><a href="#L34">  34</a>         raise ValueError(&#x27;Provide a square correlation matrix of 2–40 labeled variables.&#x27;)</span>
+<span id="L35"><a href="#L35">  35</a>     if len(set(labels))!=len(labels) or any(not str(label).strip() for label in labels):</span>
+<span id="L36"><a href="#L36">  36</a>         raise ValueError(&#x27;Variable labels must be nonempty and unique.&#x27;)</span>
+<span id="L37"><a href="#L37">  37</a>     if not np.isfinite(matrix).all() or np.any(np.abs(matrix)&gt;1+1e-8):</span>
+<span id="L38"><a href="#L38">  38</a>         raise ValueError(&#x27;Correlations must be finite and within [-1,1].&#x27;)</span>
+<span id="L39"><a href="#L39">  39</a>     if not np.allclose(matrix,matrix.T,atol=1e-8,rtol=0) or not np.allclose(np.diag(matrix),1,atol=1e-8,rtol=0):</span>
+<span id="L40"><a href="#L40">  40</a>         raise ValueError(&#x27;Correlation matrices must be symmetric with diagonal 1.&#x27;)</span>
+<span id="L41"><a href="#L41">  41</a>     if np.linalg.eigvalsh(matrix).min() &lt; -1e-6:</span>
+<span id="L42"><a href="#L42">  42</a>         raise ValueError(&#x27;The supplied matrix is not positive semidefinite; verify its source.&#x27;)</span>
+<span id="L43"><a href="#L43">  43</a>     return matrix</span>
+<span id="L44"><a href="#L44">  44</a> </span>
+<span id="L45"><a href="#L45">  45</a> </span>
+<span id="L46"><a href="#L46">  46</a> def from_samples(samples, labels):</span>
+<span id="L47"><a href="#L47">  47</a>     values=np.asarray(samples,dtype=float)</span>
+<span id="L48"><a href="#L48">  48</a>     if (values.ndim!=2 or values.shape[0]&lt;3 or values.shape[1]!=len(labels)</span>
+<span id="L49"><a href="#L49">  49</a>             or not np.isfinite(values).all() or np.any(values.std(axis=0)==0)):</span>
+<span id="L50"><a href="#L50">  50</a>         raise ValueError(&#x27;Supply at least three complete observations and nonconstant numeric columns.&#x27;)</span>
+<span id="L51"><a href="#L51">  51</a>     return validate_correlation(np.corrcoef(values,rowvar=False),labels)</span>
+<span id="L52"><a href="#L52">  52</a> </span>
+<span id="L53"><a href="#L53">  53</a> </span>
+<span id="L54"><a href="#L54">  54</a> def cell_geometry(row, col, size, r, relief=1.):</span>
+<span id="L55"><a href="#L55">  55</a>     &quot;&quot;&quot;Return the two side walls and the colored square face, in draw order.&quot;&quot;&quot;</span>
+<span id="L56"><a href="#L56">  56</a>     if not np.isfinite(relief) or relief&lt;0:</span>
+<span id="L57"><a href="#L57">  57</a>         raise ValueError(&#x27;Relief must be finite and nonnegative.&#x27;)</span>
+<span id="L58"><a href="#L58">  58</a>     x,y=float(col),float(size-1-row)</span>
+<span id="L59"><a href="#L59">  59</a>     base=np.array([[x,y],[x+1,y],[x+1,y+1],[x,y+1]])</span>
+<span id="L60"><a href="#L60">  60</a>     height=relief*(.12+1.4*(float(r)+1)/2)</span>
+<span id="L61"><a href="#L61">  61</a>     face=base+height*np.array([.58,.98])</span>
+<span id="L62"><a href="#L62">  62</a>     bottom=np.array([base[0],base[1],face[1],face[0]])</span>
+<span id="L63"><a href="#L63">  63</a>     left=np.array([base[0],base[3],face[3],face[0]])</span>
+<span id="L64"><a href="#L64">  64</a>     return bottom,left,face,height</span>
+<span id="L65"><a href="#L65">  65</a> </span>
+<span id="L66"><a href="#L66">  66</a> </span>
+<span id="L67"><a href="#L67">  67</a> def plot_chart(matrix, labels, *, cmap=None, relief=1., note=None):</span>
+<span id="L68"><a href="#L68">  68</a>     &quot;&quot;&quot;Deterministic 2.5D oblique projection; full N×N matrix, no smoothing.</span>
+<span id="L69"><a href="#L69">  69</a> </span>
+<span id="L70"><a href="#L70">  70</a>     Only square faces use the exact colorbar mapping. Side walls are shaded</span>
+<span id="L71"><a href="#L71">  71</a>     for geometry and must not be used to read correlation values.</span>
+<span id="L72"><a href="#L72">  72</a>     &quot;&quot;&quot;</span>
+<span id="L73"><a href="#L73">  73</a>     matrix=validate_correlation(matrix,labels)</span>
+<span id="L74"><a href="#L74">  74</a>     n=len(labels)</span>
+<span id="L75"><a href="#L75">  75</a>     setup_style()</span>
+<span id="L76"><a href="#L76">  76</a>     cmap=palette_cmap(&#x27;diverging&#x27;) if cmap is None else cmap</span>
+<span id="L77"><a href="#L77">  77</a>     norm=Normalize(-1,1)</span>
+<span id="L78"><a href="#L78">  78</a>     plt.rcParams.update({&#x27;font.family&#x27;:&#x27;sans-serif&#x27;,&#x27;font.sans-serif&#x27;:[&#x27;Arial&#x27;,&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L79"><a href="#L79">  79</a>                          &#x27;pdf.fonttype&#x27;:42,&#x27;axes.unicode_minus&#x27;:False})</span>
+<span id="L80"><a href="#L80">  80</a>     fig=plt.figure(figsize=(11.4,10.2),facecolor=&#x27;white&#x27;)</span>
+<span id="L81"><a href="#L81">  81</a>     ax=fig.add_axes([.18,.19,.71,.76])</span>
+<span id="L82"><a href="#L82">  82</a>     # Rows at the top/back first, columns right to left: nearer cells cover</span>
+<span id="L83"><a href="#L83">  83</a>     # hidden parts of farther walls while every complete matrix cell is kept.</span>
+<span id="L84"><a href="#L84">  84</a>     faces=[]</span>
+<span id="L85"><a href="#L85">  85</a>     for row in range(n):</span>
+<span id="L86"><a href="#L86">  86</a>         for col in range(n-1,-1,-1):</span>
+<span id="L87"><a href="#L87">  87</a>             r=float(matrix[row,col]);rgb=np.asarray(cmap(norm(r))[:3])</span>
+<span id="L88"><a href="#L88">  88</a>             bottom,left,face,height=cell_geometry(row,col,n,r,relief)</span>
+<span id="L89"><a href="#L89">  89</a>             for points,color in ((bottom,rgb*.77),(left,rgb*.87),(face,rgb)):</span>
+<span id="L90"><a href="#L90">  90</a>                 polygon=Polygon(points,closed=True,facecolor=color,</span>
+<span id="L91"><a href="#L91">  91</a>                                 edgecolor=&#x27;#273641&#x27;,linewidth=.62,joinstyle=&#x27;miter&#x27;)</span>
+<span id="L92"><a href="#L92">  92</a>                 ax.add_patch(polygon)</span>
+<span id="L93"><a href="#L93">  93</a>             faces.append(dict(row=row,col=col,r=r,height=height,face_color=rgb.tolist()))</span>
+<span id="L94"><a href="#L94">  94</a>     max_height=relief*1.52</span>
+<span id="L95"><a href="#L95">  95</a>     ax.set_xlim(-.02,n+.58*max_height+.06)</span>
+<span id="L96"><a href="#L96">  96</a>     ax.set_ylim(-.02,n+.98*max_height+.06)</span>
+<span id="L97"><a href="#L97">  97</a>     ax.set_aspect(&#x27;equal&#x27;)</span>
+<span id="L98"><a href="#L98">  98</a>     ax.set_xticks(np.arange(n)+.5,labels,rotation=90,fontsize=7.4 if n&gt;16 else 9)</span>
+<span id="L99"><a href="#L99">  99</a>     ax.set_yticks(n-np.arange(n)-.5,labels,fontsize=7.4 if n&gt;16 else 9)</span>
+<span id="L100"><a href="#L100"> 100</a>     ax.tick_params(axis=&#x27;both&#x27;,which=&#x27;both&#x27;,length=0,pad=3)</span>
+<span id="L101"><a href="#L101"> 101</a>     ax.grid(False)</span>
+<span id="L102"><a href="#L102"> 102</a>     for spine in ax.spines.values():spine.set_visible(False)</span>
+<span id="L103"><a href="#L103"> 103</a>     # Fixed limits and an unshaded colorbar preserve the sign and magnitude.</span>
+<span id="L104"><a href="#L104"> 104</a>     cax=fig.add_axes([.925,.455,.013,.13])</span>
+<span id="L105"><a href="#L105"> 105</a>     colorbar=fig.colorbar(ScalarMappable(norm=norm,cmap=cmap),cax=cax,</span>
+<span id="L106"><a href="#L106"> 106</a>                          ticks=[-1,-.5,0,.5,1])</span>
+<span id="L107"><a href="#L107"> 107</a>     cax.set_title(&#x27;Pearson r&#x27;,loc=&#x27;left&#x27;,fontsize=9,fontweight=&#x27;bold&#x27;,pad=5)</span>
+<span id="L108"><a href="#L108"> 108</a>     colorbar.ax.tick_params(labelsize=8,length=2,pad=2)</span>
+<span id="L109"><a href="#L109"> 109</a>     colorbar.outline.set_visible(False)</span>
+<span id="L110"><a href="#L110"> 110</a>     if note:fig.text(.18,.04,note,fontsize=8,color=&#x27;#444444&#x27;)</span>
+<span id="L111"><a href="#L111"> 111</a>     return fig,dict(matrix=matrix.tolist(),labels=list(labels),faces=faces,</span>
+<span id="L112"><a href="#L112"> 112</a>                     height_rule=&#x27;relief * (0.12 + 1.4 * (r + 1) / 2)&#x27;,projection=[.58,.98])</span>
+<span id="L113"><a href="#L113"> 113</a> </span>
+<span id="L114"><a href="#L114"> 114</a> </span>
+<span id="L115"><a href="#L115"> 115</a> def read_csv(path, matrix_input=False):</span>
+<span id="L116"><a href="#L116"> 116</a>     with Path(path).open(encoding=&#x27;utf-8-sig&#x27;,newline=&#x27;&#x27;) as stream:rows=list(csv.reader(stream))</span>
+<span id="L117"><a href="#L117"> 117</a>     if len(rows)&lt;2 or any(len(row)!=len(rows[0]) for row in rows):</span>
+<span id="L118"><a href="#L118"> 118</a>         raise ValueError(&#x27;CSV must be rectangular with a header row.&#x27;)</span>
+<span id="L119"><a href="#L119"> 119</a>     if matrix_input:</span>
+<span id="L120"><a href="#L120"> 120</a>         labels=rows[0][1:]</span>
+<span id="L121"><a href="#L121"> 121</a>         if [r[0] for r in rows[1:]]!=labels:</span>
+<span id="L122"><a href="#L122"> 122</a>             raise ValueError(&#x27;Matrix row and column labels and ordering must match.&#x27;)</span>
+<span id="L123"><a href="#L123"> 123</a>         matrix=np.array([[float(v) for v in row[1:]] for row in rows[1:]])</span>
+<span id="L124"><a href="#L124"> 124</a>         return validate_correlation(matrix,labels),labels,None</span>
+<span id="L125"><a href="#L125"> 125</a>     labels=rows[0];samples=np.array([[float(v) for v in row] for row in rows[1:]])</span>
+<span id="L126"><a href="#L126"> 126</a>     return from_samples(samples,labels),labels,samples</span>
+<span id="L127"><a href="#L127"> 127</a> </span>
+<span id="L128"><a href="#L128"> 128</a> </span>
+<span id="L129"><a href="#L129"> 129</a> def main():</span>
+<span id="L130"><a href="#L130"> 130</a>     parser=argparse.ArgumentParser(description=__doc__)</span>
+<span id="L131"><a href="#L131"> 131</a>     inputs=parser.add_mutually_exclusive_group()</span>
+<span id="L132"><a href="#L132"> 132</a>     inputs.add_argument(&#x27;--data&#x27;,type=Path,help=&#x27;Observations CSV; numeric columns with variable names&#x27;)</span>
+<span id="L133"><a href="#L133"> 133</a>     inputs.add_argument(&#x27;--matrix&#x27;,type=Path,help=&#x27;Square correlation CSV with row and column labels&#x27;)</span>
+<span id="L134"><a href="#L134"> 134</a>     parser.add_argument(&#x27;--reference-colors&#x27;,action=&#x27;store_true&#x27;,help=&#x27;Explicit blue reference-style ramp&#x27;)</span>
+<span id="L135"><a href="#L135"> 135</a>     parser.add_argument(&#x27;--relief&#x27;,type=float,default=1.)</span>
+<span id="L136"><a href="#L136"> 136</a>     parser.add_argument(&#x27;--output&#x27;,type=Path,default=Path(&#x27;figures/fig_relief_correlation_heatmap&#x27;))</span>
+<span id="L137"><a href="#L137"> 137</a>     args=parser.parse_args()</span>
+<span id="L138"><a href="#L138"> 138</a>     if args.data or args.matrix:</span>
+<span id="L139"><a href="#L139"> 139</a>         matrix,labels,samples=read_csv(args.matrix or args.data,matrix_input=args.matrix is not None)</span>
+<span id="L140"><a href="#L140"> 140</a>         note=None</span>
+<span id="L141"><a href="#L141"> 141</a>     else:</span>
+<span id="L142"><a href="#L142"> 142</a>         # Domain labels follow the reference only to demonstrate its dense layout.</span>
+<span id="L143"><a href="#L143"> 143</a>         # All observations are synthetic latent-factor data, not recovered study data.</span>
+<span id="L144"><a href="#L144"> 144</a>         labels=[&#x27;ACs&#x27;,&#x27;T-SOD&#x27;,&#x27;MPNs&#x27;,&#x27;DTPNs&#x27;,&#x27;CAT&#x27;,&#x27;GSH-PX&#x27;,&#x27;Unique AAs&#x27;,&#x27;Non-Essential AAs&#x27;,</span>
+<span id="L145"><a href="#L145"> 145</a>                 &#x27;Essential AAs&#x27;,&#x27;Conditionally Essential AAs&#x27;,&#x27;SpNDs&#x27;,&#x27;Ketone compounds&#x27;,</span>
+<span id="L146"><a href="#L146"> 146</a>                 &#x27;Hydrocarbon compounds&#x27;,&#x27;Alcohol compounds&#x27;,&#x27;MDA&#x27;,&#x27;T-AOC&#x27;,&#x27;Hardness&#x27;,</span>
+<span id="L147"><a href="#L147"> 147</a>                 &#x27;Springiness&#x27;,&#x27;POD&#x27;,&#x27;Gumminess&#x27;,&#x27;Chewiness&#x27;,&#x27;Cohesiveness&#x27;,&#x27;Elasticity&#x27;]</span>
+<span id="L148"><a href="#L148"> 148</a>         rng=np.random.default_rng(20260916)</span>
+<span id="L149"><a href="#L149"> 149</a>         latent=rng.normal(size=(360,4))</span>
+<span id="L150"><a href="#L150"> 150</a>         # Heterogeneous loadings produce varied relief instead of uniform blocks.</span>
+<span id="L151"><a href="#L151"> 151</a>         loadings=rng.normal(0,.3,size=(23,4))</span>
+<span id="L152"><a href="#L152"> 152</a>         loadings[:,0]=rng.uniform(.3,1.2,size=23)</span>
+<span id="L153"><a href="#L153"> 153</a>         loadings[:,1]+=.65*np.sin(np.arange(23)*.85)</span>
+<span id="L154"><a href="#L154"> 154</a>         loadings[:,2]+=.55*np.cos(np.arange(23)*.6)</span>
+<span id="L155"><a href="#L155"> 155</a>         loadings[10:15,0]*=-1</span>
+<span id="L156"><a href="#L156"> 156</a>         noise=rng.uniform(.18,.58,size=23)</span>
+<span id="L157"><a href="#L157"> 157</a>         samples=latent@loadings.T+rng.normal(size=(360,23))*noise</span>
+<span id="L158"><a href="#L158"> 158</a>         matrix=from_samples(samples,labels)</span>
+<span id="L159"><a href="#L159"> 159</a>         note=&#x27;Synthetic data. Face color = Pearson r; relief increases linearly with r.&#x27;</span>
+<span id="L160"><a href="#L160"> 160</a>     cmap=None</span>
+<span id="L161"><a href="#L161"> 161</a>     if args.reference_colors:</span>
+<span id="L162"><a href="#L162"> 162</a>         cmap=LinearSegmentedColormap.from_list(&#x27;reference_blue&#x27;,</span>
+<span id="L163"><a href="#L163"> 163</a>                      [&#x27;#F5FCFC&#x27;,&#x27;#CFEAF0&#x27;,&#x27;#AAC5E4&#x27;,&#x27;#6B9FCB&#x27;,&#x27;#399DCB&#x27;])</span>
+<span id="L164"><a href="#L164"> 164</a>     fig,stats=plot_chart(matrix,labels,cmap=cmap,relief=args.relief,note=note)</span>
+<span id="L165"><a href="#L165"> 165</a>     args.output.parent.mkdir(parents=True,exist_ok=True)</span>
+<span id="L166"><a href="#L166"> 166</a>     for suffix in (&#x27;png&#x27;,&#x27;pdf&#x27;):</span>
+<span id="L167"><a href="#L167"> 167</a>         fig.savefig(args.output.with_suffix(&#x27;.&#x27;+suffix),dpi=300,facecolor=&#x27;white&#x27;,</span>
+<span id="L168"><a href="#L168"> 168</a>                     bbox_inches=&#x27;tight&#x27;,pad_inches=.12)</span>
+<span id="L169"><a href="#L169"> 169</a>     args.output.with_suffix(&#x27;.json&#x27;).write_text(json.dumps(stats,ensure_ascii=False,indent=2),encoding=&#x27;utf8&#x27;)</span>
+<span id="L170"><a href="#L170"> 170</a>     with args.output.with_suffix(&#x27;.csv&#x27;).open(&#x27;w&#x27;,encoding=&#x27;utf8&#x27;,newline=&#x27;&#x27;) as stream:</span>
+<span id="L171"><a href="#L171"> 171</a>         writer=csv.writer(stream);writer.writerow([&#x27;variable&#x27;,*labels])</span>
+<span id="L172"><a href="#L172"> 172</a>         writer.writerows([label,*row] for label,row in zip(labels,matrix))</span>
+<span id="L173"><a href="#L173"> 173</a>     if args.data is None and args.matrix is None:</span>
+<span id="L174"><a href="#L174"> 174</a>         with args.output.with_name(args.output.name+&#x27;-samples.csv&#x27;).open(&#x27;w&#x27;,encoding=&#x27;utf8&#x27;,newline=&#x27;&#x27;) as stream:</span>
+<span id="L175"><a href="#L175"> 175</a>             writer=csv.writer(stream);writer.writerow(labels);writer.writerows(samples)</span>
+<span id="L176"><a href="#L176"> 176</a>     plt.close(fig)</span>
+<span id="L177"><a href="#L177"> 177</a>     print(&#x27;Saved PNG, vector PDF, matrix CSV and geometry:&#x27;,args.output)</span>
+<span id="L178"><a href="#L178"> 178</a> </span>
+<span id="L179"><a href="#L179"> 179</a> </span>
+<span id="L180"><a href="#L180"> 180</a> if __name__==&#x27;__main__&#x27;:main()</span></pre>

@@ -1,0 +1,24 @@
+{
+  "source_type": "missing_data",
+  "status": "代码截图恢复，原数据缺失",
+  "attribution": "小明的代码美学",
+  "figure_page": 116,
+  "code_pages": [
+    118,
+    119,
+    120
+  ],
+  "all_pages": [
+    116,
+    117,
+    118,
+    119,
+    120
+  ],
+  "changes": [
+    "原data.csv缺失，补充angle及三个value列的周期合成示例。",
+    "增加角度顺序及端点检查，周期样条在0/360处同时闭合值和斜率。",
+    "原中心Circle仅创建且使用私有变换；改为实际绘制的白色中心覆盖，保留空心基座。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

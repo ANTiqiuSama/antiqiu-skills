@@ -1,0 +1,31 @@
+<!doctype html><meta charset="utf-8"><title>多层旭日图 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>多层旭日图</h1><p>代码截图恢复与适配 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;多层旭日图</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [12, 13].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 小明的代码美学 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> import plotly.graph_objects as go</span>
+<span id="L18"><a href="#L18">  18</a> read_custom_data = False</span>
+<span id="L19"><a href="#L19">  19</a> if read_custom_data:</span>
+<span id="L20"><a href="#L20">  20</a>     data_df = pd.read_csv(&#x27;data.csv&#x27;)</span>
+<span id="L21"><a href="#L21">  21</a> else:</span>
+<span id="L22"><a href="#L22">  22</a>     data_df = pd.DataFrame({</span>
+<span id="L23"><a href="#L23">  23</a>         &#x27;labels&#x27;:[&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;,&#x27;D&#x27;,&#x27;E&#x27;,&#x27;F&#x27;,&#x27;B1&#x27;,&#x27;B2&#x27;,&#x27;B1-1&#x27;,&#x27;B1-2&#x27;,&#x27;B1-3&#x27;,&#x27;C1&#x27;,&#x27;C2&#x27;,&#x27;D1&#x27;,&#x27;D2&#x27;,&#x27;E1&#x27;,&#x27;E2&#x27;,&#x27;E3&#x27;,&#x27;E4&#x27;,&#x27;E1-1&#x27;,&#x27;E1-2&#x27;,&#x27;E1-3&#x27;,&#x27;E3-1&#x27;,&#x27;E3-2&#x27;,&#x27;F1&#x27;,&#x27;F2&#x27;,&#x27;F3&#x27;,&#x27;F1-1&#x27;,&#x27;F1-2&#x27;,&#x27;F1-3&#x27;],</span>
+<span id="L24"><a href="#L24">  24</a>         &#x27;parents&#x27;:[&#x27;&#x27;,&#x27;A&#x27;,&#x27;A&#x27;,&#x27;A&#x27;,&#x27;A&#x27;,&#x27;A&#x27;,&#x27;B&#x27;,&#x27;B&#x27;,&#x27;B1&#x27;,&#x27;B1&#x27;,&#x27;B1&#x27;,&#x27;C&#x27;,&#x27;C&#x27;,&#x27;D&#x27;,&#x27;D&#x27;,&#x27;E&#x27;,&#x27;E&#x27;,&#x27;E&#x27;,&#x27;E&#x27;,&#x27;E1&#x27;,&#x27;E1&#x27;,&#x27;E1&#x27;,&#x27;E3&#x27;,&#x27;E3&#x27;,&#x27;F&#x27;,&#x27;F&#x27;,&#x27;F&#x27;,&#x27;F1&#x27;,&#x27;F1&#x27;,&#x27;F1&#x27;],</span>
+<span id="L25"><a href="#L25">  25</a>         &#x27;values&#x27;:[0,0,0,0,0,0,0,8,4,2,2,4,4,6,6,0,7,0,3,7,2,2,2,2,0,9,8,6,5,6]})</span>
+<span id="L26"><a href="#L26">  26</a> fig = go.Figure(go.Sunburst(labels=data_df.labels,parents=data_df.parents,values=data_df[&#x27;values&#x27;],</span>
+<span id="L27"><a href="#L27">  27</a>     textinfo=&#x27;label+percent root&#x27;,textfont=dict(color=&#x27;white&#x27;,size=14),</span>
+<span id="L28"><a href="#L28">  28</a>     marker=dict(colors=[&#x27;#ffffff&#x27;,&#x27;#f9b99e&#x27;,&#x27;#f87f8c&#x27;,&#x27;#e37e8e&#x27;,&#x27;#a9758c&#x27;,&#x27;#796b88&#x27;],line=dict(color=&#x27;white&#x27;,width=3))))</span>
+<span id="L29"><a href="#L29">  29</a> fig.update_layout(margin=dict(t=0,l=0,r=0,b=0),width=800,height=500)</span>
+<span id="L30"><a href="#L30">  30</a> fig.show()</span>
+<span id="L31"><a href="#L31">  31</a> </span></pre>

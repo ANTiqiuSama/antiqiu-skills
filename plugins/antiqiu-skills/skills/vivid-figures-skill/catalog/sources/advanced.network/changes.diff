@@ -1,0 +1,14 @@
+--- original.py
++++ render.py
+@@ -64,8 +64,9 @@
+             linewidth=0.5 + 1.5 * norm_w, alpha=0.3 + 0.4 * norm_w, zorder=1)
+ 
+ # Draw nodes
+-nx.draw_networkx_nodes(G, pos, ax=ax, node_color=node_colors, node_size=node_sizes,
+-                        edgecolors='white', linewidths=1.2, alpha=0.9, zorder=3)
++_node_artist = nx.draw_networkx_nodes(G, pos, ax=ax, node_color=node_colors, node_size=node_sizes,
++                        edgecolors='white', linewidths=1.2, alpha=0.9)
++_node_artist.set_zorder(3)
+ 
+ # Labels for high-degree nodes only
+ high_deg_nodes = {n: str(n) for n in G.nodes() if degrees[n] >= 4}

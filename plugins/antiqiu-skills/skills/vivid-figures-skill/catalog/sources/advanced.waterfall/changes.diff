@@ -1,0 +1,11 @@
+--- original.py
++++ render.py
+@@ -75,7 +75,7 @@
+ legend = ax.legend(handles=legend_patches, loc='lower right',
+                    frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8.5,
+                    facecolor='white', title='Contribution', title_fontsize=9,
+-                   handlelength=1.5, handleheight=1.0)
++                   handleheight=1.0)
+ legend.set_zorder(15)
+ 
+ ax.set_xticks(x_positions)

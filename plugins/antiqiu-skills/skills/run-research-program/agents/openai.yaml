@@ -1,0 +1,4 @@
+interface:
+  display_name: "Run Research Program"
+  short_description: "Advance research with recoverable state"
+  default_prompt: "Use $run-research-program to continue authorized research from the current objective, retain real results, and apply manuscript review when needed."

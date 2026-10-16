@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "Apple PingFang SC Fallback";
+  src: url("./woff2/PingFangSC-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Apple PingFang SC Fallback";
+  src: url("./woff2/PingFangSC-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Apple PingFang SC Fallback";
+  src: url("./woff2/PingFangSC-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Apple PingFang SC Fallback";
+  src: url("./woff2/PingFangSC-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Apple PingFang SC Fallback";
+  src: url("./woff2/PingFangSC-Semibold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --apple-font-cn-embedded:
+    "PingFang SC",
+    "SF Pro SC",
+    "Apple PingFang SC Fallback",
+    "Noto Sans SC",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+}
+

@@ -1,0 +1,63 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> years = np.arange(2016, 2025)</span>
+<span id="L7"><a href="#L7">   7</a> bar_data = np.array([120, 145, 168, 195, 230, 260, 310, 355, 400])</span>
+<span id="L8"><a href="#L8">   8</a> line_data = np.array([15.2, 18.5, 22.1, 25.8, 30.2, 35.5, 38.1, 42.3, 45.0])</span>
+<span id="L9"><a href="#L9">   9</a> </span>
+<span id="L10"><a href="#L10">  10</a> fig, ax1 = plt.subplots(figsize=(8, 5.5))</span>
+<span id="L11"><a href="#L11">  11</a> ax2 = ax1.twinx()</span>
+<span id="L12"><a href="#L12">  12</a> </span>
+<span id="L13"><a href="#L13">  13</a> # ★ 淡色填充 + 原色边框柱</span>
+<span id="L14"><a href="#L14">  14</a> bars = ax1.bar(years, bar_data, width=0.6,</span>
+<span id="L15"><a href="#L15">  15</a>                color=_lighten(PALETTE[0], 0.4), edgecolor=PALETTE[0],</span>
+<span id="L16"><a href="#L16">  16</a>                linewidth=1.2, label=&#x27;数量&#x27;, zorder=2)</span>
+<span id="L17"><a href="#L17">  17</a> </span>
+<span id="L18"><a href="#L18">  18</a> # 柱子阴影</span>
+<span id="L19"><a href="#L19">  19</a> ax1.bar(years + 0.03, bar_data, width=0.6, color=&#x27;#cccccc&#x27;, alpha=0.08, zorder=1)</span>
+<span id="L20"><a href="#L20">  20</a> </span>
+<span id="L21"><a href="#L21">  21</a> # 渐变填充折线</span>
+<span id="L22"><a href="#L22">  22</a> line = ax2.plot(years, line_data, &#x27;o-&#x27;, color=PALETTE[1], linewidth=2.2, markersize=7,</span>
+<span id="L23"><a href="#L23">  23</a>                 markeredgecolor=&#x27;white&#x27;, markeredgewidth=1.2, label=&#x27;增长率&#x27;, zorder=5)</span>
+<span id="L24"><a href="#L24">  24</a> for layer, alpha in enumerate([0.15, 0.08, 0.03]):</span>
+<span id="L25"><a href="#L25">  25</a>     ax2.fill_between(years, min(line_data) - 2 + layer * 0.5,</span>
+<span id="L26"><a href="#L26">  26</a>                      np.array(line_data) - layer * 0.5,</span>
+<span id="L27"><a href="#L27">  27</a>                      alpha=alpha, color=PALETTE[1], linewidth=0)</span>
+<span id="L28"><a href="#L28">  28</a> </span>
+<span id="L29"><a href="#L29">  29</a> # 峰值高亮</span>
+<span id="L30"><a href="#L30">  30</a> peak_idx = np.argmax(line_data)</span>
+<span id="L31"><a href="#L31">  31</a> ax2.scatter(years[peak_idx], line_data[peak_idx], s=150, color=PALETTE[1],</span>
+<span id="L32"><a href="#L32">  32</a>             edgecolor=&#x27;white&#x27;, linewidth=2.5, zorder=6)</span>
+<span id="L33"><a href="#L33">  33</a> ax2.annotate(f&#x27;峰值 {line_data[peak_idx]:.1f}%&#x27;,</span>
+<span id="L34"><a href="#L34">  34</a>              xy=(years[peak_idx], line_data[peak_idx]),</span>
+<span id="L35"><a href="#L35">  35</a>              xytext=(years[peak_idx] - 2, line_data[peak_idx] + 3),</span>
+<span id="L36"><a href="#L36">  36</a>              fontsize=9, fontweight=&#x27;bold&#x27;, color=PALETTE[1],</span>
+<span id="L37"><a href="#L37">  37</a>              arrowprops=dict(arrowstyle=&#x27;-&gt;&#x27;, color=PALETTE[1], lw=1.2),</span>
+<span id="L38"><a href="#L38">  38</a>              bbox=dict(boxstyle=&#x27;round,pad=0.3&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L39"><a href="#L39">  39</a>                        edgecolor=PALETTE[1], alpha=0.9))</span>
+<span id="L40"><a href="#L40">  40</a> </span>
+<span id="L41"><a href="#L41">  41</a> # 相关性标注框</span>
+<span id="L42"><a href="#L42">  42</a> corr = np.corrcoef(bar_data, line_data)[0, 1]</span>
+<span id="L43"><a href="#L43">  43</a> ax1.text(0.02, 0.95, f&#x27;r = {corr:.3f}&#x27;,</span>
+<span id="L44"><a href="#L44">  44</a>          transform=ax1.transAxes, fontsize=9, va=&#x27;top&#x27;,</span>
+<span id="L45"><a href="#L45">  45</a>          bbox=dict(boxstyle=&#x27;round,pad=0.3&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L46"><a href="#L46">  46</a>                    edgecolor=COLORS[&#x27;grid&#x27;], alpha=0.9, linewidth=0.8))</span>
+<span id="L47"><a href="#L47">  47</a> </span>
+<span id="L48"><a href="#L48">  48</a> ax1.set_xlabel(&#x27;年份&#x27;, fontsize=11)</span>
+<span id="L49"><a href="#L49">  49</a> ax1.set_ylabel(&#x27;数量 (个)&#x27;, fontsize=11, color=PALETTE[0])</span>
+<span id="L50"><a href="#L50">  50</a> ax2.set_ylabel(&#x27;增长率 (%)&#x27;, fontsize=11, color=PALETTE[1])</span>
+<span id="L51"><a href="#L51">  51</a> ax1.tick_params(axis=&#x27;y&#x27;, labelcolor=PALETTE[0])</span>
+<span id="L52"><a href="#L52">  52</a> ax2.tick_params(axis=&#x27;y&#x27;, labelcolor=PALETTE[1])</span>
+<span id="L53"><a href="#L53">  53</a> </span>
+<span id="L54"><a href="#L54">  54</a> # 合并图例</span>
+<span id="L55"><a href="#L55">  55</a> lines1, labels1 = ax1.get_legend_handles_labels()</span>
+<span id="L56"><a href="#L56">  56</a> lines2, labels2 = ax2.get_legend_handles_labels()</span>
+<span id="L57"><a href="#L57">  57</a> ax1.legend(lines1 + lines2, labels1 + labels2, frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=9, loc=&#x27;upper left&#x27;)</span>
+<span id="L58"><a href="#L58">  58</a> </span>
+<span id="L59"><a href="#L59">  59</a> ax1.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L60"><a href="#L60">  60</a> ax1.grid(axis=&#x27;y&#x27;, alpha=0.12, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L61"><a href="#L61">  61</a> fig.tight_layout()</span>
+<span id="L62"><a href="#L62">  62</a> save_fig(fig, &#x27;figures/fig_dual_axis.pdf&#x27;)</span>
+</pre>

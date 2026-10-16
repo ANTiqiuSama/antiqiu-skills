@@ -1,0 +1,35 @@
+<!doctype html><meta charset="utf-8"><title>极坐标径向柱状图 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>极坐标径向柱状图</h1><p>代码截图恢复与适配 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;极坐标径向柱状图</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [72, 73, 74].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 小明的代码美学 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> from matplotlib.patches import Patch</span>
+<span id="L18"><a href="#L18">  18</a> values=[20,27,16,17,16,22,24,26,30,22,18,24,17,14,23,17,20,18,14,18,21,13,14,20]</span>
+<span id="L19"><a href="#L19">  19</a> count=len(values);angles=np.linspace(0,2*np.pi,count,endpoint=False)</span>
+<span id="L20"><a href="#L20">  20</a> colors=[&#x27;#9dc1c5&#x27; if v&lt;15 else &#x27;#d7a6b3&#x27; if v&gt;25 else &#x27;#8e93af&#x27; for v in values]</span>
+<span id="L21"><a href="#L21">  21</a> fig,ax=plt.subplots(figsize=(8,5),subplot_kw={&#x27;projection&#x27;:&#x27;polar&#x27;},dpi=150)</span>
+<span id="L22"><a href="#L22">  22</a> bars=ax.bar(angles,values,width=2*np.pi/count,bottom=10,color=colors,edgecolor=&#x27;#f1f5f9&#x27;,linewidth=1,zorder=2)</span>
+<span id="L23"><a href="#L23">  23</a> for bar,angle,value in zip(bars,angles,values):</span>
+<span id="L24"><a href="#L24">  24</a>     rotation=np.degrees(angle);flip=90&lt;rotation&lt;270</span>
+<span id="L25"><a href="#L25">  25</a>     ax.text(angle,value+7,str(value),ha=&#x27;right&#x27; if flip else &#x27;left&#x27;,va=&#x27;center&#x27;,fontsize=8,fontweight=&#x27;bold&#x27;,rotation=rotation-180 if flip else rotation,rotation_mode=&#x27;anchor&#x27;,color=&#x27;white&#x27;,zorder=4)</span>
+<span id="L26"><a href="#L26">  26</a> handles=[Patch(color=c,label=l) for c,l in zip([&#x27;#9dc1c5&#x27;,&#x27;#8e93af&#x27;,&#x27;#d7a6b3&#x27;],[&#x27;低值&#x27;,&#x27;中值&#x27;,&#x27;高值&#x27;])]</span>
+<span id="L27"><a href="#L27">  27</a> fig.legend(handles=handles,loc=&#x27;center right&#x27;,frameon=False)</span>
+<span id="L28"><a href="#L28">  28</a> ax.set_ylim(0,44);ax.set_yticks([]);ax.set_xticks(angles,np.arange(count))</span>
+<span id="L29"><a href="#L29">  29</a> ax.tick_params(axis=&#x27;x&#x27;,labelsize=8,pad=-5)</span>
+<span id="L30"><a href="#L30">  30</a> ax.grid(axis=&#x27;x&#x27;,linestyle=&#x27;--&#x27;,linewidth=.5,color=&#x27;#8e93af&#x27;,alpha=.5,zorder=1)</span>
+<span id="L31"><a href="#L31">  31</a> ax.spines[&#x27;polar&#x27;].set_visible(False)</span>
+<span id="L32"><a href="#L32">  32</a> fig.text(.67,.72,&#x27;径向柱状图&#x27;,fontsize=22,fontweight=&#x27;bold&#x27;,color=&#x27;#515a85&#x27;)</span>
+<span id="L33"><a href="#L33">  33</a> fig.subplots_adjust(left=.03,right=.67,top=.95,bottom=.05)</span>
+<span id="L34"><a href="#L34">  34</a> plt.show()</span>
+<span id="L35"><a href="#L35">  35</a> </span></pre>

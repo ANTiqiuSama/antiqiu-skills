@@ -1,0 +1,77 @@
+{
+  "data_sha256": "9f0fb518ad289b08f7a03889beef7d8dff837418509197c2c14407f72481f465",
+  "composition_sums": "100%",
+  "all_scatter_and_violin_samples_within_axes": true,
+  "results": [
+    {
+      "palette": "coral-teal",
+      "base_colors_match": true,
+      "shared_data_match": true,
+      "png": "2400x2880 at 300dpi",
+      "svg_parse": "pass",
+      "pdf_pages": 1,
+      "visual_review": "viewed; current recipe translucent ridge fill and outline retained",
+      "repair_rounds": 1
+    },
+    {
+      "palette": "olive-apricot",
+      "base_colors_match": true,
+      "shared_data_match": true,
+      "png": "2400x2880 at 300dpi",
+      "svg_parse": "pass",
+      "pdf_pages": 1,
+      "visual_review": "viewed; current recipe translucent ridge fill and outline retained",
+      "repair_rounds": 1
+    },
+    {
+      "palette": "blue-pink",
+      "base_colors_match": true,
+      "shared_data_match": true,
+      "png": "2400x2880 at 300dpi",
+      "svg_parse": "pass",
+      "pdf_pages": 1,
+      "visual_review": "viewed; current recipe translucent ridge fill and outline retained",
+      "repair_rounds": 1
+    },
+    {
+      "palette": "soft-forest",
+      "base_colors_match": true,
+      "shared_data_match": true,
+      "png": "2400x2880 at 300dpi",
+      "svg_parse": "pass",
+      "pdf_pages": 1,
+      "visual_review": "viewed; current recipe translucent ridge fill and outline retained",
+      "repair_rounds": 0
+    },
+    {
+      "palette": "ocean-breeze",
+      "base_colors_match": true,
+      "shared_data_match": true,
+      "png": "2400x2880 at 300dpi",
+      "svg_parse": "pass",
+      "pdf_pages": 1,
+      "visual_review": "viewed; current recipe translucent ridge fill and outline retained",
+      "repair_rounds": 0
+    },
+    {
+      "palette": "blue-sky",
+      "base_colors_match": true,
+      "shared_data_match": true,
+      "png": "2400x2880 at 300dpi",
+      "svg_parse": "pass",
+      "pdf_pages": 1,
+      "visual_review": "viewed; current recipe translucent ridge fill and outline retained",
+      "repair_rounds": 1
+    },
+    {
+      "palette": "pastel-girl",
+      "base_colors_match": true,
+      "shared_data_match": true,
+      "png": "2400x2880 at 300dpi",
+      "svg_parse": "pass",
+      "pdf_pages": 1,
+      "visual_review": "viewed; current recipe translucent ridge fill and outline retained",
+      "repair_rounds": 1
+    }
+  ]
+}

@@ -1,0 +1,395 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> #!/usr/bin/env python</span>
+<span id="L2"><a href="#L2">   2</a> &quot;&quot;&quot;Create residual violin and Pearson pair-grid figures for SEM survey data.&quot;&quot;&quot;</span>
+<span id="L3"><a href="#L3">   3</a> </span>
+<span id="L4"><a href="#L4">   4</a> from __future__ import annotations</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> import argparse</span>
+<span id="L7"><a href="#L7">   7</a> import json</span>
+<span id="L8"><a href="#L8">   8</a> from itertools import combinations</span>
+<span id="L9"><a href="#L9">   9</a> from pathlib import Path</span>
+<span id="L10"><a href="#L10">  10</a> </span>
+<span id="L11"><a href="#L11">  11</a> import numpy as np</span>
+<span id="L12"><a href="#L12">  12</a> import pandas as pd</span>
+<span id="L13"><a href="#L13">  13</a> from scipy import stats</span>
+<span id="L14"><a href="#L14">  14</a> </span>
+<span id="L15"><a href="#L15">  15</a> </span>
+<span id="L16"><a href="#L16">  16</a> DEFAULT_ORDER = [&quot;USE&quot;, &quot;ATT&quot;, &quot;PBC&quot;, &quot;BI&quot;, &quot;EVA&quot;, &quot;AWA&quot;, &quot;SN&quot;, &quot;ETH&quot;]</span>
+<span id="L17"><a href="#L17">  17</a> PREFIX_GROUPS = {</span>
+<span id="L18"><a href="#L18">  18</a>     &quot;AWA&quot;: (&quot;10\u3001&quot;, &quot;@10\u3001&quot;),</span>
+<span id="L19"><a href="#L19">  19</a>     &quot;USE&quot;: (&quot;11\u3001&quot;, &quot;@11\u3001&quot;),</span>
+<span id="L20"><a href="#L20">  20</a>     &quot;EVA&quot;: (&quot;12\u3001&quot;, &quot;@12\u3001&quot;),</span>
+<span id="L21"><a href="#L21">  21</a>     &quot;ETH&quot;: (&quot;13\u3001&quot;, &quot;@13\u3001&quot;),</span>
+<span id="L22"><a href="#L22">  22</a>     &quot;SN&quot;: (&quot;14\u3001&quot;, &quot;@14\u3001&quot;),</span>
+<span id="L23"><a href="#L23">  23</a>     &quot;PBC&quot;: (&quot;15\u3001&quot;, &quot;@15\u3001&quot;),</span>
+<span id="L24"><a href="#L24">  24</a>     &quot;ATT&quot;: (&quot;16\u3001&quot;, &quot;@16\u3001&quot;),</span>
+<span id="L25"><a href="#L25">  25</a>     &quot;BI&quot;: (&quot;17\u3001&quot;, &quot;@17\u3001&quot;),</span>
+<span id="L26"><a href="#L26">  26</a> }</span>
+<span id="L27"><a href="#L27">  27</a> </span>
+<span id="L28"><a href="#L28">  28</a> </span>
+<span id="L29"><a href="#L29">  29</a> def load_data(path: Path) -&gt; pd.DataFrame:</span>
+<span id="L30"><a href="#L30">  30</a>     suffix = path.suffix.lower()</span>
+<span id="L31"><a href="#L31">  31</a>     if suffix in {&quot;.xlsx&quot;, &quot;.xls&quot;}:</span>
+<span id="L32"><a href="#L32">  32</a>         return pd.read_excel(path)</span>
+<span id="L33"><a href="#L33">  33</a>     if suffix == &quot;.sav&quot;:</span>
+<span id="L34"><a href="#L34">  34</a>         try:</span>
+<span id="L35"><a href="#L35">  35</a>             import pyreadstat</span>
+<span id="L36"><a href="#L36">  36</a>         except ImportError as exc:</span>
+<span id="L37"><a href="#L37">  37</a>             raise SystemExit(&quot;Reading .sav requires pyreadstat. Install it or use an XLSX source.&quot;) from exc</span>
+<span id="L38"><a href="#L38">  38</a>         df, _meta = pyreadstat.read_sav(str(path), apply_value_formats=False)</span>
+<span id="L39"><a href="#L39">  39</a>         return df</span>
+<span id="L40"><a href="#L40">  40</a>     if suffix == &quot;.csv&quot;:</span>
+<span id="L41"><a href="#L41">  41</a>         return pd.read_csv(path)</span>
+<span id="L42"><a href="#L42">  42</a>     raise SystemExit(f&quot;Unsupported data format: {path.suffix}&quot;)</span>
+<span id="L43"><a href="#L43">  43</a> </span>
+<span id="L44"><a href="#L44">  44</a> </span>
+<span id="L45"><a href="#L45">  45</a> def parse_json_arg(value: str | None, default):</span>
+<span id="L46"><a href="#L46">  46</a>     if not value:</span>
+<span id="L47"><a href="#L47">  47</a>         return default</span>
+<span id="L48"><a href="#L48">  48</a>     candidate = Path(value)</span>
+<span id="L49"><a href="#L49">  49</a>     try:</span>
+<span id="L50"><a href="#L50">  50</a>         if candidate.exists():</span>
+<span id="L51"><a href="#L51">  51</a>             return json.loads(candidate.read_text(encoding=&quot;utf-8&quot;))</span>
+<span id="L52"><a href="#L52">  52</a>     except OSError:</span>
+<span id="L53"><a href="#L53">  53</a>         pass</span>
+<span id="L54"><a href="#L54">  54</a>     return json.loads(value)</span>
+<span id="L55"><a href="#L55">  55</a> </span>
+<span id="L56"><a href="#L56">  56</a> </span>
+<span id="L57"><a href="#L57">  57</a> def auto_construct_map(columns: list[str], exclude: dict[str, list[int]]) -&gt; dict[str, list[str]]:</span>
+<span id="L58"><a href="#L58">  58</a>     mapping: dict[str, list[str]] = {}</span>
+<span id="L59"><a href="#L59">  59</a>     for construct, prefixes in PREFIX_GROUPS.items():</span>
+<span id="L60"><a href="#L60">  60</a>         selected = [c for c in columns if str(c).startswith(prefixes)]</span>
+<span id="L61"><a href="#L61">  61</a>         if selected:</span>
+<span id="L62"><a href="#L62">  62</a>             removed = set(exclude.get(construct, []))</span>
+<span id="L63"><a href="#L63">  63</a>             keep = [i for i in range(len(selected)) if i not in removed]</span>
+<span id="L64"><a href="#L64">  64</a>             mapping[construct] = [selected[i] for i in keep]</span>
+<span id="L65"><a href="#L65">  65</a>     return mapping</span>
+<span id="L66"><a href="#L66">  66</a> </span>
+<span id="L67"><a href="#L67">  67</a> </span>
+<span id="L68"><a href="#L68">  68</a> def build_scores(df: pd.DataFrame, mapping: dict[str, list[str]], order: list[str]) -&gt; pd.DataFrame:</span>
+<span id="L69"><a href="#L69">  69</a>     missing = [c for cols in mapping.values() for c in cols if c not in df.columns]</span>
+<span id="L70"><a href="#L70">  70</a>     if missing:</span>
+<span id="L71"><a href="#L71">  71</a>         raise SystemExit(f&quot;Construct map references missing columns: {missing[:8]}&quot;)</span>
+<span id="L72"><a href="#L72">  72</a>     scored = pd.DataFrame(index=df.index)</span>
+<span id="L73"><a href="#L73">  73</a>     for construct in order:</span>
+<span id="L74"><a href="#L74">  74</a>         cols = mapping.get(construct)</span>
+<span id="L75"><a href="#L75">  75</a>         if not cols:</span>
+<span id="L76"><a href="#L76">  76</a>             raise SystemExit(f&quot;No item mapping found for construct: {construct}&quot;)</span>
+<span id="L77"><a href="#L77">  77</a>         scored[construct] = df[cols].apply(pd.to_numeric, errors=&quot;coerce&quot;).mean(axis=1)</span>
+<span id="L78"><a href="#L78">  78</a>     return scored</span>
+<span id="L79"><a href="#L79">  79</a> </span>
+<span id="L80"><a href="#L80">  80</a> </span>
+<span id="L81"><a href="#L81">  81</a> def standardize(df: pd.DataFrame) -&gt; pd.DataFrame:</span>
+<span id="L82"><a href="#L82">  82</a>     return (df - df.mean()) / df.std(ddof=0)</span>
+<span id="L83"><a href="#L83">  83</a> </span>
+<span id="L84"><a href="#L84">  84</a> </span>
+<span id="L85"><a href="#L85">  85</a> def residualize_each_variable(scored: pd.DataFrame, order: list[str]) -&gt; pd.DataFrame:</span>
+<span id="L86"><a href="#L86">  86</a>     residuals = pd.DataFrame(index=scored.index)</span>
+<span id="L87"><a href="#L87">  87</a>     for y in order:</span>
+<span id="L88"><a href="#L88">  88</a>         x_cols = [c for c in order if c != y]</span>
+<span id="L89"><a href="#L89">  89</a>         x = scored[x_cols].to_numpy(float)</span>
+<span id="L90"><a href="#L90">  90</a>         yv = scored[y].to_numpy(float)</span>
+<span id="L91"><a href="#L91">  91</a>         mask = np.isfinite(yv) &amp; np.isfinite(x).all(axis=1)</span>
+<span id="L92"><a href="#L92">  92</a>         X = np.column_stack([np.ones(mask.sum()), x[mask]])</span>
+<span id="L93"><a href="#L93">  93</a>         beta, *_ = np.linalg.lstsq(X, yv[mask], rcond=None)</span>
+<span id="L94"><a href="#L94">  94</a>         residuals.loc[mask, y] = yv[mask] - (X @ beta)</span>
+<span id="L95"><a href="#L95">  95</a>     return standardize(residuals[order])</span>
+<span id="L96"><a href="#L96">  96</a> </span>
+<span id="L97"><a href="#L97">  97</a> </span>
+<span id="L98"><a href="#L98">  98</a> def p_values(scored: pd.DataFrame, order: list[str]) -&gt; pd.DataFrame:</span>
+<span id="L99"><a href="#L99">  99</a>     pmat = pd.DataFrame(index=order, columns=order, dtype=float)</span>
+<span id="L100"><a href="#L100"> 100</a>     for a in order:</span>
+<span id="L101"><a href="#L101"> 101</a>         for b in order:</span>
+<span id="L102"><a href="#L102"> 102</a>             if a == b:</span>
+<span id="L103"><a href="#L103"> 103</a>                 pmat.loc[a, b] = 0.0</span>
+<span id="L104"><a href="#L104"> 104</a>                 continue</span>
+<span id="L105"><a href="#L105"> 105</a>             pair = scored[[a, b]].dropna()</span>
+<span id="L106"><a href="#L106"> 106</a>             _r, p = stats.pearsonr(pair[a], pair[b])</span>
+<span id="L107"><a href="#L107"> 107</a>             pmat.loc[a, b] = p</span>
+<span id="L108"><a href="#L108"> 108</a>     return pmat</span>
+<span id="L109"><a href="#L109"> 109</a> </span>
+<span id="L110"><a href="#L110"> 110</a> </span>
+<span id="L111"><a href="#L111"> 111</a> def star(p: float) -&gt; str:</span>
+<span id="L112"><a href="#L112"> 112</a>     if p &lt; 0.001:</span>
+<span id="L113"><a href="#L113"> 113</a>         return &quot;***&quot;</span>
+<span id="L114"><a href="#L114"> 114</a>     if p &lt; 0.01:</span>
+<span id="L115"><a href="#L115"> 115</a>         return &quot;**&quot;</span>
+<span id="L116"><a href="#L116"> 116</a>     if p &lt; 0.05:</span>
+<span id="L117"><a href="#L117"> 117</a>         return &quot;*&quot;</span>
+<span id="L118"><a href="#L118"> 118</a>     return &quot;&quot;</span>
+<span id="L119"><a href="#L119"> 119</a> </span>
+<span id="L120"><a href="#L120"> 120</a> </span>
+<span id="L121"><a href="#L121"> 121</a> def available_times_font() -&gt; str | None:</span>
+<span id="L122"><a href="#L122"> 122</a>     candidates = [</span>
+<span id="L123"><a href="#L123"> 123</a>         Path(r&quot;C:\Windows\Fonts\times.ttf&quot;),</span>
+<span id="L124"><a href="#L124"> 124</a>         Path(r&quot;C:\Windows\Fonts\timesbd.ttf&quot;),</span>
+<span id="L125"><a href="#L125"> 125</a>         Path(r&quot;C:\Windows\Fonts\Times New Roman.ttf&quot;),</span>
+<span id="L126"><a href="#L126"> 126</a>     ]</span>
+<span id="L127"><a href="#L127"> 127</a>     return next((str(p) for p in candidates if p.exists()), None)</span>
+<span id="L128"><a href="#L128"> 128</a> </span>
+<span id="L129"><a href="#L129"> 129</a> </span>
+<span id="L130"><a href="#L130"> 130</a> def paper_comparison(corr: pd.DataFrame, paper: dict | None, order: list[str]) -&gt; pd.DataFrame:</span>
+<span id="L131"><a href="#L131"> 131</a>     if not paper:</span>
+<span id="L132"><a href="#L132"> 132</a>         return pd.DataFrame()</span>
+<span id="L133"><a href="#L133"> 133</a>     rows = []</span>
+<span id="L134"><a href="#L134"> 134</a>     for a, b in combinations(order, 2):</span>
+<span id="L135"><a href="#L135"> 135</a>         target = None</span>
+<span id="L136"><a href="#L136"> 136</a>         if isinstance(paper.get(a), dict) and b in paper[a]:</span>
+<span id="L137"><a href="#L137"> 137</a>             target = paper[a][b]</span>
+<span id="L138"><a href="#L138"> 138</a>         elif isinstance(paper.get(b), dict) and a in paper[b]:</span>
+<span id="L139"><a href="#L139"> 139</a>             target = paper[b][a]</span>
+<span id="L140"><a href="#L140"> 140</a>         elif f&quot;{a},{b}&quot; in paper:</span>
+<span id="L141"><a href="#L141"> 141</a>             target = paper[f&quot;{a},{b}&quot;]</span>
+<span id="L142"><a href="#L142"> 142</a>         elif f&quot;{b},{a}&quot; in paper:</span>
+<span id="L143"><a href="#L143"> 143</a>             target = paper[f&quot;{b},{a}&quot;]</span>
+<span id="L144"><a href="#L144"> 144</a>         if target is None:</span>
+<span id="L145"><a href="#L145"> 145</a>             continue</span>
+<span id="L146"><a href="#L146"> 146</a>         rows.append({</span>
+<span id="L147"><a href="#L147"> 147</a>             &quot;var1&quot;: a,</span>
+<span id="L148"><a href="#L148"> 148</a>             &quot;var2&quot;: b,</span>
+<span id="L149"><a href="#L149"> 149</a>             &quot;computed&quot;: float(corr.loc[a, b]),</span>
+<span id="L150"><a href="#L150"> 150</a>             &quot;paper&quot;: float(target),</span>
+<span id="L151"><a href="#L151"> 151</a>             &quot;abs_diff&quot;: abs(float(corr.loc[a, b]) - float(target)),</span>
+<span id="L152"><a href="#L152"> 152</a>         })</span>
+<span id="L153"><a href="#L153"> 153</a>     return pd.DataFrame(rows).sort_values(&quot;abs_diff&quot;, ascending=False)</span>
+<span id="L154"><a href="#L154"> 154</a> </span>
+<span id="L155"><a href="#L155"> 155</a> </span>
+<span id="L156"><a href="#L156"> 156</a> def draw_plots(</span>
+<span id="L157"><a href="#L157"> 157</a>     scored: pd.DataFrame,</span>
+<span id="L158"><a href="#L158"> 158</a>     residuals: pd.DataFrame,</span>
+<span id="L159"><a href="#L159"> 159</a>     corr: pd.DataFrame,</span>
+<span id="L160"><a href="#L160"> 160</a>     pmat: pd.DataFrame,</span>
+<span id="L161"><a href="#L161"> 161</a>     order: list[str],</span>
+<span id="L162"><a href="#L162"> 162</a>     out_dir: Path,</span>
+<span id="L163"><a href="#L163"> 163</a>     prefix: str,</span>
+<span id="L164"><a href="#L164"> 164</a> ) -&gt; dict[str, str]:</span>
+<span id="L165"><a href="#L165"> 165</a>     import matplotlib</span>
+<span id="L166"><a href="#L166"> 166</a>     matplotlib.use(&quot;Agg&quot;)</span>
+<span id="L167"><a href="#L167"> 167</a>     import matplotlib.pyplot as plt</span>
+<span id="L168"><a href="#L168"> 168</a>     from matplotlib import font_manager</span>
+<span id="L169"><a href="#L169"> 169</a>     from matplotlib.cm import ScalarMappable</span>
+<span id="L170"><a href="#L170"> 170</a>     from matplotlib.colors import LinearSegmentedColormap, Normalize</span>
+<span id="L171"><a href="#L171"> 171</a>     from matplotlib.ticker import FuncFormatter</span>
+<span id="L172"><a href="#L172"> 172</a>     import seaborn as sns</span>
+<span id="L173"><a href="#L173"> 173</a>     from PIL import Image</span>
+<span id="L174"><a href="#L174"> 174</a> </span>
+<span id="L175"><a href="#L175"> 175</a>     font_path = available_times_font()</span>
+<span id="L176"><a href="#L176"> 176</a>     if font_path:</span>
+<span id="L177"><a href="#L177"> 177</a>         font_manager.fontManager.addfont(font_path)</span>
+<span id="L178"><a href="#L178"> 178</a>     plt.rcParams.update({</span>
+<span id="L179"><a href="#L179"> 179</a>         &quot;font.family&quot;: &quot;Times New Roman&quot;,</span>
+<span id="L180"><a href="#L180"> 180</a>         &quot;font.size&quot;: 24,</span>
+<span id="L181"><a href="#L181"> 181</a>         &quot;axes.labelsize&quot;: 30,</span>
+<span id="L182"><a href="#L182"> 182</a>         &quot;xtick.labelsize&quot;: 24,</span>
+<span id="L183"><a href="#L183"> 183</a>         &quot;ytick.labelsize&quot;: 24,</span>
+<span id="L184"><a href="#L184"> 184</a>         &quot;axes.unicode_minus&quot;: False,</span>
+<span id="L185"><a href="#L185"> 185</a>         &quot;figure.dpi&quot;: 180,</span>
+<span id="L186"><a href="#L186"> 186</a>         &quot;savefig.dpi&quot;: 300,</span>
+<span id="L187"><a href="#L187"> 187</a>     })</span>
+<span id="L188"><a href="#L188"> 188</a>     sns.set_theme(style=&quot;whitegrid&quot;, rc={</span>
+<span id="L189"><a href="#L189"> 189</a>         &quot;font.family&quot;: &quot;Times New Roman&quot;,</span>
+<span id="L190"><a href="#L190"> 190</a>         &quot;axes.edgecolor&quot;: &quot;#AEB7C4&quot;,</span>
+<span id="L191"><a href="#L191"> 191</a>         &quot;grid.color&quot;: &quot;#E5EAF0&quot;,</span>
+<span id="L192"><a href="#L192"> 192</a>         &quot;axes.facecolor&quot;: &quot;#FFFFFF&quot;,</span>
+<span id="L193"><a href="#L193"> 193</a>         &quot;figure.facecolor&quot;: &quot;#FFFFFF&quot;,</span>
+<span id="L194"><a href="#L194"> 194</a>     })</span>
+<span id="L195"><a href="#L195"> 195</a> </span>
+<span id="L196"><a href="#L196"> 196</a>     fill = &quot;#87DED7&quot;</span>
+<span id="L197"><a href="#L197"> 197</a>     line = &quot;#3049A1&quot;</span>
+<span id="L198"><a href="#L198"> 198</a>     dot = &quot;#2D84AD&quot;</span>
+<span id="L199"><a href="#L199"> 199</a>     cmap = LinearSegmentedColormap.from_list(</span>
+<span id="L200"><a href="#L200"> 200</a>         &quot;paper_teal_blue&quot;,</span>
+<span id="L201"><a href="#L201"> 201</a>         [&quot;#25258F&quot;, &quot;#5A69A8&quot;, &quot;#F6FAFA&quot;, &quot;#BEEAD6&quot;, &quot;#53CDC9&quot;, &quot;#4A98B9&quot;, &quot;#25258F&quot;],</span>
+<span id="L202"><a href="#L202"> 202</a>         N=256,</span>
+<span id="L203"><a href="#L203"> 203</a>     )</span>
+<span id="L204"><a href="#L204"> 204</a> </span>
+<span id="L205"><a href="#L205"> 205</a>     long = residuals.melt(var_name=&quot;Variable&quot;, value_name=&quot;Residual&quot;)</span>
+<span id="L206"><a href="#L206"> 206</a>     long[&quot;Variable&quot;] = pd.Categorical(long[&quot;Variable&quot;], categories=order, ordered=True)</span>
+<span id="L207"><a href="#L207"> 207</a>     fig, ax = plt.subplots(figsize=(6.4, 11.0))</span>
+<span id="L208"><a href="#L208"> 208</a>     sns.violinplot(</span>
+<span id="L209"><a href="#L209"> 209</a>         data=long,</span>
+<span id="L210"><a href="#L210"> 210</a>         y=&quot;Variable&quot;,</span>
+<span id="L211"><a href="#L211"> 211</a>         x=&quot;Residual&quot;,</span>
+<span id="L212"><a href="#L212"> 212</a>         order=order,</span>
+<span id="L213"><a href="#L213"> 213</a>         orient=&quot;h&quot;,</span>
+<span id="L214"><a href="#L214"> 214</a>         inner=None,</span>
+<span id="L215"><a href="#L215"> 215</a>         color=fill,</span>
+<span id="L216"><a href="#L216"> 216</a>         linewidth=1.8,</span>
+<span id="L217"><a href="#L217"> 217</a>         cut=0,</span>
+<span id="L218"><a href="#L218"> 218</a>         ax=ax,</span>
+<span id="L219"><a href="#L219"> 219</a>     )</span>
+<span id="L220"><a href="#L220"> 220</a>     for collection in ax.collections:</span>
+<span id="L221"><a href="#L221"> 221</a>         collection.set_edgecolor(line)</span>
+<span id="L222"><a href="#L222"> 222</a>         collection.set_alpha(0.75)</span>
+<span id="L223"><a href="#L223"> 223</a>     rng = np.random.default_rng(20260626)</span>
+<span id="L224"><a href="#L224"> 224</a>     for yi, var in enumerate(order):</span>
+<span id="L225"><a href="#L225"> 225</a>         vals = long.loc[long[&quot;Variable&quot;] == var, &quot;Residual&quot;].dropna().to_numpy()</span>
+<span id="L226"><a href="#L226"> 226</a>         ax.scatter(vals, rng.normal(yi, 0.055, len(vals)), s=11, color=dot, alpha=0.28, edgecolors=&quot;none&quot;, zorder=3)</span>
+<span id="L227"><a href="#L227"> 227</a>     ax.axvline(0, color=&quot;#6E7785&quot;, linestyle=&quot;:&quot;, linewidth=1.4)</span>
+<span id="L228"><a href="#L228"> 228</a>     ax.set_xlim(-2.8, 2.8)</span>
+<span id="L229"><a href="#L229"> 229</a>     ax.set_xlabel(&quot;Residual&quot;, fontsize=30)</span>
+<span id="L230"><a href="#L230"> 230</a>     ax.set_ylabel(&quot;&quot;)</span>
+<span id="L231"><a href="#L231"> 231</a>     ax.tick_params(axis=&quot;y&quot;, labelsize=30)</span>
+<span id="L232"><a href="#L232"> 232</a>     ax.tick_params(axis=&quot;x&quot;, labelsize=26)</span>
+<span id="L233"><a href="#L233"> 233</a>     ax.grid(axis=&quot;x&quot;, color=&quot;#E5EAF0&quot;, linewidth=1)</span>
+<span id="L234"><a href="#L234"> 234</a>     ax.grid(axis=&quot;y&quot;, visible=False)</span>
+<span id="L235"><a href="#L235"> 235</a>     sns.despine(ax=ax, top=False, right=False)</span>
+<span id="L236"><a href="#L236"> 236</a>     ax.text(-0.02, 1.02, &quot;(a)&quot;, transform=ax.transAxes, fontsize=34, fontweight=&quot;bold&quot;, ha=&quot;left&quot;, va=&quot;bottom&quot;)</span>
+<span id="L237"><a href="#L237"> 237</a>     fig.tight_layout(pad=1.2)</span>
+<span id="L238"><a href="#L238"> 238</a>     violin_png = out_dir / f&quot;{prefix}_residual_violin.png&quot;</span>
+<span id="L239"><a href="#L239"> 239</a>     violin_svg = out_dir / f&quot;{prefix}_residual_violin.svg&quot;</span>
+<span id="L240"><a href="#L240"> 240</a>     fig.savefig(violin_png, bbox_inches=&quot;tight&quot;)</span>
+<span id="L241"><a href="#L241"> 241</a>     fig.savefig(violin_svg, bbox_inches=&quot;tight&quot;)</span>
+<span id="L242"><a href="#L242"> 242</a>     plt.close(fig)</span>
+<span id="L243"><a href="#L243"> 243</a> </span>
+<span id="L244"><a href="#L244"> 244</a>     n = len(order)</span>
+<span id="L245"><a href="#L245"> 245</a>     fig = plt.figure(figsize=(16.8, 14.4))</span>
+<span id="L246"><a href="#L246"> 246</a>     gs = fig.add_gridspec(n, n, wspace=0.03, hspace=0.03)</span>
+<span id="L247"><a href="#L247"> 247</a>     norm = Normalize(vmin=-1, vmax=1)</span>
+<span id="L248"><a href="#L248"> 248</a>     for i, row in enumerate(order):</span>
+<span id="L249"><a href="#L249"> 249</a>         for j, col in enumerate(order):</span>
+<span id="L250"><a href="#L250"> 250</a>             ax = fig.add_subplot(gs[i, j])</span>
+<span id="L251"><a href="#L251"> 251</a>             for spine in ax.spines.values():</span>
+<span id="L252"><a href="#L252"> 252</a>                 spine.set_color(&quot;#AEB7C4&quot;)</span>
+<span id="L253"><a href="#L253"> 253</a>                 spine.set_linewidth(1.0)</span>
+<span id="L254"><a href="#L254"> 254</a>             ax.tick_params(length=0, pad=3)</span>
+<span id="L255"><a href="#L255"> 255</a>             if i == j:</span>
+<span id="L256"><a href="#L256"> 256</a>                 vals = scored[row].dropna()</span>
+<span id="L257"><a href="#L257"> 257</a>                 ax.hist(vals, bins=np.arange(1, 8.5, 0.5), color=&quot;#CBEFC9&quot;, edgecolor=&quot;#6FAB74&quot;, linewidth=1.0)</span>
+<span id="L258"><a href="#L258"> 258</a>                 try:</span>
+<span id="L259"><a href="#L259"> 259</a>                     sns.kdeplot(x=vals, ax=ax, color=line, linewidth=1.6, bw_adjust=0.9)</span>
+<span id="L260"><a href="#L260"> 260</a>                 except Exception:</span>
+<span id="L261"><a href="#L261"> 261</a>                     pass</span>
+<span id="L262"><a href="#L262"> 262</a>                 ax.set_xlim(0.8, 7.2)</span>
+<span id="L263"><a href="#L263"> 263</a>                 ax.set_yticks([])</span>
+<span id="L264"><a href="#L264"> 264</a>                 ax.set_xlabel(&quot;&quot;)</span>
+<span id="L265"><a href="#L265"> 265</a>                 ax.set_ylabel(&quot;&quot;)</span>
+<span id="L266"><a href="#L266"> 266</a>             elif i &gt; j:</span>
+<span id="L267"><a href="#L267"> 267</a>                 ax.scatter(scored[col], scored[row], s=10, color=&quot;#2BB8C6&quot;, alpha=0.34, edgecolors=&quot;none&quot;)</span>
+<span id="L268"><a href="#L268"> 268</a>                 ax.set_xlim(0.8, 7.2)</span>
+<span id="L269"><a href="#L269"> 269</a>                 ax.set_ylim(0.8, 7.2)</span>
+<span id="L270"><a href="#L270"> 270</a>             else:</span>
+<span id="L271"><a href="#L271"> 271</a>                 value = corr.loc[row, col]</span>
+<span id="L272"><a href="#L272"> 272</a>                 ax.set_facecolor(cmap(norm(value)))</span>
+<span id="L273"><a href="#L273"> 273</a>                 ax.text(0.5, 0.57, f&quot;{value:.3f}&quot;, transform=ax.transAxes, ha=&quot;center&quot;, va=&quot;center&quot;, fontsize=24, color=&quot;#202633&quot;)</span>
+<span id="L274"><a href="#L274"> 274</a>                 ax.text(</span>
+<span id="L275"><a href="#L275"> 275</a>                     0.5,</span>
+<span id="L276"><a href="#L276"> 276</a>                     0.38,</span>
+<span id="L277"><a href="#L277"> 277</a>                     star(float(pmat.loc[row, col])),</span>
+<span id="L278"><a href="#L278"> 278</a>                     transform=ax.transAxes,</span>
+<span id="L279"><a href="#L279"> 279</a>                     ha=&quot;center&quot;,</span>
+<span id="L280"><a href="#L280"> 280</a>                     va=&quot;center&quot;,</span>
+<span id="L281"><a href="#L281"> 281</a>                     fontsize=24,</span>
+<span id="L282"><a href="#L282"> 282</a>                     fontweight=&quot;bold&quot;,</span>
+<span id="L283"><a href="#L283"> 283</a>                     color=&quot;#202633&quot;,</span>
+<span id="L284"><a href="#L284"> 284</a>                 )</span>
+<span id="L285"><a href="#L285"> 285</a>                 ax.set_xticks([])</span>
+<span id="L286"><a href="#L286"> 286</a>                 ax.set_yticks([])</span>
+<span id="L287"><a href="#L287"> 287</a>             if i &lt; n - 1:</span>
+<span id="L288"><a href="#L288"> 288</a>                 ax.set_xticklabels([])</span>
+<span id="L289"><a href="#L289"> 289</a>             else:</span>
+<span id="L290"><a href="#L290"> 290</a>                 ax.set_xlabel(col, labelpad=10, fontsize=30)</span>
+<span id="L291"><a href="#L291"> 291</a>             if j &gt; 0:</span>
+<span id="L292"><a href="#L292"> 292</a>                 ax.set_yticklabels([])</span>
+<span id="L293"><a href="#L293"> 293</a>             else:</span>
+<span id="L294"><a href="#L294"> 294</a>                 ax.set_ylabel(row, rotation=90, labelpad=20, fontsize=30)</span>
+<span id="L295"><a href="#L295"> 295</a>             ax.grid(False)</span>
+<span id="L296"><a href="#L296"> 296</a>     fig.text(0.03, 0.965, &quot;(b)&quot;, fontsize=34, fontweight=&quot;bold&quot;, ha=&quot;left&quot;, va=&quot;top&quot;)</span>
+<span id="L297"><a href="#L297"> 297</a>     cax = fig.add_axes([0.92, 0.13, 0.025, 0.75])</span>
+<span id="L298"><a href="#L298"> 298</a>     cb = fig.colorbar(ScalarMappable(norm=norm, cmap=cmap), cax=cax)</span>
+<span id="L299"><a href="#L299"> 299</a>     cb.set_ticks([-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1])</span>
+<span id="L300"><a href="#L300"> 300</a>     cb.ax.yaxis.set_major_formatter(FuncFormatter(lambda x, _pos: &quot;0.00&quot; if abs(x) &lt; 0.0005 else f&quot;{x:.2f}&quot;))</span>
+<span id="L301"><a href="#L301"> 301</a>     cb.ax.tick_params(labelsize=24)</span>
+<span id="L302"><a href="#L302"> 302</a>     cb.outline.set_edgecolor(&quot;#AEB7C4&quot;)</span>
+<span id="L303"><a href="#L303"> 303</a>     fig.subplots_adjust(left=0.08, right=0.89, top=0.93, bottom=0.08)</span>
+<span id="L304"><a href="#L304"> 304</a>     pearson_png = out_dir / f&quot;{prefix}_pearson_pairgrid.png&quot;</span>
+<span id="L305"><a href="#L305"> 305</a>     pearson_svg = out_dir / f&quot;{prefix}_pearson_pairgrid.svg&quot;</span>
+<span id="L306"><a href="#L306"> 306</a>     fig.savefig(pearson_png, bbox_inches=&quot;tight&quot;)</span>
+<span id="L307"><a href="#L307"> 307</a>     fig.savefig(pearson_svg, bbox_inches=&quot;tight&quot;)</span>
+<span id="L308"><a href="#L308"> 308</a>     plt.close(fig)</span>
+<span id="L309"><a href="#L309"> 309</a> </span>
+<span id="L310"><a href="#L310"> 310</a>     img_a = Image.open(violin_png).convert(&quot;RGB&quot;)</span>
+<span id="L311"><a href="#L311"> 311</a>     img_b = Image.open(pearson_png).convert(&quot;RGB&quot;)</span>
+<span id="L312"><a href="#L312"> 312</a>     h = max(img_a.height, img_b.height)</span>
+<span id="L313"><a href="#L313"> 313</a>     resample = getattr(Image, &quot;Resampling&quot;, Image).LANCZOS</span>
+<span id="L314"><a href="#L314"> 314</a>     img_a = img_a.resize((round(img_a.width * h / img_a.height), h), resample)</span>
+<span id="L315"><a href="#L315"> 315</a>     img_b = img_b.resize((round(img_b.width * h / img_b.height), h), resample)</span>
+<span id="L316"><a href="#L316"> 316</a>     combined = Image.new(&quot;RGB&quot;, (img_a.width + img_b.width + 40, h), &quot;white&quot;)</span>
+<span id="L317"><a href="#L317"> 317</a>     combined.paste(img_a, (0, 0))</span>
+<span id="L318"><a href="#L318"> 318</a>     combined.paste(img_b, (img_a.width + 40, 0))</span>
+<span id="L319"><a href="#L319"> 319</a>     combined_png = out_dir / f&quot;{prefix}_violin_pearson_combined.png&quot;</span>
+<span id="L320"><a href="#L320"> 320</a>     combined.save(combined_png, quality=95)</span>
+<span id="L321"><a href="#L321"> 321</a>     return {</span>
+<span id="L322"><a href="#L322"> 322</a>         &quot;violin_png&quot;: str(violin_png),</span>
+<span id="L323"><a href="#L323"> 323</a>         &quot;violin_svg&quot;: str(violin_svg),</span>
+<span id="L324"><a href="#L324"> 324</a>         &quot;pearson_png&quot;: str(pearson_png),</span>
+<span id="L325"><a href="#L325"> 325</a>         &quot;pearson_svg&quot;: str(pearson_svg),</span>
+<span id="L326"><a href="#L326"> 326</a>         &quot;combined_png&quot;: str(combined_png),</span>
+<span id="L327"><a href="#L327"> 327</a>     }</span>
+<span id="L328"><a href="#L328"> 328</a> </span>
+<span id="L329"><a href="#L329"> 329</a> </span>
+<span id="L330"><a href="#L330"> 330</a> def write_audit(</span>
+<span id="L331"><a href="#L331"> 331</a>     out_dir: Path,</span>
+<span id="L332"><a href="#L332"> 332</a>     prefix: str,</span>
+<span id="L333"><a href="#L333"> 333</a>     mapping: dict[str, list[str]],</span>
+<span id="L334"><a href="#L334"> 334</a>     scored: pd.DataFrame,</span>
+<span id="L335"><a href="#L335"> 335</a>     residuals: pd.DataFrame,</span>
+<span id="L336"><a href="#L336"> 336</a>     corr: pd.DataFrame,</span>
+<span id="L337"><a href="#L337"> 337</a>     comparison: pd.DataFrame,</span>
+<span id="L338"><a href="#L338"> 338</a> ) -&gt; Path:</span>
+<span id="L339"><a href="#L339"> 339</a>     out = out_dir / f&quot;{prefix}_plot_audit.xlsx&quot;</span>
+<span id="L340"><a href="#L340"> 340</a>     rows = [{&quot;construct&quot;: k, &quot;items_used&quot;: &quot; | &quot;.join(map(str, mapping[k]))} for k in mapping]</span>
+<span id="L341"><a href="#L341"> 341</a>     with pd.ExcelWriter(out, engine=&quot;openpyxl&quot;) as writer:</span>
+<span id="L342"><a href="#L342"> 342</a>         pd.DataFrame(rows).to_excel(writer, sheet_name=&quot;item_mapping&quot;, index=False)</span>
+<span id="L343"><a href="#L343"> 343</a>         scored.to_excel(writer, sheet_name=&quot;construct_scores&quot;, index=False)</span>
+<span id="L344"><a href="#L344"> 344</a>         residuals.to_excel(writer, sheet_name=&quot;residuals_z&quot;, index=False)</span>
+<span id="L345"><a href="#L345"> 345</a>         corr.round(6).to_excel(writer, sheet_name=&quot;computed_corr&quot;)</span>
+<span id="L346"><a href="#L346"> 346</a>         if not comparison.empty:</span>
+<span id="L347"><a href="#L347"> 347</a>             comparison.round(6).to_excel(writer, sheet_name=&quot;paper_comparison&quot;, index=False)</span>
+<span id="L348"><a href="#L348"> 348</a>     return out</span>
+<span id="L349"><a href="#L349"> 349</a> </span>
+<span id="L350"><a href="#L350"> 350</a> </span>
+<span id="L351"><a href="#L351"> 351</a> def main() -&gt; None:</span>
+<span id="L352"><a href="#L352"> 352</a>     parser = argparse.ArgumentParser()</span>
+<span id="L353"><a href="#L353"> 353</a>     parser.add_argument(&quot;--data&quot;, required=True, type=Path)</span>
+<span id="L354"><a href="#L354"> 354</a>     parser.add_argument(&quot;--output-dir&quot;, required=True, type=Path)</span>
+<span id="L355"><a href="#L355"> 355</a>     parser.add_argument(&quot;--order&quot;, default=&quot;,&quot;.join(DEFAULT_ORDER))</span>
+<span id="L356"><a href="#L356"> 356</a>     parser.add_argument(&quot;--exclude-json&quot;, default=None, help=&#x27;JSON such as {&quot;AWA&quot;:[0,2]} using zero-based item positions after auto-detection.&#x27;)</span>
+<span id="L357"><a href="#L357"> 357</a>     parser.add_argument(&quot;--construct-map-json&quot;, default=None, help=&quot;JSON string or file path mapping constructs to exact column names.&quot;)</span>
+<span id="L358"><a href="#L358"> 358</a>     parser.add_argument(&quot;--paper-corr-json&quot;, default=None, help=&quot;Optional JSON string or file path with paper correlations for comparison.&quot;)</span>
+<span id="L359"><a href="#L359"> 359</a>     parser.add_argument(&quot;--prefix&quot;, default=&quot;sem&quot;)</span>
+<span id="L360"><a href="#L360"> 360</a>     args = parser.parse_args()</span>
+<span id="L361"><a href="#L361"> 361</a> </span>
+<span id="L362"><a href="#L362"> 362</a>     out_dir = args.output_dir</span>
+<span id="L363"><a href="#L363"> 363</a>     out_dir.mkdir(parents=True, exist_ok=True)</span>
+<span id="L364"><a href="#L364"> 364</a>     order = [x.strip() for x in args.order.split(&quot;,&quot;) if x.strip()]</span>
+<span id="L365"><a href="#L365"> 365</a>     exclude = parse_json_arg(args.exclude_json, {})</span>
+<span id="L366"><a href="#L366"> 366</a>     data = load_data(args.data)</span>
+<span id="L367"><a href="#L367"> 367</a>     mapping = parse_json_arg(args.construct_map_json, None) or auto_construct_map(list(data.columns), exclude)</span>
+<span id="L368"><a href="#L368"> 368</a>     scored = build_scores(data, mapping, order)</span>
+<span id="L369"><a href="#L369"> 369</a>     corr = scored[order].corr()</span>
+<span id="L370"><a href="#L370"> 370</a>     pmat = p_values(scored, order)</span>
+<span id="L371"><a href="#L371"> 371</a>     residuals = residualize_each_variable(scored, order)</span>
+<span id="L372"><a href="#L372"> 372</a>     paper = parse_json_arg(args.paper_corr_json, None)</span>
+<span id="L373"><a href="#L373"> 373</a>     comparison = paper_comparison(corr, paper, order)</span>
+<span id="L374"><a href="#L374"> 374</a>     figures = draw_plots(scored, residuals, corr, pmat, order, out_dir, args.prefix)</span>
+<span id="L375"><a href="#L375"> 375</a>     audit = write_audit(out_dir, args.prefix, mapping, scored[order], residuals[order], corr, comparison)</span>
+<span id="L376"><a href="#L376"> 376</a>     summary = {</span>
+<span id="L377"><a href="#L377"> 377</a>         &quot;source_data&quot;: str(args.data),</span>
+<span id="L378"><a href="#L378"> 378</a>         &quot;n_rows&quot;: int(data.shape[0]),</span>
+<span id="L379"><a href="#L379"> 379</a>         &quot;n_complete_construct_rows&quot;: int(scored[order].dropna().shape[0]),</span>
+<span id="L380"><a href="#L380"> 380</a>         &quot;order&quot;: order,</span>
+<span id="L381"><a href="#L381"> 381</a>         &quot;mapping&quot;: mapping,</span>
+<span id="L382"><a href="#L382"> 382</a>         &quot;figures&quot;: figures,</span>
+<span id="L383"><a href="#L383"> 383</a>         &quot;audit_workbook&quot;: str(audit),</span>
+<span id="L384"><a href="#L384"> 384</a>     }</span>
+<span id="L385"><a href="#L385"> 385</a>     if not comparison.empty:</span>
+<span id="L386"><a href="#L386"> 386</a>         summary[&quot;mean_abs_diff_vs_paper_corr&quot;] = float(comparison[&quot;abs_diff&quot;].mean())</span>
+<span id="L387"><a href="#L387"> 387</a>         summary[&quot;max_abs_diff_vs_paper_corr&quot;] = float(comparison[&quot;abs_diff&quot;].max())</span>
+<span id="L388"><a href="#L388"> 388</a>     summary_path = out_dir / f&quot;{args.prefix}_plot_summary.json&quot;</span>
+<span id="L389"><a href="#L389"> 389</a>     summary_path.write_text(json.dumps(summary, ensure_ascii=True, indent=2), encoding=&quot;utf-8&quot;)</span>
+<span id="L390"><a href="#L390"> 390</a>     print(json.dumps(summary, ensure_ascii=True, indent=2))</span>
+<span id="L391"><a href="#L391"> 391</a> </span>
+<span id="L392"><a href="#L392"> 392</a> </span>
+<span id="L393"><a href="#L393"> 393</a> if __name__ == &quot;__main__&quot;:</span>
+<span id="L394"><a href="#L394"> 394</a>     main()</span>
+</pre>

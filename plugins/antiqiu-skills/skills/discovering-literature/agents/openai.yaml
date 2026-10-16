@@ -1,0 +1,4 @@
+interface:
+  display_name: "Discovering Literature"
+  short_description: "Build reproducible bilingual literature searches"
+  default_prompt: "Use $discovering-literature to build a reproducible bilingual literature search and screened candidate corpus."

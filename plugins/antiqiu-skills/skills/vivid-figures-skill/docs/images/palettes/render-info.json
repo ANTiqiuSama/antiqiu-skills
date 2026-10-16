@@ -1,0 +1,243 @@
+[
+  {
+    "slug": "coral-teal",
+    "name": "珊瑚青绿",
+    "base_colors": [
+      "#4ECDC4",
+      "#FF6B6B",
+      "#45B7D1",
+      "#F7A072",
+      "#A06CD5",
+      "#F79256",
+      "#7DCFB6"
+    ],
+    "display_colors": [
+      "#4ECDC4",
+      "#FF6B6B",
+      "#45B7D1",
+      "#F7A072",
+      "#A06CD5",
+      "#F79256",
+      "#7DCFB6"
+    ],
+    "data_sha256": "9f0fb518ad289b08f7a03889beef7d8dff837418509197c2c14407f72481f465",
+    "png_pixels": [
+      2400,
+      2880
+    ],
+    "dpi": 300,
+    "groups": 7,
+    "scatter_samples_per_group": 200,
+    "distribution_samples_per_group": 240,
+    "extra_tints": []
+  },
+  {
+    "slug": "olive-apricot",
+    "name": "橄榄杏棕",
+    "base_colors": [
+      "#606C38",
+      "#DDA15E",
+      "#BC6C25",
+      "#4A5A2B",
+      "#A68A64",
+      "#7F4F24",
+      "#936639"
+    ],
+    "display_colors": [
+      "#606C38",
+      "#DDA15E",
+      "#BC6C25",
+      "#4A5A2B",
+      "#A68A64",
+      "#7F4F24",
+      "#936639"
+    ],
+    "data_sha256": "9f0fb518ad289b08f7a03889beef7d8dff837418509197c2c14407f72481f465",
+    "png_pixels": [
+      2400,
+      2880
+    ],
+    "dpi": 300,
+    "groups": 7,
+    "scatter_samples_per_group": 200,
+    "distribution_samples_per_group": 240,
+    "extra_tints": []
+  },
+  {
+    "slug": "blue-pink",
+    "name": "蓝粉浅彩",
+    "base_colors": [
+      "#6797C7",
+      "#91ACC7",
+      "#A494C2",
+      "#D7979C",
+      "#99999F"
+    ],
+    "display_colors": [
+      "#6797C7",
+      "#91ACC7",
+      "#A494C2",
+      "#D7979C",
+      "#99999F",
+      "#a6c2de",
+      "#cac0db"
+    ],
+    "data_sha256": "9f0fb518ad289b08f7a03889beef7d8dff837418509197c2c14407f72481f465",
+    "png_pixels": [
+      2400,
+      2880
+    ],
+    "dpi": 300,
+    "groups": 7,
+    "scatter_samples_per_group": 200,
+    "distribution_samples_per_group": 240,
+    "extra_tints": [
+      "A lightened 42%",
+      "C lightened 42%"
+    ]
+  },
+  {
+    "slug": "blue-sky",
+    "name": "蓝天绿地",
+    "base_colors": [
+      "#377EB8",
+      "#B23648",
+      "#DC7369",
+      "#8AAA7B",
+      "#B5A34F",
+      "#A39A77",
+      "#8E999D",
+      "#86B3C7"
+    ],
+    "display_colors": [
+      "#377EB8",
+      "#B23648",
+      "#DC7369",
+      "#8AAA7B",
+      "#B5A34F",
+      "#A39A77",
+      "#8E999D",
+      "#86B3C7"
+    ],
+    "data_sha256": "6212888390c8dbb3f6b5dbf62e05cab24f7a958d48cc24c7d6291fd32d12627f",
+    "png_pixels": [
+      2400,
+      2880
+    ],
+    "dpi": 300,
+    "groups": 8,
+    "data_file": "demo-data-8.json",
+    "pale_color_readability_adjustment": true,
+    "scatter_samples_per_group": 200,
+    "distribution_samples_per_group": 240,
+    "extra_tints": []
+  },
+  {
+    "slug": "soft-forest",
+    "name": "柔绿森林",
+    "base_colors": [
+      "#80AC7B",
+      "#78AE6B",
+      "#71A682",
+      "#81989B",
+      "#D19246",
+      "#9C966F",
+      "#7EA4B6",
+      "#4A4F7E"
+    ],
+    "display_colors": [
+      "#80AC7B",
+      "#78AE6B",
+      "#71A682",
+      "#81989B",
+      "#D19246",
+      "#9C966F",
+      "#7EA4B6",
+      "#4A4F7E"
+    ],
+    "data_sha256": "6212888390c8dbb3f6b5dbf62e05cab24f7a958d48cc24c7d6291fd32d12627f",
+    "png_pixels": [
+      2400,
+      2880
+    ],
+    "dpi": 300,
+    "groups": 8,
+    "data_file": "demo-data-8.json",
+    "pale_color_readability_adjustment": false,
+    "scatter_samples_per_group": 200,
+    "distribution_samples_per_group": 240,
+    "extra_tints": []
+  },
+  {
+    "slug": "pastel-girl",
+    "name": "粉彩少女",
+    "base_colors": [
+      "#9693B6",
+      "#A49FBE",
+      "#A5A1B2",
+      "#AAA0A0",
+      "#C6A497",
+      "#DE9888",
+      "#F1837A",
+      "#E9687A"
+    ],
+    "display_colors": [
+      "#9693B6",
+      "#A49FBE",
+      "#A5A1B2",
+      "#AAA0A0",
+      "#C6A497",
+      "#DE9888",
+      "#F1837A",
+      "#E9687A"
+    ],
+    "data_sha256": "6212888390c8dbb3f6b5dbf62e05cab24f7a958d48cc24c7d6291fd32d12627f",
+    "png_pixels": [
+      2400,
+      2880
+    ],
+    "dpi": 300,
+    "groups": 8,
+    "data_file": "demo-data-8.json",
+    "pale_color_readability_adjustment": true,
+    "scatter_samples_per_group": 200,
+    "distribution_samples_per_group": 240,
+    "extra_tints": []
+  },
+  {
+    "slug": "ocean-breeze",
+    "name": "海洋清风",
+    "base_colors": [
+      "#86B6A3",
+      "#51999F",
+      "#4198AC",
+      "#69AEBC",
+      "#B5A56C",
+      "#D8A258",
+      "#EA9E58",
+      "#ED8D5A"
+    ],
+    "display_colors": [
+      "#86B6A3",
+      "#51999F",
+      "#4198AC",
+      "#69AEBC",
+      "#B5A56C",
+      "#D8A258",
+      "#EA9E58",
+      "#ED8D5A"
+    ],
+    "data_sha256": "6212888390c8dbb3f6b5dbf62e05cab24f7a958d48cc24c7d6291fd32d12627f",
+    "png_pixels": [
+      2400,
+      2880
+    ],
+    "dpi": 300,
+    "groups": 8,
+    "data_file": "demo-data-8.json",
+    "pale_color_readability_adjustment": false,
+    "scatter_samples_per_group": 200,
+    "distribution_samples_per_group": 240,
+    "extra_tints": []
+  }
+]

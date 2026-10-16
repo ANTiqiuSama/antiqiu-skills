@@ -1,0 +1,29 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 14,
+  "code_pages": [
+    17,
+    18,
+    19,
+    20,
+    21
+  ],
+  "all_pages": [
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21
+  ],
+  "changes": [
+    "恢复多峰合成、累计面积、白边、空心峰值点和注释。",
+    "显式设定效果图的白色背景；演示图例移至上方。",
+    "使用Plotly交互显示；预览通过Kaleido导出，画布和边距适配截图检查。3D PDF内部仍含栅格渲染。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

@@ -1,0 +1,29 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 91,
+  "code_pages": [
+    92,
+    93,
+    94,
+    95,
+    96,
+    97
+  ],
+  "all_pages": [
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97
+  ],
+  "changes": [
+    "原示例随机方阵并非有效相关矩阵；演示改由合成样本计算对称Pearson矩阵。",
+    "原方块宽高直接使用带符号r；改为abs(r)，颜色保留符号。线宽按abs(r)分档。",
+    "修正连续颜色插值和标签与矩阵坐标的对应。网络r/p仍为演示输入，不声称做了Mantel检验；真实任务需提供实际检验结果。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

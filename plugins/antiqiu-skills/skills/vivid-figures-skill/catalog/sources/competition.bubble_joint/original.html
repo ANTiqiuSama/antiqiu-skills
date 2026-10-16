@@ -1,0 +1,46 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np, matplotlib.pyplot as plt</span>
+<span id="L2"><a href="#L2">   2</a> from scipy.stats import gaussian_kde</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> np.random.seed(42)</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> n = 150</span>
+<span id="L8"><a href="#L8">   8</a> x = np.random.normal(5, 2, n)</span>
+<span id="L9"><a href="#L9">   9</a> y = 0.6*x + np.random.normal(0, 1.5, n)</span>
+<span id="L10"><a href="#L10">  10</a> z = np.random.uniform(10, 80, n)</span>
+<span id="L11"><a href="#L11">  11</a> </span>
+<span id="L12"><a href="#L12">  12</a> fig = plt.figure(figsize=(7, 7))</span>
+<span id="L13"><a href="#L13">  13</a> gs = fig.add_gridspec(2, 2, width_ratios=[4, 1], height_ratios=[1, 4],</span>
+<span id="L14"><a href="#L14">  14</a>                       hspace=0.05, wspace=0.05)</span>
+<span id="L15"><a href="#L15">  15</a> ax_main = fig.add_subplot(gs[1, 0])</span>
+<span id="L16"><a href="#L16">  16</a> ax_top = fig.add_subplot(gs[0, 0], sharex=ax_main)</span>
+<span id="L17"><a href="#L17">  17</a> ax_right = fig.add_subplot(gs[1, 1], sharey=ax_main)</span>
+<span id="L18"><a href="#L18">  18</a> </span>
+<span id="L19"><a href="#L19">  19</a> # 主图：气泡</span>
+<span id="L20"><a href="#L20">  20</a> sc = ax_main.scatter(x, y, s=z*3, c=z, cmap=&#x27;YlOrRd&#x27;, alpha=0.6,</span>
+<span id="L21"><a href="#L21">  21</a>                      edgecolor=&#x27;white&#x27;, linewidth=0.5)</span>
+<span id="L22"><a href="#L22">  22</a> ax_main.set_xlabel(&#x27;变量 X&#x27;, fontsize=11); ax_main.set_ylabel(&#x27;变量 Y&#x27;, fontsize=11)</span>
+<span id="L23"><a href="#L23">  23</a> </span>
+<span id="L24"><a href="#L24">  24</a> # 上方 KDE</span>
+<span id="L25"><a href="#L25">  25</a> kde_x = gaussian_kde(x)</span>
+<span id="L26"><a href="#L26">  26</a> xx = np.linspace(x.min()-1, x.max()+1, 200)</span>
+<span id="L27"><a href="#L27">  27</a> ax_top.fill_between(xx, kde_x(xx), alpha=0.3, color=PALETTE[0])</span>
+<span id="L28"><a href="#L28">  28</a> ax_top.plot(xx, kde_x(xx), color=PALETTE[0], linewidth=1.5)</span>
+<span id="L29"><a href="#L29">  29</a> ax_top.set_ylabel(&#x27;密度&#x27;, fontsize=9)</span>
+<span id="L30"><a href="#L30">  30</a> plt.setp(ax_top.get_xticklabels(), visible=False)</span>
+<span id="L31"><a href="#L31">  31</a> </span>
+<span id="L32"><a href="#L32">  32</a> # 右方 KDE</span>
+<span id="L33"><a href="#L33">  33</a> kde_y = gaussian_kde(y)</span>
+<span id="L34"><a href="#L34">  34</a> yy = np.linspace(y.min()-1, y.max()+1, 200)</span>
+<span id="L35"><a href="#L35">  35</a> ax_right.fill_betweenx(yy, kde_y(yy), alpha=0.3, color=PALETTE[1])</span>
+<span id="L36"><a href="#L36">  36</a> ax_right.plot(kde_y(yy), yy, color=PALETTE[1], linewidth=1.5)</span>
+<span id="L37"><a href="#L37">  37</a> ax_right.set_xlabel(&#x27;密度&#x27;, fontsize=9)</span>
+<span id="L38"><a href="#L38">  38</a> plt.setp(ax_right.get_yticklabels(), visible=False)</span>
+<span id="L39"><a href="#L39">  39</a> </span>
+<span id="L40"><a href="#L40">  40</a> for a in [ax_main, ax_top, ax_right]:</span>
+<span id="L41"><a href="#L41">  41</a>     a.spines[&#x27;top&#x27;].set_visible(False); a.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L42"><a href="#L42">  42</a> </span>
+<span id="L43"><a href="#L43">  43</a> fig.colorbar(sc, ax=ax_right, shrink=0.6, label=&#x27;气泡大小 Z&#x27;)</span>
+<span id="L44"><a href="#L44">  44</a> fig.tight_layout()</span>
+<span id="L45"><a href="#L45">  45</a> save_fig(fig, &#x27;figures/fig_bubble_joint.pdf&#x27;)</span>
+</pre>

@@ -1,0 +1,23 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np, matplotlib.pyplot as plt; from _utils.palette_maps import palette_cmap, palette_stops, contrast_text</span>
+<span id="L2"><a href="#L2">   2</a> import seaborn as sns</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> np.random.seed(42)</span>
+<span id="L7"><a href="#L7">   7</a> n_vars = 6</span>
+<span id="L8"><a href="#L8">   8</a> var_names = [&#x27;人均GDP&#x27;, &#x27;城镇化率&#x27;, &#x27;教育支出&#x27;, &#x27;医疗投入&#x27;, &#x27;交通密度&#x27;, &#x27;产业结构&#x27;]</span>
+<span id="L9"><a href="#L9">   9</a> data = np.random.randn(100, n_vars)</span>
+<span id="L10"><a href="#L10">  10</a> data[:, 1] = data[:, 0] * 0.8 + np.random.randn(100) * 0.3</span>
+<span id="L11"><a href="#L11">  11</a> data[:, 2] = data[:, 0] * 0.5 + np.random.randn(100) * 0.5</span>
+<span id="L12"><a href="#L12">  12</a> corr = np.corrcoef(data.T)</span>
+<span id="L13"><a href="#L13">  13</a> mask = np.triu(np.ones_like(corr, dtype=bool), k=1)</span>
+<span id="L14"><a href="#L14">  14</a> </span>
+<span id="L15"><a href="#L15">  15</a> fig, ax = plt.subplots(figsize=(7, 6))</span>
+<span id="L16"><a href="#L16">  16</a> sns.heatmap(corr, mask=mask, annot=True, fmt=&#x27;.2f&#x27;, cmap=palette_cmap(&#x27;diverging&#x27;), center=0,</span>
+<span id="L17"><a href="#L17">  17</a>             vmin=-1, vmax=1, xticklabels=var_names, yticklabels=var_names,</span>
+<span id="L18"><a href="#L18">  18</a>             linewidths=0.5, linecolor=&#x27;white&#x27;, square=True,</span>
+<span id="L19"><a href="#L19">  19</a>             cbar_kws={&#x27;shrink&#x27;: 0.8, &#x27;label&#x27;: &#x27;相关系数&#x27;}, ax=ax)</span>
+<span id="L20"><a href="#L20">  20</a> ax.set_xticklabels(var_names, fontsize=9, rotation=45, ha=&#x27;right&#x27;)</span>
+<span id="L21"><a href="#L21">  21</a> ax.set_yticklabels(var_names, fontsize=9, rotation=0)</span>
+<span id="L22"><a href="#L22">  22</a> [t.set_color(contrast_text(ax.collections[0].cmap(ax.collections[0].norm(float(t.get_text()))))) for t in ax.texts]; fig.tight_layout()</span>
+<span id="L23"><a href="#L23">  23</a> save_fig(fig, &#x27;figures/fig_correlation.pdf&#x27;)</span></pre>

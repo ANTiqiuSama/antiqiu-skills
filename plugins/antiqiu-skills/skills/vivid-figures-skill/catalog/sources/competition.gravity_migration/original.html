@@ -1,0 +1,42 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np, matplotlib.pyplot as plt</span>
+<span id="L2"><a href="#L2">   2</a> from scipy.stats import gaussian_kde</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> np.random.seed(42)</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> years = np.arange(2010, 2024)</span>
+<span id="L8"><a href="#L8">   8</a> cx = np.cumsum(np.random.normal(0.1, 0.3, len(years))) + 116.4</span>
+<span id="L9"><a href="#L9">   9</a> cy = np.cumsum(np.random.normal(-0.05, 0.2, len(years))) + 39.9</span>
+<span id="L10"><a href="#L10">  10</a> </span>
+<span id="L11"><a href="#L11">  11</a> fig, ax = plt.subplots(figsize=(7, 6))</span>
+<span id="L12"><a href="#L12">  12</a> ax.grid(True, linestyle=&#x27;--&#x27;, alpha=0.15); ax.set_axisbelow(True)</span>
+<span id="L13"><a href="#L13">  13</a> </span>
+<span id="L14"><a href="#L14">  14</a> # KDE 热力背景</span>
+<span id="L15"><a href="#L15">  15</a> kde = gaussian_kde(np.vstack([cx, cy]))</span>
+<span id="L16"><a href="#L16">  16</a> xg = np.linspace(cx.min()-0.5, cx.max()+0.5, 80)</span>
+<span id="L17"><a href="#L17">  17</a> yg = np.linspace(cy.min()-0.5, cy.max()+0.5, 80)</span>
+<span id="L18"><a href="#L18">  18</a> Xg, Yg = np.meshgrid(xg, yg)</span>
+<span id="L19"><a href="#L19">  19</a> Zg = kde(np.vstack([Xg.ravel(), Yg.ravel()])).reshape(Xg.shape)</span>
+<span id="L20"><a href="#L20">  20</a> ax.contourf(Xg, Yg, Zg, levels=8, cmap=&#x27;Blues&#x27;, alpha=0.15, zorder=0)</span>
+<span id="L21"><a href="#L21">  21</a> </span>
+<span id="L22"><a href="#L22">  22</a> # 轨迹线（带箭头）</span>
+<span id="L23"><a href="#L23">  23</a> for i in range(len(years)-1):</span>
+<span id="L24"><a href="#L24">  24</a>     alpha = 0.3 + 0.7 * i / (len(years)-1)</span>
+<span id="L25"><a href="#L25">  25</a>     ax.annotate(&#x27;&#x27;, xy=(cx[i+1], cy[i+1]), xytext=(cx[i], cy[i]),</span>
+<span id="L26"><a href="#L26">  26</a>                 arrowprops=dict(arrowstyle=&#x27;-&gt;&#x27;, color=PALETTE[0], lw=1.5, alpha=alpha))</span>
+<span id="L27"><a href="#L27">  27</a> </span>
+<span id="L28"><a href="#L28">  28</a> # 起止点</span>
+<span id="L29"><a href="#L29">  29</a> ax.scatter(cx[0], cy[0], s=120, color=COLORS[&#x27;up&#x27;], edgecolor=&#x27;white&#x27;, linewidth=2, zorder=5, label=f&#x27;起点 ({years[0]})&#x27;)</span>
+<span id="L30"><a href="#L30">  30</a> ax.scatter(cx[-1], cy[-1], s=120, color=COLORS[&#x27;down&#x27;], edgecolor=&#x27;white&#x27;, linewidth=2, zorder=5, marker=&#x27;*&#x27;, label=f&#x27;终点 ({years[-1]})&#x27;)</span>
+<span id="L31"><a href="#L31">  31</a> </span>
+<span id="L32"><a href="#L32">  32</a> # 时间标注（只标注首尾和中间几个）</span>
+<span id="L33"><a href="#L33">  33</a> for i in [0, len(years)//3, 2*len(years)//3, len(years)-1]:</span>
+<span id="L34"><a href="#L34">  34</a>     ax.text(cx[i]+0.05, cy[i]+0.05, str(years[i]), fontsize=8, fontweight=&#x27;bold&#x27;,</span>
+<span id="L35"><a href="#L35">  35</a>             bbox=dict(facecolor=&#x27;white&#x27;, alpha=0.7, edgecolor=&#x27;none&#x27;, pad=1))</span>
+<span id="L36"><a href="#L36">  36</a> </span>
+<span id="L37"><a href="#L37">  37</a> ax.set_xlabel(&#x27;经度 (°E)&#x27;, fontsize=11); ax.set_ylabel(&#x27;纬度 (°N)&#x27;, fontsize=11)</span>
+<span id="L38"><a href="#L38">  38</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=9, loc=&#x27;best&#x27;)</span>
+<span id="L39"><a href="#L39">  39</a> ax.spines[&#x27;top&#x27;].set_visible(False); ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L40"><a href="#L40">  40</a> fig.tight_layout()</span>
+<span id="L41"><a href="#L41">  41</a> save_fig(fig, &#x27;figures/fig_centroid_migration.pdf&#x27;)</span>
+</pre>

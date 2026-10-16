@@ -1,0 +1,19 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 103,
+  "code_pages": [
+    104,
+    105
+  ],
+  "all_pages": [
+    103,
+    104,
+    105
+  ],
+  "changes": [
+    "恢复全部可见绘图层与示例数据；调整导入、缩进、标签或输出边距以兼容当前运行环境。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

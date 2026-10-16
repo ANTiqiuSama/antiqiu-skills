@@ -1,0 +1,20 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 11,
+  "code_pages": [
+    12,
+    13
+  ],
+  "all_pages": [
+    11,
+    12,
+    13
+  ],
+  "changes": [
+    "从012–013恢复树形演示数据和Plotly Sunburst；取消演示时向当前目录写出data.csv的副作用。",
+    "使用Plotly交互显示；预览通过Kaleido导出，画布和边距适配截图检查。3D PDF内部仍含栅格渲染。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

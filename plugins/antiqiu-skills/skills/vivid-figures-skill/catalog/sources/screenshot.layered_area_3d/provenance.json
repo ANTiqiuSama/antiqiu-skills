@@ -1,0 +1,18 @@
+{
+  "source_type": "partial_code",
+  "status": "部分代码恢复，缺失段按图补全",
+  "attribution": "小明的代码美学",
+  "figure_page": 9,
+  "code_pages": [
+    7
+  ],
+  "all_pages": [
+    7,
+    9
+  ],
+  "changes": [
+    "仅有007的CSV读取和函数起始页；保留可见读取函数，绘图部分按009效果图重建。",
+    "原CSV未附带，示例水位为手工合成；统一900m基座、六层透明填充与独立轮廓。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

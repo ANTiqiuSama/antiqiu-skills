@@ -1,0 +1,8 @@
+{
+  "source_type": "user_reference_reproduction",
+  "reference_sha256": "73b9d3d2a9012ae32f6ccc72da13ef4ba9bbc97888eb6b788a9db72bf39e7a20",
+  "reproduction_sha256": "43e5b762c12793ef3085e93083f00876c357187c2cd2bc0989a6b75d582245ad",
+  "data_sha256": "0dcdf812b3939a474d24cb9322eaa023a2f89c6032650556f1e40299e2040b44",
+  "heights": "66 values transcribed from reference labels",
+  "uncertainty": "illustrative only in demo; custom data requires explicit errors"
+}

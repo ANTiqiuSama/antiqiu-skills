@@ -1,0 +1,57 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> np.random.seed(42)</span>
+<span id="L7"><a href="#L7">   7</a> n = 20</span>
+<span id="L8"><a href="#L8">   8</a> labels = [&#x27;Before&#x27;, &#x27;After&#x27;]</span>
+<span id="L9"><a href="#L9">   9</a> before = np.random.normal(75, 8, n)</span>
+<span id="L10"><a href="#L10">  10</a> after = before + np.random.normal(5, 4, n)  # general improvement with variance</span>
+<span id="L11"><a href="#L11">  11</a> </span>
+<span id="L12"><a href="#L12">  12</a> fig, ax = plt.subplots(figsize=(5, 6))</span>
+<span id="L13"><a href="#L13">  13</a> </span>
+<span id="L14"><a href="#L14">  14</a> # Individual paired lines</span>
+<span id="L15"><a href="#L15">  15</a> for i in range(n):</span>
+<span id="L16"><a href="#L16">  16</a>     color = PALETTE[0] if after[i] &gt; before[i] else PALETTE[1]</span>
+<span id="L17"><a href="#L17">  17</a>     ax.plot([0, 1], [before[i], after[i]], color=color, alpha=0.35,</span>
+<span id="L18"><a href="#L18">  18</a>             linewidth=1.2, zorder=2)</span>
+<span id="L19"><a href="#L19">  19</a>     ax.scatter([0, 1], [before[i], after[i]], color=color, s=30,</span>
+<span id="L20"><a href="#L20">  20</a>                edgecolors=&#x27;white&#x27;, linewidths=0.5, zorder=3, alpha=0.6)</span>
+<span id="L21"><a href="#L21">  21</a> </span>
+<span id="L22"><a href="#L22">  22</a> # Mean markers (large, prominent)</span>
+<span id="L23"><a href="#L23">  23</a> mean_before, mean_after = before.mean(), after.mean()</span>
+<span id="L24"><a href="#L24">  24</a> ax.scatter(0, mean_before, s=200, color=PALETTE[1], marker=&#x27;D&#x27;,</span>
+<span id="L25"><a href="#L25">  25</a>            edgecolors=&#x27;white&#x27;, linewidths=2, zorder=5, label=f&#x27;Mean Before: {mean_before:.1f}&#x27;)</span>
+<span id="L26"><a href="#L26">  26</a> ax.scatter(1, mean_after, s=200, color=PALETTE[0], marker=&#x27;D&#x27;,</span>
+<span id="L27"><a href="#L27">  27</a>            edgecolors=&#x27;white&#x27;, linewidths=2, zorder=5, label=f&#x27;Mean After: {mean_after:.1f}&#x27;)</span>
+<span id="L28"><a href="#L28">  28</a> </span>
+<span id="L29"><a href="#L29">  29</a> # Mean shift arrow</span>
+<span id="L30"><a href="#L30">  30</a> ax.annotate(&#x27;&#x27;, xy=(1, mean_after), xytext=(0, mean_before),</span>
+<span id="L31"><a href="#L31">  31</a>             arrowprops=dict(arrowstyle=&#x27;-&gt;&#x27;, color=COLORS[&#x27;text&#x27;], lw=2.5,</span>
+<span id="L32"><a href="#L32">  32</a>                             connectionstyle=&#x27;arc3,rad=0.15&#x27;))</span>
+<span id="L33"><a href="#L33">  33</a> delta = mean_after - mean_before</span>
+<span id="L34"><a href="#L34">  34</a> ax.text(0.5, (mean_before + mean_after) / 2 + 2,</span>
+<span id="L35"><a href="#L35">  35</a>         f&#x27;Δ = +{delta:.1f}&#x27;, ha=&#x27;center&#x27;, fontsize=10, fontweight=&#x27;bold&#x27;,</span>
+<span id="L36"><a href="#L36">  36</a>         color=PALETTE[0],</span>
+<span id="L37"><a href="#L37">  37</a>         bbox=dict(boxstyle=&#x27;round,pad=0.3&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L38"><a href="#L38">  38</a>                   edgecolor=PALETTE[0], alpha=0.9))</span>
+<span id="L39"><a href="#L39">  39</a> </span>
+<span id="L40"><a href="#L40">  40</a> # Significance annotation</span>
+<span id="L41"><a href="#L41">  41</a> from scipy import stats</span>
+<span id="L42"><a href="#L42">  42</a> t_stat, p_val = stats.ttest_rel(after, before)</span>
+<span id="L43"><a href="#L43">  43</a> sig_text = f&#x27;p = {p_val:.4f}&#x27; if p_val &gt;= 0.001 else &#x27;p &lt; 0.001&#x27;</span>
+<span id="L44"><a href="#L44">  44</a> ax.text(0.5, max(max(before), max(after)) + 4, sig_text,</span>
+<span id="L45"><a href="#L45">  45</a>         ha=&#x27;center&#x27;, fontsize=9, fontstyle=&#x27;italic&#x27;, color=COLORS[&#x27;text&#x27;])</span>
+<span id="L46"><a href="#L46">  46</a> </span>
+<span id="L47"><a href="#L47">  47</a> ax.set_xticks([0, 1])</span>
+<span id="L48"><a href="#L48">  48</a> ax.set_xticklabels(labels, fontsize=12, fontweight=&#x27;bold&#x27;)</span>
+<span id="L49"><a href="#L49">  49</a> ax.set_ylabel(&#x27;Score&#x27;, fontsize=11)</span>
+<span id="L50"><a href="#L50">  50</a> ax.set_xlim(-0.4, 1.4)</span>
+<span id="L51"><a href="#L51">  51</a> ax.legend(loc=&#x27;lower right&#x27;, fontsize=8, frameon=False, edgecolor=COLORS[&#x27;grid&#x27;])</span>
+<span id="L52"><a href="#L52">  52</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L53"><a href="#L53">  53</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L54"><a href="#L54">  54</a> ax.grid(axis=&#x27;y&#x27;, alpha=0.1, linestyle=&#x27;--&#x27;)</span>
+<span id="L55"><a href="#L55">  55</a> fig.tight_layout()</span>
+<span id="L56"><a href="#L56">  56</a> save_fig(fig, &#x27;figures/fig_paired_dot.pdf&#x27;)</span>
+</pre>

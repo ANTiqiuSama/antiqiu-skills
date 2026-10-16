@@ -1,0 +1,39 @@
+<!doctype html><meta charset="utf-8"><title>阶梯折线与区间带 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>阶梯折线与区间带</h1><p>代码截图恢复与适配 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;阶梯折线与区间带</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [85, 86].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 小明的代码美学 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> import matplotlib.ticker as ticker</span>
+<span id="L18"><a href="#L18">  18</a> x=np.arange(1860,2020)</span>
+<span id="L19"><a href="#L19">  19</a> np.random.seed(3)</span>
+<span id="L20"><a href="#L20">  20</a> y1=np.random.uniform(20,30,len(x))+10*np.sin(np.linspace(0,3*np.pi,len(x)))</span>
+<span id="L21"><a href="#L21">  21</a> y2=np.random.uniform(50,55,len(x))+5*np.sin(np.linspace(0,3*np.pi,len(x)))</span>
+<span id="L22"><a href="#L22">  22</a> y3=np.random.uniform(80,85,len(x))+7*np.sin(np.linspace(0,3*np.pi,len(x)))</span>
+<span id="L23"><a href="#L23">  23</a> # Widths are synthetic illustration intervals, not estimated confidence intervals.</span>
+<span id="L24"><a href="#L24">  24</a> ci1=np.random.uniform(4,5,len(x));ci2=np.random.uniform(4,7,len(x));ci3=np.random.uniform(5,9,len(x))</span>
+<span id="L25"><a href="#L25">  25</a> line_colors=[&#x27;#8e93af&#x27;,&#x27;#d7a6b3&#x27;,&#x27;#eac890&#x27;];edge_colors=[&#x27;#3f51af&#x27;,&#x27;#d7607e&#x27;,&#x27;#eab159&#x27;]</span>
+<span id="L26"><a href="#L26">  26</a> fig,ax=plt.subplots(figsize=(10,5),dpi=150)</span>
+<span id="L27"><a href="#L27">  27</a> ax.set_facecolor(&#x27;#f4f6f8&#x27;)</span>
+<span id="L28"><a href="#L28">  28</a> for i,(y,ci,fill_color,line_color) in enumerate(zip([y1,y2,y3],[ci1,ci2,ci3],line_colors,edge_colors)):</span>
+<span id="L29"><a href="#L29">  29</a>     ax.step(x,y,label=f&#x27;类别{chr(65+i)}&#x27;,linewidth=1,where=&#x27;mid&#x27;,color=line_color,zorder=3)</span>
+<span id="L30"><a href="#L30">  30</a>     ax.fill_between(x,y-ci,y+ci,label=f&#x27;示意区间{chr(65+i)}&#x27;,alpha=.4,step=&#x27;mid&#x27;,color=fill_color,zorder=3 if i&lt;2 else 2)</span>
+<span id="L31"><a href="#L31">  31</a> ax.text(1940,5,&#x27;低值期&#x27;,ha=&#x27;center&#x27;,color=&#x27;#3f51af&#x27;,fontweight=&#x27;bold&#x27;)</span>
+<span id="L32"><a href="#L32">  32</a> ax.text(2000,80,&#x27;高值期&#x27;,ha=&#x27;center&#x27;,color=&#x27;#eab159&#x27;,fontweight=&#x27;bold&#x27;)</span>
+<span id="L33"><a href="#L33">  33</a> ax.set(xlim=(1860,2020),ylim=(0,120))</span>
+<span id="L34"><a href="#L34">  34</a> ax.legend(loc=&#x27;upper right&#x27;,ncols=3,frameon=False)</span>
+<span id="L35"><a href="#L35">  35</a> ax.grid(axis=&#x27;y&#x27;,which=&#x27;major&#x27;,linestyle=&#x27;-&#x27;,linewidth=1,color=&#x27;white&#x27;,zorder=1)</span>
+<span id="L36"><a href="#L36">  36</a> ax.xaxis.set_major_locator(ticker.MultipleLocator(10))</span>
+<span id="L37"><a href="#L37">  37</a> ax.set_title(&#x27;阶梯趋势及区间带（合成数据）&#x27;,loc=&#x27;left&#x27;)</span>
+<span id="L38"><a href="#L38">  38</a> plt.tight_layout();plt.show()</span>
+<span id="L39"><a href="#L39">  39</a> </span></pre>

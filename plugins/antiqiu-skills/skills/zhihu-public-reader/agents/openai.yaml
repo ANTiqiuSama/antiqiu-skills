@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zhihu Public Reader"
+  short_description: "Safely read public Zhihu content through zhihu-cli"
+  default_prompt: "Use $zhihu-public-reader to read and analyze a public Zhihu answer with safe CLI fallbacks."

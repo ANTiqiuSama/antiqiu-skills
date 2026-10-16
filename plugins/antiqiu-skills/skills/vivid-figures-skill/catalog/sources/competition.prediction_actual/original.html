@@ -1,0 +1,40 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np, matplotlib.pyplot as plt</span>
+<span id="L2"><a href="#L2">   2</a> from scipy.stats import gaussian_kde, norm</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> np.random.seed(42)</span>
+<span id="L6"><a href="#L6">   6</a> n = 200</span>
+<span id="L7"><a href="#L7">   7</a> actual = np.random.uniform(10, 100, n)</span>
+<span id="L8"><a href="#L8">   8</a> predicted = actual + np.random.normal(0, 5, n)</span>
+<span id="L9"><a href="#L9">   9</a> residuals = predicted - actual</span>
+<span id="L10"><a href="#L10">  10</a> r2 = 1 - np.sum(residuals**2)/np.sum((actual-actual.mean())**2)</span>
+<span id="L11"><a href="#L11">  11</a> rmse = np.sqrt(np.mean(residuals**2))</span>
+<span id="L12"><a href="#L12">  12</a> </span>
+<span id="L13"><a href="#L13">  13</a> fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(6, 7), height_ratios=[3, 1], sharex=False)</span>
+<span id="L14"><a href="#L14">  14</a> # 上方：预测 vs 实际</span>
+<span id="L15"><a href="#L15">  15</a> ax1.grid(True, linestyle=&#x27;--&#x27;, alpha=0.15); ax1.set_axisbelow(True)</span>
+<span id="L16"><a href="#L16">  16</a> kde = gaussian_kde(np.vstack([actual, predicted]))</span>
+<span id="L17"><a href="#L17">  17</a> xg = np.linspace(5, 105, 100); yg = np.linspace(5, 105, 100)</span>
+<span id="L18"><a href="#L18">  18</a> Xg, Yg = np.meshgrid(xg, yg)</span>
+<span id="L19"><a href="#L19">  19</a> Zg = kde(np.vstack([Xg.ravel(), Yg.ravel()])).reshape(Xg.shape)</span>
+<span id="L20"><a href="#L20">  20</a> ax1.contourf(Xg, Yg, Zg, levels=8, cmap=&#x27;Blues&#x27;, alpha=0.2, zorder=0)</span>
+<span id="L21"><a href="#L21">  21</a> ax1.scatter(actual, predicted, s=18, alpha=0.5, color=PALETTE[0], edgecolor=&#x27;white&#x27;, linewidth=0.3, zorder=2)</span>
+<span id="L22"><a href="#L22">  22</a> ax1.plot([5,105],[5,105], &#x27;--&#x27;, color=COLORS[&#x27;down&#x27;], linewidth=1.2, label=&#x27;完美拟合线&#x27;, zorder=3)</span>
+<span id="L23"><a href="#L23">  23</a> ax1.fill_between([5,105],[0,100],[10,110], alpha=0.06, color=PALETTE[0])</span>
+<span id="L24"><a href="#L24">  24</a> ax1.text(0.05, 0.92, f&#x27;R² = {r2:.4f}\nRMSE = {rmse:.2f}&#x27;, transform=ax1.transAxes, fontsize=10,</span>
+<span id="L25"><a href="#L25">  25</a>          verticalalignment=&#x27;top&#x27;, bbox=dict(boxstyle=&#x27;round,pad=0.4&#x27;, facecolor=&#x27;white&#x27;, edgecolor=COLORS[&#x27;grid&#x27;], alpha=0.9))</span>
+<span id="L26"><a href="#L26">  26</a> ax1.set_xlabel(&#x27;实际值&#x27;, fontsize=11); ax1.set_ylabel(&#x27;预测值&#x27;, fontsize=11)</span>
+<span id="L27"><a href="#L27">  27</a> ax1.spines[&#x27;top&#x27;].set_visible(False); ax1.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L28"><a href="#L28">  28</a> ax1.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=9)</span>
+<span id="L29"><a href="#L29">  29</a> # 下方：残差分布</span>
+<span id="L30"><a href="#L30">  30</a> ax2.grid(True, linestyle=&#x27;--&#x27;, alpha=0.15); ax2.set_axisbelow(True)</span>
+<span id="L31"><a href="#L31">  31</a> ax2.hist(residuals, bins=25, density=True, color=_lighten(PALETTE[0], 0.4), alpha=0.5, edgecolor=PALETTE[0], linewidth=0.8)</span>
+<span id="L32"><a href="#L32">  32</a> xr = np.linspace(residuals.min()-2, residuals.max()+2, 100)</span>
+<span id="L33"><a href="#L33">  33</a> ax2.plot(xr, norm.pdf(xr, residuals.mean(), residuals.std()), color=PALETTE[1], linewidth=2, label=&#x27;正态拟合&#x27;)</span>
+<span id="L34"><a href="#L34">  34</a> ax2.axvline(x=0, color=COLORS[&#x27;ref_line&#x27;], linewidth=0.8, linestyle=&#x27;--&#x27;)</span>
+<span id="L35"><a href="#L35">  35</a> ax2.set_xlabel(&#x27;残差&#x27;, fontsize=11); ax2.set_ylabel(&#x27;密度&#x27;, fontsize=11)</span>
+<span id="L36"><a href="#L36">  36</a> ax2.spines[&#x27;top&#x27;].set_visible(False); ax2.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L37"><a href="#L37">  37</a> ax2.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=9)</span>
+<span id="L38"><a href="#L38">  38</a> fig.tight_layout()</span>
+<span id="L39"><a href="#L39">  39</a> save_fig(fig, &#x27;figures/fig_pred_vs_actual.pdf&#x27;)</span>
+</pre>

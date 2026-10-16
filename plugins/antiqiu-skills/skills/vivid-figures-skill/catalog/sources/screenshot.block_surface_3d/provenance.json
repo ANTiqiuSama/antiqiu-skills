@@ -1,0 +1,22 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 42,
+  "code_pages": [
+    43,
+    44,
+    45
+  ],
+  "all_pages": [
+    42,
+    43,
+    44,
+    45
+  ],
+  "changes": [
+    "原标题称三维直方图，但高度来自连续合成曲面；卡片称方柱曲面，真实频数需先分箱计数。",
+    "使用Plotly交互显示；预览通过Kaleido导出，画布和边距适配截图检查。3D PDF内部仍含栅格渲染。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

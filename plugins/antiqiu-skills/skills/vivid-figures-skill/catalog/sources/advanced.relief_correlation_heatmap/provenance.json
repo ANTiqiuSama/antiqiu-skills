@@ -1,0 +1,9 @@
+{
+  "source_type": "image_only_reconstruction",
+  "reference_sha256": "5675449c3e4b4f663b236207df8f1dd6526f9e2f6b86f4d4f6880ebd19d8826b",
+  "original_code_provided": false,
+  "original_data_provided": false,
+  "author": "unverified",
+  "demo": "Pearson matrix computed from 360 synthetic observations, 23 variables, seed 20260916",
+  "height_rule": "declared design choice, not recovered from image"
+}

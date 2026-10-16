@@ -1,0 +1,6 @@
+interface:
+  display_name: "滚动目标 Prompt 与 SSoT"
+  short_description: "长程任务维护可执行目标 Prompt，随证据修订，供交接并逐项反查完成"
+  default_prompt: "使用 $rolling-goal-prompt，把我的目标整理为可执行 SSoT，随新材料、缺口和判断边界滚动更新，并用于 worker 交接与最终完成反查。"
+policy:
+  allow_implicit_invocation: true

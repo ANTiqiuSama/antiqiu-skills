@@ -1,0 +1,11 @@
+--- original.py
++++ render.py
+@@ -25,7 +25,7 @@
+         offset = (i - len(methods) / 2 + 0.5) * width
+         color = cmap(norm(scores[i, j]))
+         bar = ax.bar(x[j] + offset, scores[i, j], width, yerr=stds[i, j], capsize=3,
+-                      color=_lighten(color, 0.35), edgecolor=color, linewidth=1.0,
++                      color=_lighten(mcolors.to_hex(color), 0.35), edgecolor=color, linewidth=1.0,
+                       error_kw={'elinewidth': 0.8, 'capthick': 0.6})
+ 
+         # Rank number on top

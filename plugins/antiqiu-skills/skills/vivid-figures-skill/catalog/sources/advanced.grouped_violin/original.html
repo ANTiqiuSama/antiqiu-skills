@@ -1,0 +1,61 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> np.random.seed(42)</span>
+<span id="L7"><a href="#L7">   7</a> categories = [&#x27;Dataset A&#x27;, &#x27;Dataset B&#x27;, &#x27;Dataset C&#x27;, &#x27;Dataset D&#x27;]</span>
+<span id="L8"><a href="#L8">   8</a> group_names = [&#x27;Ours&#x27;, &#x27;Baseline-1&#x27;, &#x27;Baseline-2&#x27;]</span>
+<span id="L9"><a href="#L9">   9</a> n_groups = len(group_names)</span>
+<span id="L10"><a href="#L10">  10</a> </span>
+<span id="L11"><a href="#L11">  11</a> # Generate sample data (replace with real results)</span>
+<span id="L12"><a href="#L12">  12</a> all_data = {}</span>
+<span id="L13"><a href="#L13">  13</a> for g, gname in enumerate(group_names):</span>
+<span id="L14"><a href="#L14">  14</a>     all_data[gname] = []</span>
+<span id="L15"><a href="#L15">  15</a>     for c in range(len(categories)):</span>
+<span id="L16"><a href="#L16">  16</a>         center = 80 + g * (-3) + c * 2 + np.random.randn()</span>
+<span id="L17"><a href="#L17">  17</a>         d = np.random.normal(center, 3 + g, 50)</span>
+<span id="L18"><a href="#L18">  18</a>         all_data[gname].append(d)</span>
+<span id="L19"><a href="#L19">  19</a> </span>
+<span id="L20"><a href="#L20">  20</a> fig, ax = plt.subplots(figsize=(9, 5))</span>
+<span id="L21"><a href="#L21">  21</a> width = 0.25</span>
+<span id="L22"><a href="#L22">  22</a> positions_base = np.arange(len(categories))</span>
+<span id="L23"><a href="#L23">  23</a> </span>
+<span id="L24"><a href="#L24">  24</a> for g, gname in enumerate(group_names):</span>
+<span id="L25"><a href="#L25">  25</a>     positions = positions_base + (g - n_groups / 2 + 0.5) * width</span>
+<span id="L26"><a href="#L26">  26</a>     color = PALETTE[g % len(PALETTE)]</span>
+<span id="L27"><a href="#L27">  27</a>     light = _lighten(color, 0.4)</span>
+<span id="L28"><a href="#L28">  28</a> </span>
+<span id="L29"><a href="#L29">  29</a>     parts = ax.violinplot(all_data[gname], positions=positions,</span>
+<span id="L30"><a href="#L30">  30</a>                           widths=width * 0.85, showmeans=False,</span>
+<span id="L31"><a href="#L31">  31</a>                           showmedians=False, showextrema=False)</span>
+<span id="L32"><a href="#L32">  32</a> </span>
+<span id="L33"><a href="#L33">  33</a>     for pc in parts[&#x27;bodies&#x27;]:</span>
+<span id="L34"><a href="#L34">  34</a>         pc.set_facecolor(light)</span>
+<span id="L35"><a href="#L35">  35</a>         pc.set_edgecolor(color)</span>
+<span id="L36"><a href="#L36">  36</a>         pc.set_linewidth(1.2)</span>
+<span id="L37"><a href="#L37">  37</a>         pc.set_alpha(0.8)</span>
+<span id="L38"><a href="#L38">  38</a> </span>
+<span id="L39"><a href="#L39">  39</a>     # Add median + quartile lines manually</span>
+<span id="L40"><a href="#L40">  40</a>     for i, d in enumerate(all_data[gname]):</span>
+<span id="L41"><a href="#L41">  41</a>         q1, med, q3 = np.percentile(d, [25, 50, 75])</span>
+<span id="L42"><a href="#L42">  42</a>         pos = positions[i]</span>
+<span id="L43"><a href="#L43">  43</a>         # Median dot</span>
+<span id="L44"><a href="#L44">  44</a>         ax.scatter(pos, med, color=color, s=30, zorder=5,</span>
+<span id="L45"><a href="#L45">  45</a>                    edgecolors=&#x27;white&#x27;, linewidths=0.8)</span>
+<span id="L46"><a href="#L46">  46</a>         # Quartile whisker</span>
+<span id="L47"><a href="#L47">  47</a>         ax.vlines(pos, q1, q3, color=color, linewidth=2.5, zorder=4)</span>
+<span id="L48"><a href="#L48">  48</a> </span>
+<span id="L49"><a href="#L49">  49</a>     # Invisible scatter for legend</span>
+<span id="L50"><a href="#L50">  50</a>     ax.scatter([], [], color=color, s=60, label=gname, edgecolors=&#x27;white&#x27;)</span>
+<span id="L51"><a href="#L51">  51</a> </span>
+<span id="L52"><a href="#L52">  52</a> ax.set_xticks(positions_base)</span>
+<span id="L53"><a href="#L53">  53</a> ax.set_xticklabels(categories, fontsize=10)</span>
+<span id="L54"><a href="#L54">  54</a> ax.set_ylabel(&#x27;Score&#x27;, fontsize=11)</span>
+<span id="L55"><a href="#L55">  55</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=9)</span>
+<span id="L56"><a href="#L56">  56</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L57"><a href="#L57">  57</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L58"><a href="#L58">  58</a> ax.grid(axis=&#x27;y&#x27;, alpha=0.1, linestyle=&#x27;--&#x27;)</span>
+<span id="L59"><a href="#L59">  59</a> fig.tight_layout()</span>
+<span id="L60"><a href="#L60">  60</a> save_fig(fig, &#x27;figures/fig_grouped_violin.pdf&#x27;)</span>
+</pre>

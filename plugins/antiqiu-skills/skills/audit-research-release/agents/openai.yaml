@@ -1,0 +1,4 @@
+interface:
+  display_name: "Audit Research Release"
+  short_description: "Independently audit evidence and manuscript readiness"
+  default_prompt: "Use $audit-research-release to independently verify whether this research package is ready for release."

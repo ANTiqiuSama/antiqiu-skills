@@ -1,0 +1,56 @@
+<!doctype html><meta charset="utf-8"><title>双向峰形河流图 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>双向峰形河流图</h1><p>代码截图恢复与适配 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;双向峰形河流图</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [8, 88, 89, 90].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 小明的代码美学 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> import matplotlib.ticker as ticker</span>
+<span id="L18"><a href="#L18">  18</a> from matplotlib.colors import ListedColormap, BoundaryNorm</span>
+<span id="L19"><a href="#L19">  19</a> def generate_single_weighted_random(scale=1.5,lower=1,upper=10):</span>
+<span id="L20"><a href="#L20">  20</a>     return np.clip(np.random.exponential(scale)+lower,lower,upper)</span>
+<span id="L21"><a href="#L21">  21</a> def create_smooth_peak_data(x,start,peak,end,max_value):</span>
+<span id="L22"><a href="#L22">  22</a>     y=np.zeros_like(x)</span>
+<span id="L23"><a href="#L23">  23</a>     rising=(x&gt;=start)&amp;(x&lt;=peak);sigma_rise=(peak-start)/3</span>
+<span id="L24"><a href="#L24">  24</a>     y[rising]=max_value*np.exp(-((x[rising]-peak)**2)/(2*sigma_rise**2))</span>
+<span id="L25"><a href="#L25">  25</a>     falling=(x&gt;peak)&amp;(x&lt;=end);sigma_fall=(end-peak)/3</span>
+<span id="L26"><a href="#L26">  26</a>     y[falling]=max_value*np.exp(-((x[falling]-peak)**2)/(2*sigma_fall**2))</span>
+<span id="L27"><a href="#L27">  27</a>     return y</span>
+<span id="L28"><a href="#L28">  28</a> hex_colors=[&#x27;#214e81&#x27;,&#x27;#456991&#x27;,&#x27;#6983a2&#x27;,&#x27;#8d9eb2&#x27;,&#x27;#dc9fb0&#x27;,&#x27;#cf8b9e&#x27;,&#x27;#c2768b&#x27;,&#x27;#a55d75&#x27;]</span>
+<span id="L29"><a href="#L29">  29</a> thresholds=[5,7.5,8,12,15,20,25]</span>
+<span id="L30"><a href="#L30">  30</a> def assign_color(value):return hex_colors[sum(value&gt;t for t in thresholds)]</span>
+<span id="L31"><a href="#L31">  31</a> np.random.seed(30)</span>
+<span id="L32"><a href="#L32">  32</a> x=np.linspace(0,800,800)</span>
+<span id="L33"><a href="#L33">  33</a> y_list,color_list,categories=[],[],[]</span>
+<span id="L34"><a href="#L34">  34</a> def generate_data(num_categories,start_base,peak_base,end_base,interval,direction):</span>
+<span id="L35"><a href="#L35">  35</a>     for i in range(num_categories):</span>
+<span id="L36"><a href="#L36">  36</a>         offset=i*interval if direction==&#x27;forward&#x27; else -i*interval</span>
+<span id="L37"><a href="#L37">  37</a>         max_value=generate_single_weighted_random(6,1,10000)</span>
+<span id="L38"><a href="#L38">  38</a>         y_list.append(create_smooth_peak_data(x,start_base+offset,peak_base+offset,end_base+offset,max_value))</span>
+<span id="L39"><a href="#L39">  39</a>         color_list.append(assign_color(max_value));categories.append(f&#x27;类别{len(categories)+1}&#x27;)</span>
+<span id="L40"><a href="#L40">  40</a> generate_data(72,720,740,820,10,&#x27;backward&#x27;);generate_data(72,0,20,100,10,&#x27;forward&#x27;)</span>
+<span id="L41"><a href="#L41">  41</a> y_list=np.array(y_list)</span>
+<span id="L42"><a href="#L42">  42</a> fig,ax=plt.subplots(figsize=(10,5),dpi=150)</span>
+<span id="L43"><a href="#L43">  43</a> polys=ax.stackplot(x,y_list,colors=color_list,labels=categories,zorder=10,alpha=1,baseline=&#x27;wiggle&#x27;)</span>
+<span id="L44"><a href="#L44">  44</a> for poly in polys:</span>
+<span id="L45"><a href="#L45">  45</a>     verts=poly.get_paths()[0].vertices</span>
+<span id="L46"><a href="#L46">  46</a>     ax.plot(verts[:,0],verts[:,1],color=&#x27;white&#x27;,zorder=20,linewidth=.5)</span>
+<span id="L47"><a href="#L47">  47</a> # Colors are discrete peak-amplitude bins in the original; show matching bin boundaries.</span>
+<span id="L48"><a href="#L48">  48</a> cmap=ListedColormap(hex_colors);norm=BoundaryNorm([0,*thresholds,40],cmap.N)</span>
+<span id="L49"><a href="#L49">  49</a> cb=fig.colorbar(ScalarMappable(norm=norm,cmap=cmap),ax=ax,orientation=&#x27;vertical&#x27;,pad=.01,fraction=.05,extend=&#x27;max&#x27;)</span>
+<span id="L50"><a href="#L50">  50</a> cb.set_label(&#x27;序列峰值分档&#x27;);cb.ax.tick_params(size=0)</span>
+<span id="L51"><a href="#L51">  51</a> ax.grid(axis=&#x27;x&#x27;,which=&#x27;major&#x27;,linestyle=&#x27;-&#x27;,linewidth=1,color=&#x27;white&#x27;)</span>
+<span id="L52"><a href="#L52">  52</a> ax.xaxis.set_major_locator(ticker.MultipleLocator(100))</span>
+<span id="L53"><a href="#L53">  53</a> ax.set_xticks(range(0,801,100),range(2020,2029));ax.set(ylim=(-75,75),yticks=[])</span>
+<span id="L54"><a href="#L54">  54</a> ax.set_title(&#x27;双向峰形河流图&#x27;,loc=&#x27;left&#x27;)</span>
+<span id="L55"><a href="#L55">  55</a> plt.tight_layout();plt.show()</span>
+<span id="L56"><a href="#L56">  56</a> </span></pre>

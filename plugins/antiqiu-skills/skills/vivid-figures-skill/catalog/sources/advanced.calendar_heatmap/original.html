@@ -1,0 +1,78 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np; from _utils.vivid_config import palette_colors</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from matplotlib.patches import Rectangle</span>
+<span id="L4"><a href="#L4">   4</a> from matplotlib.colors import LinearSegmentedColormap</span>
+<span id="L5"><a href="#L5">   5</a> from datetime import date, timedelta</span>
+<span id="L6"><a href="#L6">   6</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L7"><a href="#L7">   7</a> </span>
+<span id="L8"><a href="#L8">   8</a> setup_style(); scale_colors = palette_colors()</span>
+<span id="L9"><a href="#L9">   9</a> np.random.seed(42)</span>
+<span id="L10"><a href="#L10">  10</a> </span>
+<span id="L11"><a href="#L11">  11</a> # === 模拟一年的日数据（周末偏低，月底偏高，几个事件峰值）===</span>
+<span id="L12"><a href="#L12">  12</a> start = date(2024, 1, 1)</span>
+<span id="L13"><a href="#L13">  13</a> n_days = 366</span>
+<span id="L14"><a href="#L14">  14</a> daily = np.random.gamma(2.0, 1.2, n_days)  # 基线</span>
+<span id="L15"><a href="#L15">  15</a> for i in range(n_days):</span>
+<span id="L16"><a href="#L16">  16</a>     d = start + timedelta(days=i)</span>
+<span id="L17"><a href="#L17">  17</a>     if d.weekday() &gt;= 5: daily[i] *= 0.55  # 周末</span>
+<span id="L18"><a href="#L18">  18</a>     if d.day &gt;= 28: daily[i] *= 1.3  # 月底</span>
+<span id="L19"><a href="#L19">  19</a> # 几个事件峰值</span>
+<span id="L20"><a href="#L20">  20</a> for ev in [40, 95, 180, 290]:</span>
+<span id="L21"><a href="#L21">  21</a>     daily[ev:ev+3] *= 2.5</span>
+<span id="L22"><a href="#L22">  22</a> </span>
+<span id="L23"><a href="#L23">  23</a> # === 转 7×53 矩阵：行=周中第几天（周一-周日），列=年中第几周 ===</span>
+<span id="L24"><a href="#L24">  24</a> grid = np.full((7, 54), np.nan)</span>
+<span id="L25"><a href="#L25">  25</a> month_starts = []  # 记录每月第一天位置（用于画分隔线）</span>
+<span id="L26"><a href="#L26">  26</a> for i in range(n_days):</span>
+<span id="L27"><a href="#L27">  27</a>     d = start + timedelta(days=i)</span>
+<span id="L28"><a href="#L28">  28</a>     week = int(d.strftime(&#x27;%W&#x27;))  # ISO 周</span>
+<span id="L29"><a href="#L29">  29</a>     weekday = d.weekday()  # 0=Mon</span>
+<span id="L30"><a href="#L30">  30</a>     grid[weekday, week] = daily[i]</span>
+<span id="L31"><a href="#L31">  31</a>     if d.day == 1:</span>
+<span id="L32"><a href="#L32">  32</a>         month_starts.append((d.month, week, weekday))</span>
+<span id="L33"><a href="#L33">  33</a> </span>
+<span id="L34"><a href="#L34">  34</a> # === 主色调渐变 colormap（用原色序首色的浅→深）===</span>
+<span id="L35"><a href="#L35">  35</a> base = scale_colors[0]</span>
+<span id="L36"><a href="#L36">  36</a> cmap_calendar = LinearSegmentedColormap.from_list(</span>
+<span id="L37"><a href="#L37">  37</a>     &#x27;cal&#x27;, [_lighten(base, 0.92), _lighten(base, 0.5), base, _lighten(base, -0.15) if False else base],</span>
+<span id="L38"><a href="#L38">  38</a>     N=128</span>
+<span id="L39"><a href="#L39">  39</a> )</span>
+<span id="L40"><a href="#L40">  40</a> </span>
+<span id="L41"><a href="#L41">  41</a> fig, ax = plt.subplots(figsize=(11, 2.6))</span>
+<span id="L42"><a href="#L42">  42</a> im = ax.imshow(grid, aspect=&#x27;equal&#x27;, cmap=cmap_calendar, vmin=0,</span>
+<span id="L43"><a href="#L43">  43</a>                vmax=np.nanpercentile(grid, 98))</span>
+<span id="L44"><a href="#L44">  44</a> </span>
+<span id="L45"><a href="#L45">  45</a> # === 月份分隔线 + 月名标注 ===</span>
+<span id="L46"><a href="#L46">  46</a> month_names = [&#x27;1月&#x27;, &#x27;2月&#x27;, &#x27;3月&#x27;, &#x27;4月&#x27;, &#x27;5月&#x27;, &#x27;6月&#x27;,</span>
+<span id="L47"><a href="#L47">  47</a>                &#x27;7月&#x27;, &#x27;8月&#x27;, &#x27;9月&#x27;, &#x27;10月&#x27;, &#x27;11月&#x27;, &#x27;12月&#x27;]</span>
+<span id="L48"><a href="#L48">  48</a> for m, wk, _ in month_starts:</span>
+<span id="L49"><a href="#L49">  49</a>     ax.axvline(wk - 0.5, color=COLORS[&#x27;grid&#x27;], linewidth=0.8, alpha=0.5)</span>
+<span id="L50"><a href="#L50">  50</a>     ax.text(wk + 0.5, -1.0, month_names[m - 1], fontsize=8,</span>
+<span id="L51"><a href="#L51">  51</a>             ha=&#x27;left&#x27;, va=&#x27;center&#x27;, color=COLORS[&#x27;text&#x27;])</span>
+<span id="L52"><a href="#L52">  52</a> </span>
+<span id="L53"><a href="#L53">  53</a> # === Y 轴：仅显示 Mon / Wed / Fri ===</span>
+<span id="L54"><a href="#L54">  54</a> ax.set_yticks([0, 2, 4, 6])</span>
+<span id="L55"><a href="#L55">  55</a> ax.set_yticklabels([&#x27;周一&#x27;, &#x27;周三&#x27;, &#x27;周五&#x27;, &#x27;周日&#x27;], fontsize=8)</span>
+<span id="L56"><a href="#L56">  56</a> ax.set_xticks([])</span>
+<span id="L57"><a href="#L57">  57</a> ax.tick_params(axis=&#x27;y&#x27;, length=0)</span>
+<span id="L58"><a href="#L58">  58</a> for spine in ax.spines.values(): spine.set_visible(False)</span>
+<span id="L59"><a href="#L59">  59</a> </span>
+<span id="L60"><a href="#L60">  60</a> # === 顶部 colorbar（横向）===</span>
+<span id="L61"><a href="#L61">  61</a> cbar = fig.colorbar(im, ax=ax, orientation=&#x27;horizontal&#x27;, shrink=0.35,</span>
+<span id="L62"><a href="#L62">  62</a>                     pad=0.25, aspect=30)</span>
+<span id="L63"><a href="#L63">  63</a> cbar.set_label(&#x27;日均值&#x27;, fontsize=8)</span>
+<span id="L64"><a href="#L64">  64</a> cbar.ax.tick_params(labelsize=7, length=0)</span>
+<span id="L65"><a href="#L65">  65</a> cbar.outline.set_linewidth(0)</span>
+<span id="L66"><a href="#L66">  66</a> </span>
+<span id="L67"><a href="#L67">  67</a> # === 异常日（top 1%）标注 ===</span>
+<span id="L68"><a href="#L68">  68</a> threshold = np.nanpercentile(daily, 99)</span>
+<span id="L69"><a href="#L69">  69</a> outliers_idx = np.where(daily &gt; threshold)[0]</span>
+<span id="L70"><a href="#L70">  70</a> for idx in outliers_idx[:5]:  # 最多标 5 个</span>
+<span id="L71"><a href="#L71">  71</a>     d = start + timedelta(days=int(idx))</span>
+<span id="L72"><a href="#L72">  72</a>     wk = int(d.strftime(&#x27;%W&#x27;)); wd = d.weekday()</span>
+<span id="L73"><a href="#L73">  73</a>     ax.add_patch(Rectangle((wk - 0.45, wd - 0.45), 0.9, 0.9,</span>
+<span id="L74"><a href="#L74">  74</a>                             fill=False, edgecolor=COLORS[&#x27;highlight&#x27;],</span>
+<span id="L75"><a href="#L75">  75</a>                             linewidth=1.3, zorder=5))</span>
+<span id="L76"><a href="#L76">  76</a> </span>
+<span id="L77"><a href="#L77">  77</a> fig.tight_layout()</span>
+<span id="L78"><a href="#L78">  78</a> save_fig(fig, &#x27;figures/fig_calendar_heatmap.pdf&#x27;)</span></pre>

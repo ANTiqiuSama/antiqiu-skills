@@ -1,0 +1,49 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np, matplotlib.pyplot as plt</span>
+<span id="L2"><a href="#L2">   2</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L3"><a href="#L3">   3</a> setup_style()</span>
+<span id="L4"><a href="#L4">   4</a> </span>
+<span id="L5"><a href="#L5">   5</a> periods = np.arange(-4, 5)</span>
+<span id="L6"><a href="#L6">   6</a> coefs   = np.array([.01, -.02, .01, .00, .12, .25, .31, .38, .42])</span>
+<span id="L7"><a href="#L7">   7</a> se      = np.array([.04, .03, .04, .03, .05, .05, .06, .06, .07])</span>
+<span id="L8"><a href="#L8">   8</a> </span>
+<span id="L9"><a href="#L9">   9</a> fig, ax = plt.subplots(figsize=(8, 5))</span>
+<span id="L10"><a href="#L10">  10</a> ax.axhline(y=0, color=COLORS[&#x27;ref_line&#x27;], linewidth=0.6, alpha=0.5)</span>
+<span id="L11"><a href="#L11">  11</a> ax.axvline(x=-0.5, color=COLORS[&#x27;down&#x27;], linestyle=&#x27;--&#x27;, linewidth=1.0, alpha=0.6)</span>
+<span id="L12"><a href="#L12">  12</a> ax.axvspan(-4.5, -0.5, color=COLORS[&#x27;bg_box&#x27;], alpha=0.3, zorder=0)</span>
+<span id="L13"><a href="#L13">  13</a> ax.axvspan(-0.5, 4.5, color=_lighten(COLORS[&#x27;highlight&#x27;], 0.85), alpha=0.3, zorder=0)</span>
+<span id="L14"><a href="#L14">  14</a> </span>
+<span id="L15"><a href="#L15">  15</a> for t_val, c, s in zip(periods, coefs, se):</span>
+<span id="L16"><a href="#L16">  16</a>     lo, hi = c - 1.96 * s, c + 1.96 * s</span>
+<span id="L17"><a href="#L17">  17</a>     base_color = COLORS[&#x27;ref_line&#x27;] if t_val &lt; 0 else PALETTE[0]</span>
+<span id="L18"><a href="#L18">  18</a>     n_layers = 6</span>
+<span id="L19"><a href="#L19">  19</a>     for k in range(n_layers, 0, -1):</span>
+<span id="L20"><a href="#L20">  20</a>         frac = k / n_layers</span>
+<span id="L21"><a href="#L21">  21</a>         ax.plot([t_val, t_val], [c - frac*1.96*s, c + frac*1.96*s],</span>
+<span id="L22"><a href="#L22">  22</a>                 color=base_color, linewidth=3.5 - k*0.3, alpha=0.08 + 0.04*(n_layers-k) + 0.3,</span>
+<span id="L23"><a href="#L23">  23</a>                 solid_capstyle=&#x27;round&#x27;)</span>
+<span id="L24"><a href="#L24">  24</a>     ax.plot([t_val, t_val], [lo, hi], color=base_color, linewidth=2.5,</span>
+<span id="L25"><a href="#L25">  25</a>             solid_capstyle=&#x27;round&#x27;, alpha=0.8)</span>
+<span id="L26"><a href="#L26">  26</a>     ax.plot(t_val, c, &#x27;o&#x27;, color=base_color, markersize=8,</span>
+<span id="L27"><a href="#L27">  27</a>             markeredgecolor=&#x27;white&#x27;, markeredgewidth=1.2, zorder=5)</span>
+<span id="L28"><a href="#L28">  28</a>     if abs(c) &gt; 1.96 * s:</span>
+<span id="L29"><a href="#L29">  29</a>         star = &#x27;***&#x27; if abs(c) &gt; 2.576 * s else &#x27;**&#x27;</span>
+<span id="L30"><a href="#L30">  30</a>         ax.text(t_val, hi + 0.02, star, ha=&#x27;center&#x27;, va=&#x27;bottom&#x27;,</span>
+<span id="L31"><a href="#L31">  31</a>                 fontsize=8, color=base_color, fontweight=&#x27;bold&#x27;)</span>
+<span id="L32"><a href="#L32">  32</a> </span>
+<span id="L33"><a href="#L33">  33</a> post_mask = periods &gt;= 0</span>
+<span id="L34"><a href="#L34">  34</a> cum_effect = np.cumsum(coefs[post_mask])</span>
+<span id="L35"><a href="#L35">  35</a> ax2 = ax.twinx()</span>
+<span id="L36"><a href="#L36">  36</a> ax2.plot(periods[post_mask], cum_effect, &#x27;--&#x27;, color=PALETTE[1], linewidth=1.5,</span>
+<span id="L37"><a href="#L37">  37</a>          alpha=0.7, label=&#x27;Cumulative Effect&#x27;)</span>
+<span id="L38"><a href="#L38">  38</a> ax2.set_ylabel(&#x27;Cumulative Effect&#x27;, fontsize=10, color=PALETTE[1])</span>
+<span id="L39"><a href="#L39">  39</a> ax2.tick_params(axis=&#x27;y&#x27;, labelcolor=PALETTE[1])</span>
+<span id="L40"><a href="#L40">  40</a> ax2.legend(loc=&#x27;upper left&#x27;, frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8)</span>
+<span id="L41"><a href="#L41">  41</a> </span>
+<span id="L42"><a href="#L42">  42</a> ax.set_xlabel(&#x27;Period Relative to Treatment&#x27;, fontsize=11)</span>
+<span id="L43"><a href="#L43">  43</a> ax.set_ylabel(&#x27;Coefficient&#x27;, fontsize=11); ax.set_xticks(periods)</span>
+<span id="L44"><a href="#L44">  44</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L45"><a href="#L45">  45</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L46"><a href="#L46">  46</a> ax.grid(alpha=0.15, linestyle=&#x27;--&#x27;)</span>
+<span id="L47"><a href="#L47">  47</a> fig.tight_layout()</span>
+<span id="L48"><a href="#L48">  48</a> save_fig(fig, &#x27;figures/fig_event.pdf&#x27;)</span>
+</pre>

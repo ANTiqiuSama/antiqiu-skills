@@ -1,0 +1,22 @@
+{
+  "source_type": "missing_data",
+  "status": "代码截图恢复，原数据缺失",
+  "attribution": "小明的代码美学",
+  "figure_page": 48,
+  "code_pages": [
+    49,
+    50,
+    51
+  ],
+  "all_pages": [
+    48,
+    49,
+    50,
+    51
+  ],
+  "changes": [
+    "原airplane_price_dataset.csv未提供，补充同字段固定种子的合成长表。",
+    "年龄排序后再绘制；缺失型号×年龄单元报错而非静默补零。图轴明确是型号均价的累计值，不代表市场总额。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

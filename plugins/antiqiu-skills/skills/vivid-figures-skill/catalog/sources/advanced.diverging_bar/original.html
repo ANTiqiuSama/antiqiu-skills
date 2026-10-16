@@ -1,0 +1,61 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten, smart_labels</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> methods = [&#x27;Ours (full)&#x27;, &#x27;w/o Attention&#x27;, &#x27;w/o Pretrain&#x27;, &#x27;w/o Augment&#x27;,</span>
+<span id="L7"><a href="#L7">   7</a>            &#x27;Baseline-A&#x27;, &#x27;Baseline-B&#x27;, &#x27;Baseline-C&#x27;]</span>
+<span id="L8"><a href="#L8">   8</a> deltas = [+5.2, +3.1, +1.8, +0.5, 0.0, -1.3, -2.7]</span>
+<span id="L9"><a href="#L9">   9</a> </span>
+<span id="L10"><a href="#L10">  10</a> # ── 自适应高度</span>
+<span id="L11"><a href="#L11">  11</a> _fig_h = max(4, len(methods) * 0.7 + 1)</span>
+<span id="L12"><a href="#L12">  12</a> fig, ax = plt.subplots(figsize=(8, _fig_h))</span>
+<span id="L13"><a href="#L13">  13</a> y_pos = np.arange(len(methods))</span>
+<span id="L14"><a href="#L14">  14</a> </span>
+<span id="L15"><a href="#L15">  15</a> # 方向性颜色背景</span>
+<span id="L16"><a href="#L16">  16</a> ax.axvspan(0, max(deltas)*1.3, alpha=0.05, color=COLORS[&#x27;up&#x27;], zorder=0)</span>
+<span id="L17"><a href="#L17">  17</a> ax.axvspan(min(deltas)*1.3, 0, alpha=0.05, color=COLORS[&#x27;down&#x27;], zorder=0)</span>
+<span id="L18"><a href="#L18">  18</a> </span>
+<span id="L19"><a href="#L19">  19</a> # Color: positive = up(green), negative = down(red)</span>
+<span id="L20"><a href="#L20">  20</a> base_colors = [COLORS[&#x27;up&#x27;] if d &gt;= 0 else COLORS[&#x27;down&#x27;] for d in deltas]</span>
+<span id="L21"><a href="#L21">  21</a> </span>
+<span id="L22"><a href="#L22">  22</a> # 柱体阴影</span>
+<span id="L23"><a href="#L23">  23</a> ax.barh(y_pos + 0.03, deltas, height=0.5, color=&#x27;#cccccc&#x27;, alpha=0.1, zorder=1)</span>
+<span id="L24"><a href="#L24">  24</a> # ── 主柱体：浅色填充 + 原色边框</span>
+<span id="L25"><a href="#L25">  25</a> bars = ax.barh(y_pos, deltas, height=0.5,</span>
+<span id="L26"><a href="#L26">  26</a>                color=[_lighten(c, 0.4) for c in base_colors],</span>
+<span id="L27"><a href="#L27">  27</a>                edgecolor=base_colors, linewidth=1.5, zorder=3)</span>
+<span id="L28"><a href="#L28">  28</a> </span>
+<span id="L29"><a href="#L29">  29</a> # Zero reference line</span>
+<span id="L30"><a href="#L30">  30</a> ax.axvline(0, color=COLORS[&#x27;text&#x27;], linewidth=1.2, zorder=2)</span>
+<span id="L31"><a href="#L31">  31</a> </span>
+<span id="L32"><a href="#L32">  32</a> # Value labels at bar ends（白底保护）</span>
+<span id="L33"><a href="#L33">  33</a> for i, (bar, d) in enumerate(zip(bars, deltas)):</span>
+<span id="L34"><a href="#L34">  34</a>     x_pos = d + (0.2 if d &gt;= 0 else -0.2)</span>
+<span id="L35"><a href="#L35">  35</a>     ha = &#x27;left&#x27; if d &gt;= 0 else &#x27;right&#x27;</span>
+<span id="L36"><a href="#L36">  36</a>     sign = &#x27;+&#x27; if d &gt; 0 else &#x27;&#x27;</span>
+<span id="L37"><a href="#L37">  37</a>     ax.text(x_pos, y_pos[i], f&#x27;{sign}{d:.1f}%&#x27;, va=&#x27;center&#x27;, ha=ha,</span>
+<span id="L38"><a href="#L38">  38</a>             fontsize=9, fontweight=&#x27;bold&#x27;, color=base_colors[i],</span>
+<span id="L39"><a href="#L39">  39</a>             bbox=dict(boxstyle=&#x27;round,pad=0.1&#x27;, facecolor=&#x27;white&#x27;, edgecolor=&#x27;none&#x27;, alpha=0.7))</span>
+<span id="L40"><a href="#L40">  40</a> </span>
+<span id="L41"><a href="#L41">  41</a> # Highlight &quot;Ours&quot; row</span>
+<span id="L42"><a href="#L42">  42</a> ax.axhspan(y_pos[0]-0.35, y_pos[0]+0.35, alpha=0.06, color=PALETTE[0], zorder=0)</span>
+<span id="L43"><a href="#L43">  43</a> bars[0].set_edgecolor(PALETTE[0]); bars[0].set_linewidth(2.0)</span>
+<span id="L44"><a href="#L44">  44</a> </span>
+<span id="L45"><a href="#L45">  45</a> # 方向标注</span>
+<span id="L46"><a href="#L46">  46</a> ax.text(0.98, 0.02, &#x27;更优 →&#x27;, transform=ax.transAxes, fontsize=8, ha=&#x27;right&#x27;,</span>
+<span id="L47"><a href="#L47">  47</a>         color=COLORS[&#x27;up&#x27;], fontweight=&#x27;bold&#x27;)</span>
+<span id="L48"><a href="#L48">  48</a> ax.text(0.02, 0.02, &#x27;← 更差&#x27;, transform=ax.transAxes, fontsize=8, ha=&#x27;left&#x27;,</span>
+<span id="L49"><a href="#L49">  49</a>         color=COLORS[&#x27;down&#x27;], fontweight=&#x27;bold&#x27;)</span>
+<span id="L50"><a href="#L50">  50</a> </span>
+<span id="L51"><a href="#L51">  51</a> ax.set_yticks(y_pos)</span>
+<span id="L52"><a href="#L52">  52</a> ax.set_yticklabels(methods, fontsize=10)</span>
+<span id="L53"><a href="#L53">  53</a> ax.set_xlabel(&#x27;Relative Improvement over Baseline (%)&#x27;, fontsize=11)</span>
+<span id="L54"><a href="#L54">  54</a> ax.invert_yaxis()</span>
+<span id="L55"><a href="#L55">  55</a> ax.grid(axis=&#x27;x&#x27;, alpha=0.12, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L56"><a href="#L56">  56</a> ax.spines[&#x27;left&#x27;].set_visible(False)</span>
+<span id="L57"><a href="#L57">  57</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L58"><a href="#L58">  58</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L59"><a href="#L59">  59</a> fig.tight_layout()</span>
+<span id="L60"><a href="#L60">  60</a> save_fig(fig, &#x27;figures/fig_diverging_bar.pdf&#x27;)</span>
+</pre>

@@ -1,0 +1,36 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np, matplotlib.pyplot as plt</span>
+<span id="L2"><a href="#L2">   2</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS</span>
+<span id="L3"><a href="#L3">   3</a> setup_style()</span>
+<span id="L4"><a href="#L4">   4</a> np.random.seed(42)</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> # 生成三目标 Pareto 前沿</span>
+<span id="L7"><a href="#L7">   7</a> n = 200</span>
+<span id="L8"><a href="#L8">   8</a> t1 = np.random.uniform(0, 1, n)</span>
+<span id="L9"><a href="#L9">   9</a> t2 = np.random.uniform(0, 1-t1, n)</span>
+<span id="L10"><a href="#L10">  10</a> f1 = t1 + 0.05*np.random.randn(n)</span>
+<span id="L11"><a href="#L11">  11</a> f2 = t2 + 0.05*np.random.randn(n)</span>
+<span id="L12"><a href="#L12">  12</a> f3 = 1 - t1 - t2 + 0.05*np.random.randn(n)</span>
+<span id="L13"><a href="#L13">  13</a> f1, f2, f3 = np.clip(f1, 0, 1), np.clip(f2, 0, 1), np.clip(f3, 0, 1)</span>
+<span id="L14"><a href="#L14">  14</a> </span>
+<span id="L15"><a href="#L15">  15</a> # 非 Pareto 解</span>
+<span id="L16"><a href="#L16">  16</a> other_f1 = np.random.uniform(0.2, 1.0, 100)</span>
+<span id="L17"><a href="#L17">  17</a> other_f2 = np.random.uniform(0.2, 1.0, 100)</span>
+<span id="L18"><a href="#L18">  18</a> other_f3 = np.random.uniform(0.2, 1.0, 100)</span>
+<span id="L19"><a href="#L19">  19</a> </span>
+<span id="L20"><a href="#L20">  20</a> fig = plt.figure(figsize=(8, 6))</span>
+<span id="L21"><a href="#L21">  21</a> ax = fig.add_subplot(111, projection=&#x27;3d&#x27;)</span>
+<span id="L22"><a href="#L22">  22</a> # 非支配解</span>
+<span id="L23"><a href="#L23">  23</a> ax.scatter(other_f1, other_f2, other_f3, s=8, alpha=0.15, color=COLORS[&#x27;neutral&#x27;])</span>
+<span id="L24"><a href="#L24">  24</a> # Pareto 前沿</span>
+<span id="L25"><a href="#L25">  25</a> sc = ax.scatter(f1, f2, f3, c=f3, cmap=&#x27;coolwarm&#x27;, s=25, alpha=0.7,</span>
+<span id="L26"><a href="#L26">  26</a>                 edgecolor=&#x27;white&#x27;, linewidth=0.3, zorder=3)</span>
+<span id="L27"><a href="#L27">  27</a> </span>
+<span id="L28"><a href="#L28">  28</a> ax.set_xlabel(&#x27;目标 f₁&#x27;, fontsize=10, labelpad=6)</span>
+<span id="L29"><a href="#L29">  29</a> ax.set_ylabel(&#x27;目标 f₂&#x27;, fontsize=10, labelpad=6)</span>
+<span id="L30"><a href="#L30">  30</a> ax.set_zlabel(&#x27;目标 f₃&#x27;, fontsize=10, labelpad=8)</span>
+<span id="L31"><a href="#L31">  31</a> ax.view_init(elev=25, azim=135); ax.tick_params(labelsize=8)</span>
+<span id="L32"><a href="#L32">  32</a> ax.legend(fontsize=9, loc=&#x27;best&#x27;)</span>
+<span id="L33"><a href="#L33">  33</a> fig.colorbar(sc, shrink=0.5, aspect=15, pad=0.1, label=&#x27;f₃ 值&#x27;)</span>
+<span id="L34"><a href="#L34">  34</a> fig.tight_layout()</span>
+<span id="L35"><a href="#L35">  35</a> save_fig(fig, &#x27;figures/fig_pareto_3d.pdf&#x27;)</span>
+</pre>

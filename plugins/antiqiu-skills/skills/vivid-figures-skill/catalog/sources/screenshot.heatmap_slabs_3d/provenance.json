@@ -1,0 +1,14 @@
+{
+  "source_type": "image_only",
+  "status": "仅效果图，按图重建",
+  "attribution": "@Doc mm",
+  "figure_page": 10,
+  "code_pages": [],
+  "all_pages": [
+    10
+  ],
+  "changes": [
+    "仅有010效果图（署名 @Doc mm），整段实现按视觉结构重建；矩阵是固定种子的合成数据。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

@@ -1,0 +1,42 @@
+<!doctype html><meta charset="utf-8"><title>分类散点与决策区域 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>分类散点与决策区域</h1><p>代码截图恢复与适配 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;分类散点与决策区域</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [107, 108, 109].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 小明的代码美学 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> from sklearn.svm import SVC</span>
+<span id="L18"><a href="#L18">  18</a> from matplotlib.colors import ListedColormap</span>
+<span id="L19"><a href="#L19">  19</a> import matplotlib.ticker as ticker</span>
+<span id="L20"><a href="#L20">  20</a> n=80;np.random.seed(7)</span>
+<span id="L21"><a href="#L21">  21</a> X1=np.random.normal(30,8,n);Y1=np.random.normal(60,18,n)</span>
+<span id="L22"><a href="#L22">  22</a> X2=np.random.normal(70,13,n);Y2=np.random.normal(90,20,n)</span>
+<span id="L23"><a href="#L23">  23</a> X3=np.random.normal(55,15,n);Y3=np.random.normal(50,15,n)</span>
+<span id="L24"><a href="#L24">  24</a> X=np.concatenate([np.column_stack((a,b)) for a,b in [(X1,Y1),(X2,Y2),(X3,Y3)]])</span>
+<span id="L25"><a href="#L25">  25</a> y=np.array([0]*n+[1]*n+[2]*n)</span>
+<span id="L26"><a href="#L26">  26</a> model=SVC(kernel=&#x27;linear&#x27;,decision_function_shape=&#x27;ovo&#x27;).fit(X,y)</span>
+<span id="L27"><a href="#L27">  27</a> x_max=X[:,0].max()+5;y_max=X[:,1].max()+10</span>
+<span id="L28"><a href="#L28">  28</a> xx,yy=np.meshgrid(np.arange(-5,x_max,.5),np.arange(-10,y_max,.5))</span>
+<span id="L29"><a href="#L29">  29</a> Z=model.predict(np.c_[xx.ravel(),yy.ravel()]).reshape(xx.shape)</span>
+<span id="L30"><a href="#L30">  30</a> colors=[&#x27;#e97a7a&#x27;,&#x27;#5595d1&#x27;,&#x27;#e5c679&#x27;]</span>
+<span id="L31"><a href="#L31">  31</a> fig,ax=plt.subplots(figsize=(9,5.5),dpi=150)</span>
+<span id="L32"><a href="#L32">  32</a> ax.contourf(xx,yy,Z,levels=[-.5,.5,1.5,2.5],alpha=.2,cmap=ListedColormap(colors))</span>
+<span id="L33"><a href="#L33">  33</a> for i,(a,b,c) in enumerate(zip([X1,X2,X3],[Y1,Y2,Y3],colors)):</span>
+<span id="L34"><a href="#L34">  34</a>     ax.scatter(a,b,s=100,c=c,alpha=.5,label=f&#x27;类别{i+1}&#x27;)</span>
+<span id="L35"><a href="#L35">  35</a>     ax.scatter(a,np.zeros(len(a)),marker=&#x27;|&#x27;,color=c,alpha=.5,s=300)</span>
+<span id="L36"><a href="#L36">  36</a>     ax.scatter(np.zeros(len(a)),b,marker=&#x27;_&#x27;,color=c,alpha=.5,s=300)</span>
+<span id="L37"><a href="#L37">  37</a> ax.xaxis.set_major_locator(ticker.MultipleLocator(10));ax.xaxis.set_minor_locator(ticker.MultipleLocator(1))</span>
+<span id="L38"><a href="#L38">  38</a> ax.yaxis.set_major_locator(ticker.MultipleLocator(20));ax.yaxis.set_minor_locator(ticker.MultipleLocator(2))</span>
+<span id="L39"><a href="#L39">  39</a> ax.set(title=&#x27;分类散点与拟合决策区域&#x27;,xlabel=&#x27;X 轴&#x27;,ylabel=&#x27;Y 轴&#x27;)</span>
+<span id="L40"><a href="#L40">  40</a> ax.legend(loc=&#x27;upper center&#x27;,ncols=3,frameon=False)</span>
+<span id="L41"><a href="#L41">  41</a> plt.tight_layout();plt.show()</span>
+<span id="L42"><a href="#L42">  42</a> </span></pre>

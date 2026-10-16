@@ -1,0 +1,29 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np, matplotlib.pyplot as plt</span>
+<span id="L2"><a href="#L2">   2</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS</span>
+<span id="L3"><a href="#L3">   3</a> setup_style()</span>
+<span id="L4"><a href="#L4">   4</a> np.random.seed(42)</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> models = {</span>
+<span id="L7"><a href="#L7">   7</a>     &#x27;本文模型 (AUC=0.952)&#x27;: (0.952, 2.5),</span>
+<span id="L8"><a href="#L8">   8</a>     &#x27;随机森林 (AUC=0.921)&#x27;: (0.921, 1.5),</span>
+<span id="L9"><a href="#L9">   9</a>     &#x27;SVM (AUC=0.887)&#x27;: (0.887, 1.5),</span>
+<span id="L10"><a href="#L10">  10</a>     &#x27;逻辑回归 (AUC=0.845)&#x27;: (0.845, 1.5),</span>
+<span id="L11"><a href="#L11">  11</a> }</span>
+<span id="L12"><a href="#L12">  12</a> </span>
+<span id="L13"><a href="#L13">  13</a> fig, ax = plt.subplots(figsize=(6, 5.5))</span>
+<span id="L14"><a href="#L14">  14</a> ax.grid(True, linestyle=&#x27;--&#x27;, alpha=0.15); ax.set_axisbelow(True)</span>
+<span id="L15"><a href="#L15">  15</a> ax.plot([0,1],[0,1], &#x27;--&#x27;, color=COLORS[&#x27;ref_line&#x27;], linewidth=0.8, label=&#x27;随机猜测&#x27;)</span>
+<span id="L16"><a href="#L16">  16</a> </span>
+<span id="L17"><a href="#L17">  17</a> for i, (name, (auc, lw)) in enumerate(models.items()):</span>
+<span id="L18"><a href="#L18">  18</a>     fpr = np.sort(np.concatenate([[0], np.random.beta(1, auc*10, 50), [1]]))</span>
+<span id="L19"><a href="#L19">  19</a>     tpr = np.sort(np.concatenate([[0], np.random.beta(auc*10, 1, 50), [1]]))</span>
+<span id="L20"><a href="#L20">  20</a>     alpha = 1.0 if &#x27;本文&#x27; in name else 0.6</span>
+<span id="L21"><a href="#L21">  21</a>     ax.plot(fpr, tpr, color=PALETTE[i], linewidth=lw, label=name, alpha=alpha, zorder=3)</span>
+<span id="L22"><a href="#L22">  22</a> </span>
+<span id="L23"><a href="#L23">  23</a> ax.set_xlabel(&#x27;假阳性率 (FPR)&#x27;, fontsize=11); ax.set_ylabel(&#x27;真阳性率 (TPR)&#x27;, fontsize=11)</span>
+<span id="L24"><a href="#L24">  24</a> ax.set_xlim(-0.02, 1.02); ax.set_ylim(-0.02, 1.02)</span>
+<span id="L25"><a href="#L25">  25</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=9, loc=&#x27;lower right&#x27;)</span>
+<span id="L26"><a href="#L26">  26</a> ax.spines[&#x27;top&#x27;].set_visible(False); ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L27"><a href="#L27">  27</a> fig.tight_layout()</span>
+<span id="L28"><a href="#L28">  28</a> save_fig(fig, &#x27;figures/fig_roc.pdf&#x27;)</span>
+</pre>

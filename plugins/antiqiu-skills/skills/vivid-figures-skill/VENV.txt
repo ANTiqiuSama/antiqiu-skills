@@ -1,0 +1,2 @@
+Python for this skill lives outside the skill tree so Codex does not walk the virtualenv on every thread open.
+C:\Users\Administrator\.cache\codex-skill-venvs\vivid-figures-skill\Scripts\python.exe

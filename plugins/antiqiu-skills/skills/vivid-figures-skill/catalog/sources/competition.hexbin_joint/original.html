@@ -1,0 +1,47 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> import matplotlib.gridspec as gridspec</span>
+<span id="L4"><a href="#L4">   4</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS</span>
+<span id="L5"><a href="#L5">   5</a> setup_style()</span>
+<span id="L6"><a href="#L6">   6</a> np.random.seed(42)</span>
+<span id="L7"><a href="#L7">   7</a> </span>
+<span id="L8"><a href="#L8">   8</a> n = 2000</span>
+<span id="L9"><a href="#L9">   9</a> x = np.random.normal(0, 2, n)</span>
+<span id="L10"><a href="#L10">  10</a> y = 0.5*x + np.random.normal(0, 1.5, n)</span>
+<span id="L11"><a href="#L11">  11</a> </span>
+<span id="L12"><a href="#L12">  12</a> fig = plt.figure(figsize=(7, 7))</span>
+<span id="L13"><a href="#L13">  13</a> gs = gridspec.GridSpec(2, 2, width_ratios=[4, 1], height_ratios=[1, 4],</span>
+<span id="L14"><a href="#L14">  14</a>                        hspace=0.05, wspace=0.05)</span>
+<span id="L15"><a href="#L15">  15</a> ax_main = fig.add_subplot(gs[1, 0])</span>
+<span id="L16"><a href="#L16">  16</a> ax_top = fig.add_subplot(gs[0, 0], sharex=ax_main)</span>
+<span id="L17"><a href="#L17">  17</a> ax_right = fig.add_subplot(gs[1, 1], sharey=ax_main)</span>
+<span id="L18"><a href="#L18">  18</a> </span>
+<span id="L19"><a href="#L19">  19</a> # 主图：hexbin</span>
+<span id="L20"><a href="#L20">  20</a> hb = ax_main.hexbin(x, y, gridsize=25, cmap=&#x27;YlOrRd&#x27;, mincnt=1, edgecolors=&#x27;white&#x27;, linewidths=0.3)</span>
+<span id="L21"><a href="#L21">  21</a> # 回归线</span>
+<span id="L22"><a href="#L22">  22</a> z = np.polyfit(x, y, 1)</span>
+<span id="L23"><a href="#L23">  23</a> p = np.poly1d(z)</span>
+<span id="L24"><a href="#L24">  24</a> x_line = np.linspace(x.min(), x.max(), 100)</span>
+<span id="L25"><a href="#L25">  25</a> ax_main.plot(x_line, p(x_line), &#x27;--&#x27;, color=PALETTE[1], linewidth=1.8,</span>
+<span id="L26"><a href="#L26">  26</a>             label=f&#x27;$\\hat{{Y}}={z[0]:.3f}X{z[1]:+.1f}$&#x27;)</span>
+<span id="L27"><a href="#L27">  27</a> ax_main.legend(loc=&#x27;lower right&#x27;, fontsize=9, framealpha=0.9)</span>
+<span id="L28"><a href="#L28">  28</a> ax_main.set_xlabel(&#x27;X 变量&#x27;, fontsize=11); ax_main.set_ylabel(&#x27;Y 变量&#x27;, fontsize=11)</span>
+<span id="L29"><a href="#L29">  29</a> </span>
+<span id="L30"><a href="#L30">  30</a> # 上方直方图</span>
+<span id="L31"><a href="#L31">  31</a> ax_top.hist(x, bins=40, color=PALETTE[0], alpha=0.5, edgecolor=&#x27;white&#x27;, linewidth=0.5)</span>
+<span id="L32"><a href="#L32">  32</a> plt.setp(ax_top.get_xticklabels(), visible=False)</span>
+<span id="L33"><a href="#L33">  33</a> ax_top.set_ylabel(&#x27;频数&#x27;, fontsize=9)</span>
+<span id="L34"><a href="#L34">  34</a> </span>
+<span id="L35"><a href="#L35">  35</a> # 右方直方图</span>
+<span id="L36"><a href="#L36">  36</a> ax_right.hist(y, bins=40, orientation=&#x27;horizontal&#x27;, color=PALETTE[1], alpha=0.5,</span>
+<span id="L37"><a href="#L37">  37</a>              edgecolor=&#x27;white&#x27;, linewidth=0.5)</span>
+<span id="L38"><a href="#L38">  38</a> plt.setp(ax_right.get_yticklabels(), visible=False)</span>
+<span id="L39"><a href="#L39">  39</a> ax_right.set_xlabel(&#x27;频数&#x27;, fontsize=9)</span>
+<span id="L40"><a href="#L40">  40</a> </span>
+<span id="L41"><a href="#L41">  41</a> for a in [ax_main, ax_top, ax_right]:</span>
+<span id="L42"><a href="#L42">  42</a>     a.spines[&#x27;top&#x27;].set_visible(False); a.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L43"><a href="#L43">  43</a> </span>
+<span id="L44"><a href="#L44">  44</a> fig.colorbar(hb, ax=ax_right, shrink=0.6, label=&#x27;样本数&#x27;)</span>
+<span id="L45"><a href="#L45">  45</a> fig.tight_layout()</span>
+<span id="L46"><a href="#L46">  46</a> save_fig(fig, &#x27;figures/fig_hexbin_joint.pdf&#x27;)</span>
+</pre>

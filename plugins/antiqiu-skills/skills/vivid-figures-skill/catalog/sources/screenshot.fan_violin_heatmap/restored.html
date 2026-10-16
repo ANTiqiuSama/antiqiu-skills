@@ -1,0 +1,53 @@
+<!doctype html><meta charset="utf-8"><title>扇形小提琴与热图 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>扇形小提琴与热图</h1><p>仅效果图，按图重建 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;扇形小提琴与热图</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [6].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 滚筒洗衣机 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np; from _utils.palette_maps import palette_cmap, palette_stops, contrast_text</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> # Image-only reference (page 006, 滚筒洗衣机). Entire implementation reconstructed.</span>
+<span id="L18"><a href="#L18">  18</a> from scipy.stats import gaussian_kde</span>
+<span id="L19"><a href="#L19">  19</a> rng=np.random.default_rng(6)</span>
+<span id="L20"><a href="#L20">  20</a> months=[&#x27;Jan&#x27;,&#x27;Feb&#x27;,&#x27;Mar&#x27;,&#x27;Apr&#x27;,&#x27;May&#x27;,&#x27;Jun&#x27;,&#x27;Jul&#x27;,&#x27;Aug&#x27;,&#x27;Sep&#x27;,&#x27;Oct&#x27;,&#x27;Nov&#x27;,&#x27;Dec&#x27;]</span>
+<span id="L21"><a href="#L21">  21</a> years=np.arange(2000,2028,4)</span>
+<span id="L22"><a href="#L22">  22</a> means=.44+.16*np.sin(np.linspace(-np.pi/2,3*np.pi/2,12))</span>
+<span id="L23"><a href="#L23">  23</a> samples=[np.clip(rng.normal(m,.035,100),.2,.7) for m in means]</span>
+<span id="L24"><a href="#L24">  24</a> heat=np.vstack([np.clip(means+rng.normal(0,.025,12)+(i-3)*.008,.2,.7) for i in range(7)])</span>
+<span id="L25"><a href="#L25">  25</a> cmap=LinearSegmentedColormap.from_list(&#x27;fan&#x27;,palette_stops(&#x27;diverging&#x27;,center=&#x27;#f4e5e9&#x27;,reverse=True))</span>
+<span id="L26"><a href="#L26">  26</a> norm=Normalize(.2,.7)</span>
+<span id="L27"><a href="#L27">  27</a> fig,ax=plt.subplots(figsize=(10,5.5),subplot_kw={&#x27;projection&#x27;:&#x27;polar&#x27;},dpi=150)</span>
+<span id="L28"><a href="#L28">  28</a> ax.set_theta_zero_location(&#x27;E&#x27;);ax.set_theta_direction(1)</span>
+<span id="L29"><a href="#L29">  29</a> ax.set_thetamin(0);ax.set_thetamax(180)</span>
+<span id="L30"><a href="#L30">  30</a> theta_edges=np.linspace(0,np.pi,13)</span>
+<span id="L31"><a href="#L31">  31</a> r_edges=np.linspace(.22,.7,8)</span>
+<span id="L32"><a href="#L32">  32</a> ax.pcolormesh(theta_edges,r_edges,heat[:,::-1],cmap=cmap,norm=norm,edgecolors=&#x27;#ffffff88&#x27;,linewidth=.5,shading=&#x27;flat&#x27;,alpha=.85)</span>
+<span id="L33"><a href="#L33">  33</a> centers=np.pi-(theta_edges[:-1]+theta_edges[1:])/2</span>
+<span id="L34"><a href="#L34">  34</a> for j,(theta,values) in enumerate(zip(centers,samples)):</span>
+<span id="L35"><a href="#L35">  35</a>     grid=np.linspace(values.min(),values.max(),120)</span>
+<span id="L36"><a href="#L36">  36</a>     density=gaussian_kde(values)(grid)</span>
+<span id="L37"><a href="#L37">  37</a>     halfwidth=density/density.max()*(np.pi/12)*.18</span>
+<span id="L38"><a href="#L38">  38</a>     radial=.83+(grid-.2)/.5*.35</span>
+<span id="L39"><a href="#L39">  39</a>     ax.fill(np.r_[theta-halfwidth,(theta+halfwidth)[::-1]],np.r_[radial,radial[::-1]],color=cmap(norm(np.median(values))),alpha=.85,edgecolor=&#x27;#ffffff&#x27;,linewidth=.6)</span>
+<span id="L40"><a href="#L40">  40</a>     for q in np.quantile(values,[.25,.5,.75]):</span>
+<span id="L41"><a href="#L41">  41</a>         w=float(np.interp(q,grid,halfwidth))*.8</span>
+<span id="L42"><a href="#L42">  42</a>         ax.plot([theta-w,theta+w],[.83+(q-.2)/.5*.35]*2,color=&#x27;white&#x27;,linestyle=&#x27;--&#x27;,linewidth=1.1)</span>
+<span id="L43"><a href="#L43">  43</a>     ax.plot([theta,theta],[.2,1.24],color=&#x27;#dddddd&#x27;,linestyle=&#x27;:&#x27;,linewidth=.5,zorder=0)</span>
+<span id="L44"><a href="#L44">  44</a> ax.set_xticks(centers,months,fontsize=10,color=&#x27;#777777&#x27;)</span>
+<span id="L45"><a href="#L45">  45</a> ax.set_yticks([])</span>
+<span id="L46"><a href="#L46">  46</a> for i in range(0,len(years),2):</span>
+<span id="L47"><a href="#L47">  47</a>     ax.text(np.pi+.05,(r_edges[i]+r_edges[i+1])/2,str(years[i]),fontsize=8,color=&#x27;#777777&#x27;,rotation=55,ha=&#x27;right&#x27;,va=&#x27;top&#x27;,clip_on=False)</span>
+<span id="L48"><a href="#L48">  48</a> ax.set_ylim(0,1.27);ax.grid(False);ax.spines[&#x27;polar&#x27;].set_color(&#x27;#bbbbbb&#x27;)</span>
+<span id="L49"><a href="#L49">  49</a> ax.set_title(&#x27;扇形热图与分布小提琴&#x27;,pad=24,color=&#x27;#515a85&#x27;)</span>
+<span id="L50"><a href="#L50">  50</a> cb=fig.colorbar(ScalarMappable(norm=norm,cmap=cmap),ax=ax,orientation=&#x27;vertical&#x27;,fraction=.035,pad=.07,shrink=.65)</span>
+<span id="L51"><a href="#L51">  51</a> cb.set_label(&#x27;测量值（合成数据）&#x27;)</span>
+<span id="L52"><a href="#L52">  52</a> plt.tight_layout();plt.show()</span>
+<span id="L53"><a href="#L53">  53</a> </span></pre>

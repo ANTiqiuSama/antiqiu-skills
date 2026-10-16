@@ -1,0 +1,65 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> import matplotlib.colors as mcolors</span>
+<span id="L4"><a href="#L4">   4</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L5"><a href="#L5">   5</a> setup_style()</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> categories = [&#x27;2019&#x27;, &#x27;2020&#x27;, &#x27;2021&#x27;, &#x27;2022&#x27;, &#x27;2023&#x27;]</span>
+<span id="L8"><a href="#L8">   8</a> components = {</span>
+<span id="L9"><a href="#L9">   9</a>     &#x27;第一产业&#x27;: [8.2, 7.8, 7.5, 7.2, 6.9],</span>
+<span id="L10"><a href="#L10">  10</a>     &#x27;第二产业&#x27;: [38.5, 37.2, 36.8, 36.1, 35.5],</span>
+<span id="L11"><a href="#L11">  11</a>     &#x27;第三产业&#x27;: [53.3, 55.0, 55.7, 56.7, 57.6],</span>
+<span id="L12"><a href="#L12">  12</a> }</span>
+<span id="L13"><a href="#L13">  13</a> </span>
+<span id="L14"><a href="#L14">  14</a> fig, ax = plt.subplots(figsize=(8, 5.5))</span>
+<span id="L15"><a href="#L15">  15</a> x = np.arange(len(categories))</span>
+<span id="L16"><a href="#L16">  16</a> bottom = np.zeros(len(categories))</span>
+<span id="L17"><a href="#L17">  17</a> bar_width = 0.55</span>
+<span id="L18"><a href="#L18">  18</a> </span>
+<span id="L19"><a href="#L19">  19</a> for i, (name, vals) in enumerate(components.items()):</span>
+<span id="L20"><a href="#L20">  20</a>     vals_arr = np.array(vals)</span>
+<span id="L21"><a href="#L21">  21</a>     # ★ 淡色填充 + 原色边框</span>
+<span id="L22"><a href="#L22">  22</a>     bars = ax.bar(x, vals_arr, bar_width, bottom=bottom,</span>
+<span id="L23"><a href="#L23">  23</a>                   color=_lighten(PALETTE[i], 0.4), edgecolor=PALETTE[i],</span>
+<span id="L24"><a href="#L24">  24</a>                   linewidth=1.2, label=name, zorder=2)</span>
+<span id="L25"><a href="#L25">  25</a> </span>
+<span id="L26"><a href="#L26">  26</a>     # 自动对比度标签：深色块白字 / 浅色块黑字</span>
+<span id="L27"><a href="#L27">  27</a>     for bar, v, b in zip(bars, vals_arr, bottom):</span>
+<span id="L28"><a href="#L28">  28</a>         if v &gt; 5:</span>
+<span id="L29"><a href="#L29">  29</a>             r, g, b_c = mcolors.to_rgb(_lighten(PALETTE[i], 0.4))</span>
+<span id="L30"><a href="#L30">  30</a>             luminance = 0.299 * r + 0.587 * g + 0.114 * b_c</span>
+<span id="L31"><a href="#L31">  31</a>             text_color = &#x27;white&#x27; if luminance &lt; 0.6 else COLORS[&#x27;text&#x27;]</span>
+<span id="L32"><a href="#L32">  32</a>             ax.text(bar.get_x() + bar.get_width() / 2, b + v / 2,</span>
+<span id="L33"><a href="#L33">  33</a>                     f&#x27;{v:.1f}%&#x27;, ha=&#x27;center&#x27;, va=&#x27;center&#x27;, fontsize=8,</span>
+<span id="L34"><a href="#L34">  34</a>                     color=text_color, fontweight=&#x27;bold&#x27;)</span>
+<span id="L35"><a href="#L35">  35</a>     bottom += vals_arr</span>
+<span id="L36"><a href="#L36">  36</a> </span>
+<span id="L37"><a href="#L37">  37</a> # 顶部趋势折线（总量）</span>
+<span id="L38"><a href="#L38">  38</a> totals = bottom</span>
+<span id="L39"><a href="#L39">  39</a> ax.plot(x, totals, &#x27;o-&#x27;, color=COLORS[&#x27;text&#x27;], linewidth=1.5, markersize=5,</span>
+<span id="L40"><a href="#L40">  40</a>         markeredgecolor=&#x27;white&#x27;, markeredgewidth=1, zorder=3)</span>
+<span id="L41"><a href="#L41">  41</a> for xi, t in zip(x, totals):</span>
+<span id="L42"><a href="#L42">  42</a>     ax.text(xi, t + 1.0, f&#x27;{t:.1f}&#x27;, ha=&#x27;center&#x27;, va=&#x27;bottom&#x27;, fontsize=8,</span>
+<span id="L43"><a href="#L43">  43</a>             fontweight=&#x27;bold&#x27;, color=COLORS[&#x27;text&#x27;])</span>
+<span id="L44"><a href="#L44">  44</a> </span>
+<span id="L45"><a href="#L45">  45</a> # 末端同比变化标注</span>
+<span id="L46"><a href="#L46">  46</a> for i, (name, vals) in enumerate(components.items()):</span>
+<span id="L47"><a href="#L47">  47</a>     change = vals[-1] - vals[-2]</span>
+<span id="L48"><a href="#L48">  48</a>     sign = &#x27;+&#x27; if change &gt;= 0 else &#x27;&#x27;</span>
+<span id="L49"><a href="#L49">  49</a>     color = COLORS[&#x27;up&#x27;] if change &gt;= 0 else COLORS[&#x27;down&#x27;]</span>
+<span id="L50"><a href="#L50">  50</a>     y_pos = sum(components[n][-1] for n in list(components.keys())[:i]) + vals[-1] / 2</span>
+<span id="L51"><a href="#L51">  51</a>     ax.annotate(f&#x27;{sign}{change:.1f}%&#x27;, xy=(len(categories) - 1 + 0.35, y_pos),</span>
+<span id="L52"><a href="#L52">  52</a>                 fontsize=7, color=color, fontweight=&#x27;bold&#x27;, va=&#x27;center&#x27;,</span>
+<span id="L53"><a href="#L53">  53</a>                 bbox=dict(boxstyle=&#x27;round,pad=0.15&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L54"><a href="#L54">  54</a>                           edgecolor=color, alpha=0.8, linewidth=0.5))</span>
+<span id="L55"><a href="#L55">  55</a> </span>
+<span id="L56"><a href="#L56">  56</a> ax.set_xticks(x)</span>
+<span id="L57"><a href="#L57">  57</a> ax.set_xticklabels(categories, fontsize=10)</span>
+<span id="L58"><a href="#L58">  58</a> ax.set_ylabel(&#x27;占比 (%)&#x27;, fontsize=11)</span>
+<span id="L59"><a href="#L59">  59</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=9, loc=&#x27;upper left&#x27;)</span>
+<span id="L60"><a href="#L60">  60</a> ax.grid(axis=&#x27;y&#x27;, alpha=0.12, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L61"><a href="#L61">  61</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L62"><a href="#L62">  62</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L63"><a href="#L63">  63</a> fig.tight_layout()</span>
+<span id="L64"><a href="#L64">  64</a> save_fig(fig, &#x27;figures/fig_stacked_bar.pdf&#x27;)</span>
+</pre>

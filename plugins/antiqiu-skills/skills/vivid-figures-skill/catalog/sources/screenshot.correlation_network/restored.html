@@ -1,0 +1,64 @@
+<!doctype html><meta charset="utf-8"><title>相关矩阵与连线网络 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>相关矩阵与连线网络</h1><p>代码截图恢复与适配 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;相关矩阵与连线网络</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [92, 93, 94, 95, 96, 97].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 小明的代码美学 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np; from _utils.palette_maps import palette_cmap, palette_stops, contrast_text</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> from matplotlib import patches,lines</span>
+<span id="L18"><a href="#L18">  18</a> # Original uses arbitrary random matrix and network statistics. Demo below uses a real</span>
+<span id="L19"><a href="#L19">  19</a> # sample correlation matrix; the r/p network table remains explicitly illustrative.</span>
+<span id="L20"><a href="#L20">  20</a> feature_labels=&#x27;N P K Ca Mg S Al Fe Mn Zn Mo pH&#x27;.split()</span>
+<span id="L21"><a href="#L21">  21</a> feature_count=len(feature_labels);spec_labels=[&#x27;spec1&#x27;,&#x27;spec2&#x27;,&#x27;spec3&#x27;]</span>
+<span id="L22"><a href="#L22">  22</a> np.random.seed(10)</span>
+<span id="L23"><a href="#L23">  23</a> latent=np.random.normal(size=(100,3))</span>
+<span id="L24"><a href="#L24">  24</a> observations=latent@np.random.normal(size=(3,feature_count))+np.random.normal(size=(100,feature_count))*.8</span>
+<span id="L25"><a href="#L25">  25</a> pearson_data=np.corrcoef(observations,rowvar=False)</span>
+<span id="L26"><a href="#L26">  26</a> p_data=np.random.beta(.8,5,(len(spec_labels),feature_count))</span>
+<span id="L27"><a href="#L27">  27</a> r_data=np.random.uniform(-1,1,(len(spec_labels),feature_count))</span>
+<span id="L28"><a href="#L28">  28</a> def calc_p_color(value):return palette_stops(&#x27;diverging&#x27;)[-1] if value&lt;.01 else palette_stops(&#x27;diverging&#x27;)[0] if value&lt;.05 else &#x27;#c7c7c7&#x27;</span>
+<span id="L29"><a href="#L29">  29</a> def calc_r_width(value):return 1. if abs(value)&lt;.2 else 2. if abs(value)&lt;.4 else 4.</span>
+<span id="L30"><a href="#L30">  30</a> def gradient_color(min_value,max_value,hex_colors,value):</span>
+<span id="L31"><a href="#L31">  31</a>     if max_value==min_value:return hex_colors[len(hex_colors)//2]</span>
+<span id="L32"><a href="#L32">  32</a>     n=np.clip((value-min_value)/(max_value-min_value),0,1)</span>
+<span id="L33"><a href="#L33">  33</a>     cmap=LinearSegmentedColormap.from_list(&#x27;corr&#x27;,hex_colors)</span>
+<span id="L34"><a href="#L34">  34</a>     return to_hex(cmap(float(n)))</span>
+<span id="L35"><a href="#L35">  35</a> fig,ax=plt.subplots(figsize=(10,7),dpi=150)</span>
+<span id="L36"><a href="#L36">  36</a> spec_pos_y=np.linspace(0,feature_count,len(spec_labels)+2).tolist()</span>
+<span id="L37"><a href="#L37">  37</a> for i,spec in enumerate(spec_labels):</span>
+<span id="L38"><a href="#L38">  38</a>     ax.text(spec_pos_y[i+1]-4.5,spec_pos_y[-2-i]-3.5,spec,ha=&#x27;center&#x27;,va=&#x27;center&#x27;)</span>
+<span id="L39"><a href="#L39">  39</a>     for j in range(feature_count):</span>
+<span id="L40"><a href="#L40">  40</a>         ax.plot([spec_pos_y[i+1]-4,-.5+j],[spec_pos_y[-2-i]-3,feature_count-j-.5],linestyle=&#x27;-&#x27;,linewidth=calc_r_width(r_data[i,j]),color=calc_p_color(p_data[i,j]),zorder=1-p_data[i,j],marker=&#x27;o&#x27;,markersize=4)</span>
+<span id="L41"><a href="#L41">  41</a> pearson_colors=palette_stops(&#x27;diverging&#x27;,center=&#x27;#ecf4f8&#x27;)</span>
+<span id="L42"><a href="#L42">  42</a> for i in range(feature_count):</span>
+<span id="L43"><a href="#L43">  43</a>     for j in range(i,feature_count):</span>
+<span id="L44"><a href="#L44">  44</a>         value=pearson_data[i,j];size=abs(value)</span>
+<span id="L45"><a href="#L45">  45</a>         color=gradient_color(-1,1,pearson_colors,value)</span>
+<span id="L46"><a href="#L46">  46</a>         ax.add_patch(patches.Rectangle((feature_count-i-1,j),1,1,linewidth=.25,edgecolor=&#x27;#999999&#x27;,facecolor=&#x27;white&#x27;))</span>
+<span id="L47"><a href="#L47">  47</a>         ax.add_patch(patches.Rectangle((feature_count-i-.5-size/2,j+.5-size/2),size,size,linewidth=.5,edgecolor=&#x27;#999999&#x27;,facecolor=color))</span>
+<span id="L48"><a href="#L48">  48</a> # Matrix coordinates are reversed in x; labels follow matrix indices.</span>
+<span id="L49"><a href="#L49">  49</a> for i,label in enumerate(feature_labels):</span>
+<span id="L50"><a href="#L50">  50</a>     ax.text(feature_count-i-.5,feature_count+.5,label,ha=&#x27;center&#x27;,va=&#x27;center&#x27;,fontsize=8)</span>
+<span id="L51"><a href="#L51">  51</a>     ax.text(feature_count+.5,i+.5,label,ha=&#x27;center&#x27;,va=&#x27;center&#x27;,fontsize=8)</span>
+<span id="L52"><a href="#L52">  52</a> p_handles=[patches.Patch(color=c,label=l) for c,l in zip([palette_stops(&#x27;diverging&#x27;)[-1],palette_stops(&#x27;diverging&#x27;)[0],&#x27;#c7c7c7&#x27;],[&#x27;&lt; 0.01&#x27;,&#x27;0.01–0.05&#x27;,&#x27;≥ 0.05&#x27;])]</span>
+<span id="L53"><a href="#L53">  53</a> leg=ax.legend(handles=p_handles,title=&#x27;示例关联 p&#x27;,bbox_to_anchor=(1,.99),frameon=False);ax.add_artist(leg)</span>
+<span id="L54"><a href="#L54">  54</a> r_handles=[lines.Line2D([],[],color=&#x27;#a9a9a9&#x27;,linewidth=w,label=l) for w,l in zip([1,2,4],[&#x27;&lt; 0.2&#x27;,&#x27;0.2–0.4&#x27;,&#x27;≥ 0.4&#x27;])]</span>
+<span id="L55"><a href="#L55">  55</a> leg=ax.legend(handles=r_handles,title=&#x27;示例 |r|&#x27;,bbox_to_anchor=(1,.67),frameon=False);ax.add_artist(leg)</span>
+<span id="L56"><a href="#L56">  56</a> cmap=LinearSegmentedColormap.from_list(&#x27;pearson&#x27;,pearson_colors)</span>
+<span id="L57"><a href="#L57">  57</a> cb=fig.colorbar(ScalarMappable(norm=Normalize(-1,1),cmap=cmap),cax=fig.add_axes([.81,.13,.025,.19]))</span>
+<span id="L58"><a href="#L58">  58</a> cb.ax.set_title(&quot;Pearson&#x27;s r&quot;,fontsize=9)</span>
+<span id="L59"><a href="#L59">  59</a> ax.set(xticks=[],yticks=[],xlim=(-2,feature_count+8),ylim=(-1,feature_count+1));ax.set_aspect(&#x27;equal&#x27;)</span>
+<span id="L60"><a href="#L60">  60</a> for s in ax.spines.values():s.set_visible(False)</span>
+<span id="L61"><a href="#L61">  61</a> ax.set_title(&#x27;相关矩阵与关联网络（合成示例）&#x27;,pad=20)</span>
+<span id="L62"><a href="#L62">  62</a> fig.subplots_adjust(left=.04,right=.96,top=.9,bottom=.06)</span>
+<span id="L63"><a href="#L63">  63</a> plt.show()</span>
+<span id="L64"><a href="#L64">  64</a> </span></pre>

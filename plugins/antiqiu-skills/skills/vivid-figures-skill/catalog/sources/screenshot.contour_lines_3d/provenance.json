@@ -1,0 +1,20 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 39,
+  "code_pages": [
+    40,
+    41
+  ],
+  "all_pages": [
+    39,
+    40,
+    41
+  ],
+  "changes": [
+    "恢复全部可见绘图层与示例数据；调整导入、缩进、标签或输出边距以兼容当前运行环境。",
+    "使用Plotly交互显示；预览通过Kaleido导出，画布和边距适配截图检查。3D PDF内部仍含栅格渲染。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

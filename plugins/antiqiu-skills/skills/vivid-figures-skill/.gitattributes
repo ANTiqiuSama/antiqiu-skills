@@ -1,0 +1,8 @@
+# Source snapshots and resource baselines use byte-level SHA-256 hashes.
+# Preserve shipped bytes across clones and archives on every platform.
+catalog/sources/** -text
+templates/**/*.py -text
+original/resources/assets/** -text
+
+# Shell entrypoints must remain executable by Unix shells.
+*.sh text eol=lf

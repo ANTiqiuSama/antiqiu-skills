@@ -1,0 +1,45 @@
+{
+  "source": "User-provided screenshots, HEX labels transcribed left to right; chart styling is not imported.",
+  "palettes": {
+    "蓝天绿地": [
+      "#377EB8",
+      "#B23648",
+      "#DC7369",
+      "#D8EBCD",
+      "#F8EFB5",
+      "#DAD4B9",
+      "#C8CDCF",
+      "#E1F3FA"
+    ],
+    "柔绿森林": [
+      "#B8DBB3",
+      "#86BC79",
+      "#71A682",
+      "#81989B",
+      "#D19246",
+      "#B5AF8B",
+      "#7EA4B6",
+      "#4A4F7E"
+    ],
+    "粉彩少女": [
+      "#B6B3D6",
+      "#CFCCE3",
+      "#D5D3DE",
+      "#D5D1D1",
+      "#F6DFD6",
+      "#F8B2A2",
+      "#F1837A",
+      "#E9687A"
+    ],
+    "海洋清风": [
+      "#BFDFD2",
+      "#51999F",
+      "#4198AC",
+      "#7BC0CD",
+      "#DBCB92",
+      "#ECB66C",
+      "#EA9E58",
+      "#ED8D5A"
+    ]
+  }
+}

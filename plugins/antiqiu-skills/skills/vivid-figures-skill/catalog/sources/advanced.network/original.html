@@ -1,0 +1,85 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten; from _utils.vivid_config import palette_colors</span>
+<span id="L2"><a href="#L2">   2</a> setup_style(); scale_colors = palette_colors()</span>
+<span id="L3"><a href="#L3">   3</a> import matplotlib.pyplot as plt</span>
+<span id="L4"><a href="#L4">   4</a> import matplotlib.colors as mcolors</span>
+<span id="L5"><a href="#L5">   5</a> import numpy as np</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> try:</span>
+<span id="L8"><a href="#L8">   8</a>     import networkx as nx</span>
+<span id="L9"><a href="#L9">   9</a> except ImportError:</span>
+<span id="L10"><a href="#L10">  10</a>     import subprocess, sys</span>
+<span id="L11"><a href="#L11">  11</a>     subprocess.check_call([sys.executable, &#x27;-m&#x27;, &#x27;pip&#x27;, &#x27;install&#x27;, &#x27;networkx&#x27;, &#x27;-q&#x27;])</span>
+<span id="L12"><a href="#L12">  12</a>     import networkx as nx</span>
+<span id="L13"><a href="#L13">  13</a> </span>
+<span id="L14"><a href="#L14">  14</a> from scipy.spatial import ConvexHull</span>
+<span id="L15"><a href="#L15">  15</a> </span>
+<span id="L16"><a href="#L16">  16</a> G = nx.karate_club_graph()</span>
+<span id="L17"><a href="#L17">  17</a> communities = list(nx.community.greedy_modularity_communities(G))</span>
+<span id="L18"><a href="#L18">  18</a> </span>
+<span id="L19"><a href="#L19">  19</a> # Assign community colors</span>
+<span id="L20"><a href="#L20">  20</a> color_map = {}</span>
+<span id="L21"><a href="#L21">  21</a> for i, comm in enumerate(communities):</span>
+<span id="L22"><a href="#L22">  22</a>     for node in comm:</span>
+<span id="L23"><a href="#L23">  23</a>         color_map[node] = i</span>
+<span id="L24"><a href="#L24">  24</a> node_colors = [PALETTE[color_map[n] % len(PALETTE)] for n in G.nodes()]</span>
+<span id="L25"><a href="#L25">  25</a> </span>
+<span id="L26"><a href="#L26">  26</a> # Node sizing by degree</span>
+<span id="L27"><a href="#L27">  27</a> degrees = dict(G.degree())</span>
+<span id="L28"><a href="#L28">  28</a> max_deg = max(degrees.values())</span>
+<span id="L29"><a href="#L29">  29</a> node_sizes = [400 * degrees[n] / max_deg + 80 for n in G.nodes()]</span>
+<span id="L30"><a href="#L30">  30</a> </span>
+<span id="L31"><a href="#L31">  31</a> fig, ax = plt.subplots(figsize=(8, 7))</span>
+<span id="L32"><a href="#L32">  32</a> pos = nx.spring_layout(G, seed=42, k=0.5)</span>
+<span id="L33"><a href="#L33">  33</a> </span>
+<span id="L34"><a href="#L34">  34</a> # Draw convex hulls for communities</span>
+<span id="L35"><a href="#L35">  35</a> for i, comm in enumerate(communities):</span>
+<span id="L36"><a href="#L36">  36</a>     if len(comm) &gt;= 3:</span>
+<span id="L37"><a href="#L37">  37</a>         points = np.array([pos[n] for n in comm])</span>
+<span id="L38"><a href="#L38">  38</a>         try:</span>
+<span id="L39"><a href="#L39">  39</a>             hull = ConvexHull(points)</span>
+<span id="L40"><a href="#L40">  40</a>             hull_points = points[hull.vertices]</span>
+<span id="L41"><a href="#L41">  41</a>             # Close the polygon</span>
+<span id="L42"><a href="#L42">  42</a>             hull_points = np.vstack([hull_points, hull_points[0]])</span>
+<span id="L43"><a href="#L43">  43</a>             # Expand hull slightly</span>
+<span id="L44"><a href="#L44">  44</a>             centroid = points.mean(axis=0)</span>
+<span id="L45"><a href="#L45">  45</a>             expanded = centroid + 1.15 * (hull_points - centroid)</span>
+<span id="L46"><a href="#L46">  46</a>             ax.fill(expanded[:, 0], expanded[:, 1],</span>
+<span id="L47"><a href="#L47">  47</a>                     color=PALETTE[i % len(PALETTE)], alpha=0.08)</span>
+<span id="L48"><a href="#L48">  48</a>             ax.plot(expanded[:, 0], expanded[:, 1],</span>
+<span id="L49"><a href="#L49">  49</a>                     color=PALETTE[i % len(PALETTE)], linewidth=1.5,</span>
+<span id="L50"><a href="#L50">  50</a>                     linestyle=&#x27;--&#x27;, alpha=0.4)</span>
+<span id="L51"><a href="#L51">  51</a>         except Exception:</span>
+<span id="L52"><a href="#L52">  52</a>             pass</span>
+<span id="L53"><a href="#L53">  53</a> </span>
+<span id="L54"><a href="#L54">  54</a> # Edge weight gradient</span>
+<span id="L55"><a href="#L55">  55</a> edges = G.edges()</span>
+<span id="L56"><a href="#L56">  56</a> edge_weights = [G[u][v].get(&#x27;weight&#x27;, 1) for u, v in edges]</span>
+<span id="L57"><a href="#L57">  57</a> max_w = max(edge_weights) if edge_weights else 1</span>
+<span id="L58"><a href="#L58">  58</a> cmap_edge = mcolors.LinearSegmentedColormap.from_list(&#x27;ew&#x27;, [_lighten(scale_colors[0], 0.8), COLORS[&#x27;ref_line&#x27;]])</span>
+<span id="L59"><a href="#L59">  59</a> for (u, v), w in zip(edges, edge_weights):</span>
+<span id="L60"><a href="#L60">  60</a>     x0, y0 = pos[u]</span>
+<span id="L61"><a href="#L61">  61</a>     x1, y1 = pos[v]</span>
+<span id="L62"><a href="#L62">  62</a>     norm_w = w / max_w</span>
+<span id="L63"><a href="#L63">  63</a>     ax.plot([x0, x1], [y0, y1], color=cmap_edge(norm_w),</span>
+<span id="L64"><a href="#L64">  64</a>             linewidth=0.5 + 1.5 * norm_w, alpha=0.3 + 0.4 * norm_w, zorder=1)</span>
+<span id="L65"><a href="#L65">  65</a> </span>
+<span id="L66"><a href="#L66">  66</a> # Draw nodes</span>
+<span id="L67"><a href="#L67">  67</a> nx.draw_networkx_nodes(G, pos, ax=ax, node_color=node_colors, node_size=node_sizes,</span>
+<span id="L68"><a href="#L68">  68</a>                         edgecolors=&#x27;white&#x27;, linewidths=1.2, alpha=0.9, zorder=3)</span>
+<span id="L69"><a href="#L69">  69</a> </span>
+<span id="L70"><a href="#L70">  70</a> # Labels for high-degree nodes only</span>
+<span id="L71"><a href="#L71">  71</a> high_deg_nodes = {n: str(n) for n in G.nodes() if degrees[n] &gt;= 4}</span>
+<span id="L72"><a href="#L72">  72</a> nx.draw_networkx_labels(G, pos, labels=high_deg_nodes, ax=ax,</span>
+<span id="L73"><a href="#L73">  73</a>                          font_size=7, font_color=COLORS[&#x27;text&#x27;], font_weight=&#x27;bold&#x27;)</span>
+<span id="L74"><a href="#L74">  74</a> </span>
+<span id="L75"><a href="#L75">  75</a> # Legend for communities</span>
+<span id="L76"><a href="#L76">  76</a> from matplotlib.lines import Line2D</span>
+<span id="L77"><a href="#L77">  77</a> legend_elements = [Line2D([0], [0], marker=&#x27;o&#x27;, color=&#x27;w&#x27;,</span>
+<span id="L78"><a href="#L78">  78</a>                            markerfacecolor=PALETTE[i % len(PALETTE)],</span>
+<span id="L79"><a href="#L79">  79</a>                            markersize=10, label=f&#x27;Community {i+1}&#x27;)</span>
+<span id="L80"><a href="#L80">  80</a>                    for i in range(len(communities))]</span>
+<span id="L81"><a href="#L81">  81</a> ax.legend(handles=legend_elements, loc=&#x27;upper left&#x27;, frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8, fancybox=True)</span>
+<span id="L82"><a href="#L82">  82</a> </span>
+<span id="L83"><a href="#L83">  83</a> ax.set_axis_off()</span>
+<span id="L84"><a href="#L84">  84</a> fig.tight_layout()</span>
+<span id="L85"><a href="#L85">  85</a> save_fig(fig, &#x27;figures/fig_network.pdf&#x27;)</span></pre>

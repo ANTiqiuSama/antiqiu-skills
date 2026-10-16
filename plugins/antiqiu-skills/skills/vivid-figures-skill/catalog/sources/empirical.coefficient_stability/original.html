@@ -1,0 +1,47 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> # === Example data (replace with actual regression results) ===</span>
+<span id="L7"><a href="#L7">   7</a> specs = [&#x27;基准&#x27;, &#x27;+经济水平&#x27;, &#x27;+城镇化&#x27;, &#x27;+人力资本&#x27;, &#x27;+FDI&#x27;, &#x27;+金融发展&#x27;, &#x27;+基础设施&#x27;, &#x27;全控制&#x27;]</span>
+<span id="L8"><a href="#L8">   8</a> coefs = [0.045, 0.042, 0.041, 0.039, 0.040, 0.038, 0.037, 0.036]</span>
+<span id="L9"><a href="#L9">   9</a> ci_lower = [0.032, 0.030, 0.029, 0.027, 0.028, 0.026, 0.025, 0.024]</span>
+<span id="L10"><a href="#L10">  10</a> ci_upper = [0.058, 0.054, 0.053, 0.051, 0.052, 0.050, 0.049, 0.048]</span>
+<span id="L11"><a href="#L11">  11</a> n_controls = list(range(len(specs)))</span>
+<span id="L12"><a href="#L12">  12</a> </span>
+<span id="L13"><a href="#L13">  13</a> fig, ax = plt.subplots(figsize=(9, 5))</span>
+<span id="L14"><a href="#L14">  14</a> </span>
+<span id="L15"><a href="#L15">  15</a> # CI band (gradient fill)</span>
+<span id="L16"><a href="#L16">  16</a> ax.fill_between(n_controls, ci_lower, ci_upper, alpha=0.15, color=PALETTE[0])</span>
+<span id="L17"><a href="#L17">  17</a> ax.fill_between(n_controls, [c - (c - cl) * 0.5 for c, cl in zip(coefs, ci_lower)],</span>
+<span id="L18"><a href="#L18">  18</a>                 [c + (cu - c) * 0.5 for c, cu in zip(coefs, ci_upper)],</span>
+<span id="L19"><a href="#L19">  19</a>                 alpha=0.25, color=PALETTE[0])</span>
+<span id="L20"><a href="#L20">  20</a> </span>
+<span id="L21"><a href="#L21">  21</a> # Coefficient line + markers</span>
+<span id="L22"><a href="#L22">  22</a> ax.plot(n_controls, coefs, &#x27;o-&#x27;, color=PALETTE[0], linewidth=2.5, markersize=8,</span>
+<span id="L23"><a href="#L23">  23</a>         markeredgecolor=&#x27;white&#x27;, markeredgewidth=1.5, zorder=5)</span>
+<span id="L24"><a href="#L24">  24</a> </span>
+<span id="L25"><a href="#L25">  25</a> # Value labels</span>
+<span id="L26"><a href="#L26">  26</a> for i, (x, y) in enumerate(zip(n_controls, coefs)):</span>
+<span id="L27"><a href="#L27">  27</a>     ax.text(x, y + 0.002, f&#x27;{y:.3f}&#x27;, ha=&#x27;center&#x27;, va=&#x27;bottom&#x27;, fontsize=8,</span>
+<span id="L28"><a href="#L28">  28</a>             fontweight=&#x27;bold&#x27;, color=PALETTE[0])</span>
+<span id="L29"><a href="#L29">  29</a> </span>
+<span id="L30"><a href="#L30">  30</a> # Zero reference line</span>
+<span id="L31"><a href="#L31">  31</a> ax.axhline(0, color=COLORS[&#x27;ref_line&#x27;], linewidth=0.8, linestyle=&#x27;--&#x27;, alpha=0.5)</span>
+<span id="L32"><a href="#L32">  32</a> </span>
+<span id="L33"><a href="#L33">  33</a> # Baseline reference band</span>
+<span id="L34"><a href="#L34">  34</a> baseline = coefs[0]</span>
+<span id="L35"><a href="#L35">  35</a> ax.axhspan(baseline * 0.9, baseline * 1.1, alpha=0.05, color=PALETTE[3],</span>
+<span id="L36"><a href="#L36">  36</a>            label=f&#x27;基准±10% ({baseline*0.9:.3f}~{baseline*1.1:.3f})&#x27;)</span>
+<span id="L37"><a href="#L37">  37</a> </span>
+<span id="L38"><a href="#L38">  38</a> ax.set_xticks(n_controls)</span>
+<span id="L39"><a href="#L39">  39</a> ax.set_xticklabels(specs, fontsize=8, rotation=30, ha=&#x27;right&#x27;)</span>
+<span id="L40"><a href="#L40">  40</a> ax.set_ylabel(&#x27;核心系数估计值&#x27;, fontsize=11)</span>
+<span id="L41"><a href="#L41">  41</a> ax.set_xlabel(&#x27;模型设定（逐步加入控制变量）&#x27;, fontsize=11)</span>
+<span id="L42"><a href="#L42">  42</a> ax.legend(fontsize=8, frameon=False, labelspacing=0.35, handlelength=1.6, loc=&#x27;best&#x27;)</span>
+<span id="L43"><a href="#L43">  43</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L44"><a href="#L44">  44</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L45"><a href="#L45">  45</a> fig.tight_layout()</span>
+<span id="L46"><a href="#L46">  46</a> save_fig(fig, &#x27;figures/fig_coef_stability.pdf&#x27;)</span>
+</pre>

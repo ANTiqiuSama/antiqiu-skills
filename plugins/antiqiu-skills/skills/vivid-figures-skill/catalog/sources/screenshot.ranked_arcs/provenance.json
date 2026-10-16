@@ -1,0 +1,21 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 63,
+  "code_pages": [
+    64,
+    65,
+    66
+  ],
+  "all_pages": [
+    63,
+    64,
+    65,
+    66
+  ],
+  "changes": [
+    "保留Faker公司名、共享角度尺度和渐变圆弧；适度扩大画布与文字布局。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

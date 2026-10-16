@@ -1,0 +1,65 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> np.random.seed(42)</span>
+<span id="L7"><a href="#L7">   7</a> fig, axes = plt.subplots(2, 2, figsize=(5.0, 4.9))   # 示例尺寸；保留模板比例，按实际显示尺寸检查字号与布局</span>
+<span id="L8"><a href="#L8">   8</a> </span>
+<span id="L9"><a href="#L9">   9</a> # (a) 折线图 — 渐变填充</span>
+<span id="L10"><a href="#L10">  10</a> ax = axes[0, 0]</span>
+<span id="L11"><a href="#L11">  11</a> for i in range(3):</span>
+<span id="L12"><a href="#L12">  12</a>     y = np.cumsum(np.random.randn(10))</span>
+<span id="L13"><a href="#L13">  13</a>     ax.plot(range(10), y, &#x27;o-&#x27;, color=PALETTE[i], linewidth=1.8, markersize=5,</span>
+<span id="L14"><a href="#L14">  14</a>             markeredgecolor=&#x27;white&#x27;, markeredgewidth=0.8, label=f&#x27;系列{i + 1}&#x27;)</span>
+<span id="L15"><a href="#L15">  15</a>     ax.fill_between(range(10), y - 1, y + 1, alpha=0.08, color=PALETTE[i])</span>
+<span id="L16"><a href="#L16">  16</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8)</span>
+<span id="L17"><a href="#L17">  17</a> ax.set_ylabel(&#x27;累计值&#x27;, fontsize=10)</span>
+<span id="L18"><a href="#L18">  18</a> ax.grid(alpha=0.12, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L19"><a href="#L19">  19</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L20"><a href="#L20">  20</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L21"><a href="#L21">  21</a> </span>
+<span id="L22"><a href="#L22">  22</a> # (b) 分组柱状图 — 淡色填充 + 原色边框</span>
+<span id="L23"><a href="#L23">  23</a> ax = axes[0, 1]</span>
+<span id="L24"><a href="#L24">  24</a> x = np.arange(5)</span>
+<span id="L25"><a href="#L25">  25</a> for i, label in enumerate([&#x27;方法A&#x27;, &#x27;方法B&#x27;]):</span>
+<span id="L26"><a href="#L26">  26</a>     vals = np.random.uniform(60, 95, 5)</span>
+<span id="L27"><a href="#L27">  27</a>     offset = (i - 0.5) * 0.3</span>
+<span id="L28"><a href="#L28">  28</a>     ax.bar(x + offset, vals, 0.28, color=_lighten(PALETTE[i], 0.4),</span>
+<span id="L29"><a href="#L29">  29</a>            edgecolor=PALETTE[i], linewidth=1.2, label=label)</span>
+<span id="L30"><a href="#L30">  30</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8)</span>
+<span id="L31"><a href="#L31">  31</a> ax.set_ylabel(&#x27;得分&#x27;, fontsize=10)</span>
+<span id="L32"><a href="#L32">  32</a> ax.grid(axis=&#x27;y&#x27;, alpha=0.12, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L33"><a href="#L33">  33</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L34"><a href="#L34">  34</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L35"><a href="#L35">  35</a> </span>
+<span id="L36"><a href="#L36">  36</a> # (c) 散点图 — KDE 等高线背景</span>
+<span id="L37"><a href="#L37">  37</a> ax = axes[1, 0]</span>
+<span id="L38"><a href="#L38">  38</a> for i in range(3):</span>
+<span id="L39"><a href="#L39">  39</a>     pts = np.random.randn(30, 2)</span>
+<span id="L40"><a href="#L40">  40</a>     ax.scatter(pts[:, 0], pts[:, 1], s=25, alpha=0.6, color=PALETTE[i],</span>
+<span id="L41"><a href="#L41">  41</a>                edgecolor=&#x27;white&#x27;, linewidth=0.5, label=f&#x27;类{i + 1}&#x27;)</span>
+<span id="L42"><a href="#L42">  42</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8)</span>
+<span id="L43"><a href="#L43">  43</a> ax.grid(alpha=0.12, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L44"><a href="#L44">  44</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L45"><a href="#L45">  45</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L46"><a href="#L46">  46</a> </span>
+<span id="L47"><a href="#L47">  47</a> # (d) 直方图 — 淡色填充 + 原色边框</span>
+<span id="L48"><a href="#L48">  48</a> ax = axes[1, 1]</span>
+<span id="L49"><a href="#L49">  49</a> for i in range(3):</span>
+<span id="L50"><a href="#L50">  50</a>     vals = np.random.normal(i * 2, 1, 200)</span>
+<span id="L51"><a href="#L51">  51</a>     ax.hist(vals, bins=20, alpha=0.5, color=_lighten(PALETTE[i], 0.4),</span>
+<span id="L52"><a href="#L52">  52</a>             edgecolor=PALETTE[i], linewidth=0.8, label=f&#x27;分布{i + 1}&#x27;)</span>
+<span id="L53"><a href="#L53">  53</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8)</span>
+<span id="L54"><a href="#L54">  54</a> ax.set_ylabel(&#x27;频次&#x27;, fontsize=10)</span>
+<span id="L55"><a href="#L55">  55</a> ax.grid(axis=&#x27;y&#x27;, alpha=0.12, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L56"><a href="#L56">  56</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L57"><a href="#L57">  57</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L58"><a href="#L58">  58</a> </span>
+<span id="L59"><a href="#L59">  59</a> # ★ 带背景框子图标签（用 set_title 紧贴子图顶部）</span>
+<span id="L60"><a href="#L60">  60</a> for i, ax in enumerate(axes.flat):</span>
+<span id="L61"><a href="#L61">  61</a>     ax.set_title(f&#x27;({chr(97 + i)})&#x27;, fontsize=12, fontweight=&#x27;bold&#x27;, loc=&#x27;left&#x27;, pad=3)</span>
+<span id="L62"><a href="#L62">  62</a> </span>
+<span id="L63"><a href="#L63">  63</a> fig.tight_layout(pad=0.5)</span>
+<span id="L64"><a href="#L64">  64</a> save_fig(fig, &#x27;figures/fig_subplots.pdf&#x27;)</span>
+</pre>

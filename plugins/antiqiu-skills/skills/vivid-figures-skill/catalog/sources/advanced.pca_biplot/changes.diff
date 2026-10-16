@@ -1,0 +1,11 @@
+--- original.py
++++ render.py
+@@ -1,7 +1,7 @@
+ import numpy as np
+ import matplotlib.pyplot as plt
+ import matplotlib.colors as mcolors
+-from _utils.plot_utils import setup_style, save_fig, PALETTE, smart_labels, auto_legend
++from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, smart_labels, auto_legend
+ setup_style()
+ 
+ # === Example data (replace with your PCA results) ===

@@ -1,0 +1,369 @@
+{
+  "html_pdf_check.py": [
+    "b874d80aa06f6ff93d74cf2476ada75a0309b990172f46f42c8e74c46e4d91e7",
+    "99ad171a2b334f1511532f59e94fc6c5e4362aaf5baeb0ea8bf38a518e66ee1a"
+  ],
+  "themes.css": [
+    "8391a06c0eb43674b68cdb691b43d6fe14d24e5c806b85fd31d26bfe491c48ae"
+  ],
+  "tpl_arch.html": [
+    "96e23e46fbb82509233c762460ad966a79f8a8d818acde5934096bcc5ea0f67b"
+  ],
+  "tpl_flow.html": [
+    "21802c7b407455bd01807e0c32b9017b75823663d695db02efdd19f84870e59f"
+  ],
+  "tpl_framework.html": [
+    "e558bc67656af290490f0eaee7df8cfc19a1e15afadaadf86aef55018f87b784"
+  ],
+  "tpl_pipeline.html": [
+    "b80ff694a40faab9843a97e9cf77430a748d8a4b0de6b4ed4b99dae4978f86af"
+  ],
+  "tpl_roadmap.html": [
+    "d8d9fe2d82d72a9be9c0f76f58940e1c364e07f89660b8ee1bbae2ba8fe59fe9"
+  ],
+  "ai_disclosure_rules.md": [
+    "9c23ab27cec24d2cae2789cc1bdcfffc4279492ae152d6ea9ec38f3a4be88fdb",
+    "1b4bab0c7916cdb0bf4c99ba94e8d0d0217690d6cd8ca0bc2ce25eea7edce0b9"
+  ],
+  "audit_final_figure_size.py": [
+    "6c91fbeddd2ef667791a52d852c4cdf5eacc4285e141991bc09562810379aeee"
+  ],
+  "bib_authenticity_check.py": [
+    "f2906c8b8db6294169d05be706fdaa70bdb76981c3f16e1a9982ad91f1cf46e9"
+  ],
+  "capability_audit.py": [
+    "73f07596ccd65951bb2595c9c65ed7d3ee2490b5a7a7aae16878123b6bb34248"
+  ],
+  "capability_check.py": [
+    "bfa050f83b3f225459cca5e2708196ffd9e27d4d44cc04f0e5c7dda03bda3193"
+  ],
+  "china_provinces.geojson": [
+    "99adfeded5223848bbe37a0a12f8023e11ee12161c7800521c27db42fdeac275"
+  ],
+  "claim_code_check.py": [
+    "4d14e17a4c4c58a078b9f659f5bb468b269bf2c16f6f9bd274afc3693c4f3c7b"
+  ],
+  "compile_check.sh": [
+    "ef76dbe3105e1dcedab66be8912e5ceb86ecf2073865debe81ff532c458c0d11",
+    "c0d51b0e5edc20af8741eed5e77a7d16bfd44957744a0f47441acdc169fca75e",
+    "cab70ba8d4e1cce860d97b32e5448a804374dbaf6e02e9005ca5224ae809dd60"
+  ],
+  "compile_utils.sh": [
+    "cb2c106969e1739939ca8c61dfa0ce1be34915000bc6c7e227fa675342e302a6",
+    "0d48922f5a6bc511a727e7ec4149085a3a2adb03ff7ff08b2294dcef571d3afd",
+    "4b99db76348edc0a84025ca7186e26e965febaa38a13accfda4b8fccb6d498d7"
+  ],
+  "count_subproblems.sh": [
+    "2ed25064186383fdeaf95ebd288592771e77dc58a665aedafa4f91c12fcb63ef"
+  ],
+  "cross_problem_check.py": [
+    "75fba952ec0ddfbc20f877d1354c2f888d4629753d5c5a91ae27665c69c4ba7c"
+  ],
+  "data_ingest_check.py": [
+    "8fd7e50af941586524d1983da176e31fd5d5242d4fe8bc1143cde3fe88d12fe7"
+  ],
+  "data_profile.py": [
+    "36d2beeda0c5fa153a39adbf5ff38b13a25c6f89f9b7170ddcbba1711644bc10"
+  ],
+  "delivery_audit.py": [
+    "a2d2e247746e1b4e0f37341a7f3f904201542cbc5df665f635c3d1fb8facac39"
+  ],
+  "demo_all_templates.tex": [
+    "fa9b350a3dd9ce55629b54a4ba40d835bf65001ee829bdfbc3633a5d9303f686"
+  ],
+  "demo_roadmap_competition.tex": [
+    "5355b140e3697df1c9ba7e7f13afa2b83064aa7628bb66fa2ed368aae33720f0"
+  ],
+  "demo_roadmap_research_pipeline.tex": [
+    "8bcf15bf62114bda1e4fc1f50f0f088724077bab94035cf580838ae521da4684"
+  ],
+  "demo_roadmap_research_premium.tex": [
+    "5c2772e5925acf0ca9e6f0f98491c80a4533c3942998d217cbed94a145333ba4"
+  ],
+  "demo_roadmap_template4.tex": [
+    "0d23872eb54b9d651bb8986ecba6c30920e389ccc2d275982c003ac24ff5265d"
+  ],
+  "drawio_check.py": [
+    "b68be731d50d0869627a066ccc19011221b0d791502dc6315c765f4277f35335"
+  ],
+  "drawio_rules.md": [
+    "74e61c2b2d1baf087a529480ddc108b64bd5436d183a5c288050ad2280a5660f",
+    "c051de75b8f2206fc89faedef32ae650cef5873e134175999d8c3fa48c4022de"
+  ],
+  "error_prevention.md": [
+    "d73b0028e142fcb9a2fbb86211e340abf08fee6d6e2848cfaae37a137fc924ef"
+  ],
+  "example_flow.drawio": [
+    "bc3364986323bd3b372b0271d05f7c71f52d9629a680e3357cf10ceabe9fa255"
+  ],
+  "example_roadmap_hex.drawio": [
+    "b471780f02f8646a9a1129f9e8293737e224e2c7467419873aa743c420c441cf"
+  ],
+  "example_roadmap_hex_cool.drawio": [
+    "10a6316fafd1995b65c4a77d22bee7d0f69d89581606c27c114bbf53198fae33"
+  ],
+  "example_roadmap_stats.drawio": [
+    "acf3ed87b3b64e7e2d62ef18ad9bce62242e7e2d79c6aec75410a547b2ed4c06"
+  ],
+  "example_roadmap_stats_warm.drawio": [
+    "770e4d8f1d97772386dc0526b8062817ab9ba181743c541aac3436f1a83f20d8"
+  ],
+  "example_roadmap_stats_warm.drawio.bak": [
+    "2b74480343a0d8c7b6c29564d02406b5deae30d40f4752617b4fb3f9363991d3"
+  ],
+  "facts_audit.py": [
+    "52fe57dc8148584bae1f4c89a34dd535321c7038a82804a59c4f0b94ec6348a2"
+  ],
+  "figure_check.sh": [
+    "6d73f69cf8db450a85cc56edb10541854d0f8e150130e70fb899037f39b8c387",
+    "7472e4848ef8cf06a8f1c9db29009a26e3b22e8a8adf6c5e4f94aace07be481f",
+    "d870fcd830004c5cbddda32bb93d41ea2b3e4439438d7e7ab7472963ebc7afe3",
+    "fc39787d66dbc96b226d199cb4dc82997e93466c8f3edd9f20074736208f43d0",
+    "f2bfb21112adb8779482b68dd718a87419ef85a03d6967623fc4e9c1f624ff5a",
+    "857e39b10b148b3ce1ffd9d748a929b68b5587210653d6258ceb2beec8a929ae"
+  ],
+  "figure_exemplars.md": [
+    "7e6b7a95281e59901b3723040a9eb45e1b1a78693556c3f84c2e97f4d74853f2",
+    "80e833f790dfafb3a96ea7c9190c71bcb537055cc877bdf1acce9bd0ed4a768d"
+  ],
+  "figure_recipes_academic.md": [
+    "a2c0aad7cc02217f7bd21a05395c785f0aaa4a028036315cc409f393f7475bf3",
+    "cc9d1db9381d59b7e2fc3507dfbc779d8a8638b998e35aa0bbfe554ad9f7d404",
+    "94eafb9fd535c59b2a96b36df6c2e05fa361005a78ad010ed9c8ff12b6c51d2c",
+    "1a0e47d1be9bc026e5b27e2ab3a2ec8ae3577307aff3f515831f979c277eae51",
+    "8d0239b2c8a4e15936987093aaa75dfe100ce5e5bf39480f1c9e52511ea2b806",
+    "acbda2641e13ff05dd0898a88b2b90aac14cee161330b8fb174b38e901c779fe",
+    "cd9f5e182ed6f670549e8a7a6d1eb43aee6d028e31b8e5a2fe47284a4efd773a"
+  ],
+  "figure_recipes_advanced.md": [
+    "bd912f52c567b0b30b344b07faa90349b1ff460eda3c896a35769d2bbee04991",
+    "fb8e96423173f44fc1b5fda09e0fa5c4fea10fef709b67745dc60fc07f049d25",
+    "89a31a0d7508983fff3a16927d47065d57061ab00ca40dcc68db157d4f8ac4ee",
+    "a9ab3ca2eb5b58f275941c8f29095d595e9f01b3807d573aa5be5cf16de53295",
+    "05c228af824a3805757ca965ecff8000c1814d998fd299c57772c6768c0620e9",
+    "983bf8e275de8c25e5504bf0ddaf7b2bb50c10094d2a70ac6badfe71521520c9",
+    "920ebfec268cfec60bf53477f669de782f850270a9d1dca739dee4a205ace0ad",
+    "28357e8fc100cae2e5841b5e62e23a403975a05921395a2af7443e7e5f69c504",
+    "1b48fb877c16a725558f32f8afb8a52d847ebca0fb3e2aecdcc1db886cbd1fce",
+    "d399ea94431427e8e2cbea267ef1f7f3a5fd18e1a50c97dd1e0edfbb54503a63",
+    "d82c43ab9f1e3be955cbc17374c3f7ceff7b4317b2db09e6c716756505c9b272",
+    "fa6479eab5a45236692b57bf33a37f30d7db26ca1f6f791b87e9e5fd3bd4059c",
+    "69aa79770f2c947542e9e8185012e6794bad74af52a26c2ae460e8aab40f806c",
+    "dd3fe163387dafe921c63e8af386eaf915675cb08a7d8ed913ee76e5bcc11887"
+  ],
+  "figure_recipes_basic.md": [
+    "607831cb30adf2b9b10da32516019423be1ba985b01bd8a1d74b62e8bbaacbfc",
+    "10159878be955660c7c61682bbaf178a85369c3fc29cd3c5f7ddcbdad4fc7dc9",
+    "6dba76c9e92e6c8e3f426c65a33cbe198b72dc3e86c186287a8b2ebb98078714",
+    "04793a99e02e8cb303bf46be0882f144f96aef54db6cba23a51374ea3fcf80f1",
+    "14dfeb39099abb03fe696d02ca9d4e48e497ff7c33cb3ee7ab8bbb307b760780",
+    "deca268a0bfbbd9ade283d91df4807a8371535edee7fac290059a28d682e3d8b"
+  ],
+  "figure_recipes_competition.md": [
+    "cf3fcc0a5b36d02b09404fd986205536a869c05761bc0e7866f9c9fbfc183658",
+    "37bcac0ca89f0d335bb6a9f11e3a0a7f28053769f74c1a73496ea9ba146a9818",
+    "27f7647e5cb14264f5e862f0d99f24cac25928ca8fa50a4b2be23fcbd7dc97eb",
+    "885d491b725531ab4968471ec7d251a067eade685bca6b292dbf218b1c160ab5",
+    "d901331985a5c2e23111eb8a54e0b51638a900bc76b9d88d8f5dc8cca7d3b4d2",
+    "51c8f367e8f0f7f306ca4ea9c1a79caf8e2ddc42b7e5d20a27855fe1a2aa5578",
+    "c88067ef65640c3f539fafe57d00900e17bd16f91e45bd8dd04f434bb6c2d93a"
+  ],
+  "figure_recipes_empirical.md": [
+    "64e408334731cc77bb2a347d8cdfd0171fcb73d2daa5bede7ee025f0b9300d5e",
+    "2f00adbd84fe51f7d358050720711e4f7d9ee6eb6cf38b66aaf82ad2ad4d5b9c",
+    "e1de255f751e038e254e951d230ef4abde201ae9ba8f7321e6c95e265aff1200",
+    "4f170dd4a5a70e61d8ae2d4498a9187bea0b973a83456e79f5809f1df1a8c0aa",
+    "a23b123b8b08a64eb713be3ba1104fd77314a821389bd302616cf67076a612a5",
+    "4858205ef16415b0ce2b17bd0da4535265a3106837616d74c88b60c51db4b903",
+    "ab8971c3c15019fc71645466c1151f7064ad3648278322b2b169aa0000d37607"
+  ],
+  "figure_style_guide.md": [
+    "4b915ee4aba0da72e28ca0f45f910ea0dea7cbc6da6307c78db01155de0bb9d6",
+    "9d93de1e50cdbed145f87af489dc74aec856f615c3372759df998457fdad5519",
+    "48864b5bcc72516987aade1e441e04214d043cd985d4c94e71592e82385607ba",
+    "3ba2e403972ace7c1735835db5d93c2c2997a021d5a517f36ecec67e99bb2c35",
+    "0724cebc9034b4cd4ca743b320b16bb1f5bac636e4103853b15bc7c240613ac5",
+    "89acc098051d07f6978e8d663f44ed0e2eedff2cd51ea5c8298b50146c9e799a",
+    "6d80dd75515792f3382aebb552a8a1b8b7fb791c87f2c7cfd7e384b51a36960a"
+  ],
+  "fig_include_size.py": [
+    "5e61fef6b10a37f686d9174878c77276b8bb8d7caa9eb3bc13d285cb534907dc"
+  ],
+  "fig_size_consistency_check.py": [
+    "66af91b33fea9a304a161c795e2d5755d659db40df495b7e388dc8ad8dde9cc2"
+  ],
+  "get_recipe.py": [
+    "a0dbe1fd4626eadaef4bea6eb4d1ca0b157057a222e5e6d0eae804005ba439e8",
+    "7845d9e19f12488e7669ca7853f9715d96b763b3fc0533e8c2457519757659dc",
+    "2e214fd9fe46582cd62bf81302c5b05931d1e2a38a10ce9336ecaf4e22964b19"
+  ],
+  "humanities-english-translation.md": [
+    "40d6e3bee1913cfab162dc234aea0eb34a15ce737eca93181d6497389adfd8d7"
+  ],
+  "humanities-formatting-guide.md": [
+    "203df35bea1d36babf04799cbcbd844f6cc3d97bfd80296940e71ef2663c1f6d"
+  ],
+  "humanities-literature-analysis.md": [
+    "b988a457cbd48008ecef1eaa3199b5e2c2552452f1fd480efd4976e41aeeb6ae"
+  ],
+  "humanities-literature-review.md": [
+    "c9622d95a276e257c9ec6e5b748a36da7d95adbd4a5c6ed29d7e46fc1437ffcf",
+    "8f951cf8280e99f0b60e3e20edabad8afc5ac64ae0ecae5b6828b59ceb7d862e"
+  ],
+  "humanities-material-integration.md": [
+    "050159a2e4231be3447536f4d8d492c62641dd0d312139e66aa93cdc1553ae6c"
+  ],
+  "humanities-platform-guide.md": [
+    "165d068c7002d93ef80ae81900aabc48a64712bef190cd63bc92fb9f9eee18be",
+    "5bd3ed0120cacfc4e496931c2d7ddee5f89b3f470593b15fcc989fe6c176b2f3"
+  ],
+  "humanities-terminology-bilingual.md": [
+    "9773adcc2d009d7a1beb8b7971214d783bbb3ac316a10a8f5ad5e40f6b9b4f91"
+  ],
+  "humanities-text-review.md": [
+    "5e92b08ff0e634fe8a8509030046250f124f37c5b21749f3a4f4dcc6003f4866"
+  ],
+  "humanities-theory-frameworks.md": [
+    "d185351f4309dfe00d5d68f74ee89985b1d79162c4ba6cc115bf1ebc78eb33e2"
+  ],
+  "humanities-writing-templates.md": [
+    "0fcf396038ef9e2baa69fd1bfa929dadbd38bdcba659999a34d9f55bb93b7daf"
+  ],
+  "inject_ai_disclosure.py": [
+    "ac294ad3d3a5b780f4b635d2062c46acc9bb7e830ba1ab3211a79d7181f8d880"
+  ],
+  "leakage_audit.py": [
+    "ac4e15bdf018ec79ba32d47e367b72722ddf110dbd11b2f30f6621d4be4f8574"
+  ],
+  "logic_audit.py": [
+    "ed214c1cede69b06801e1c4d43a47ea5d990c2d9c3afd42d6ec3bcc426fb3bc4"
+  ],
+  "modeling_coverage_check.py": [
+    "49d376b7747d0493451bf844ab202189035673da586b4b8b6066f28361ffb8ca"
+  ],
+  "normalize_cjk_quotes.py": [
+    "276a43e95753a7aa45e00ed57e001c23d7600ffac7992310b10fba9ae8356af5"
+  ],
+  "NOTICE-humanities.md": [
+    "d58e3210d289211b8f7979004fd372580006ebccbaeec0fd941b75550e0b9b0d"
+  ],
+  "NotoSansSC-Regular.ttf": [
+    "ae82f4e2a55e1316a55bcc1d05e9555ce08d8bda07e893b486896b626fd852ff"
+  ],
+  "paper_claim_check.py": [
+    "fb87405e343e35fb5da4382b314368c820ef8f3e852105ffb19fad7f916e7aec"
+  ],
+  "plot_utils.py": [
+    "d1444782f69982b17f1857217c2044044b185b213ca1929229eade21a1f86a91",
+    "ab2c10ec1f7cd5a5848136355614999042b167e5d364dcf69aa6e07b588aa9e4",
+    "f1a69d03de59a522c9cdb93c24d082b4df51c68ace708c589b4c822a8bed68f8",
+    "7f8ffd89949adb161bdf7026790fbf86e7a1b509f2bebc8f2377c14b5b59b503",
+    "356c969c3fcb42efc6ac784e2d99d2bea11891b60c98bd85ac4efc229ef4ec98",
+    "56225470474307c026c1c2dbf837e2a09864ad0a1ecd7a3698825df402d71991",
+    "8296b5313a6430cd087a87a0bfb12cfee6d7a617a6adac021098fecf0aaca818",
+    "44fa7d7c11d0d374bd43486e27e453b590653d35769e071ab2c1946ff2e8ac35"
+  ],
+  "recipe_audit.py": [
+    "c429f994f2749c3727ec1e5a02ddc69a5ff8f681d0fdc0eac1c614b329c250b1"
+  ],
+  "recipe_registry.json": [
+    "24d803671af835c32d3a126dbbdfd65f6a36283eb75198642bd112d95e36e7f4",
+    "66acdc58b3b195a6c40e68dabb04c0dbc6d1270227191af11ef1f6abf367448f",
+    "1c5f2edf134442ad889c61ca55c0bb09a53856b8bed0c250949055db5eca7902",
+    "4a36b9eb36acc0caaa0e4fb497bcceb738c3097bc1fcdfec481012fa123836a2",
+    "1bec1297eed8aec73c37490a6c98ccc7e492a07d8e61f7fc450a2d58e032a8a9",
+    "7a72aa78dbec399f6be7887be0f34b7aaca806ed27042b40a08655659370ecb2",
+    "ea31508ad061d05bc43c3af8ae4ea3824f1a2cfa185b382eb6a9a0b5847e12f6",
+    "701703f77f4bd82ecf9ade0188e8f02403a2839f9f1b0bbfefbf95fcf02570af",
+    "dec94bf8d1ab7b9206b636de2195008ed1ce8887860243c7c63bc0446f933cdb",
+    "01cdf019a45c2a2132a56ea144c3307d8fb277b479e0abda687d3b8cf5ee0822",
+    "b23c0b7f060c2652ed217200809809f58ece8c741581fb70ab95e088a1e128b7",
+    "22cb1acd1f7c14546844303482cac03eaeb3d9934c126ef55c551582a9e2b798",
+    "1f824d102c75cd6ef9790bcd08f3eef99de95ddbf63f71df32b05d7cacd71a61",
+    "ba081b050039f8ee847945ff7631b99eef7ea4cabad0ba9160be44f414e56977",
+    "35ef0dbd20eaf8db7d50c11ea82dfc41dbb716fc95c39ef33a18040a88fcfa4f",
+    "27f4912a8a130e90ed07d2d59029e5281ae7aa28698897d13ba413e3202efd02",
+    "b04f5458350713019e8630ddb931cb58d5fb245e721d0f5d47e896d6cd6260d2",
+    "bf1fcdcd01378d07ba2c68257863b63450b11228183351bce762ff573c6d367c"
+  ],
+  "stats_utils.py": [
+    "1f7fd87be546b2d0c51ee9ca7842c6582b3a32f6b12ec67323df05ab9e42a20b"
+  ],
+  "table_slim.py": [
+    "0570f7e24e8615a6b239ee0e99be5de7a028b119a00cd72a9cb530130936ebf6"
+  ],
+  "tikz_check.sh": [
+    "e34a55dc9fd2a1b4396a6a50c0b90b30fe9c20f9d2f816cb9c59fd3e7f721eb9",
+    "4cac0936e08efc8de61975a3513021ef6d010f91dbcf2ef810ac277b3dbf268a",
+    "072aea2811bcfb30836b9c366483c736e448d46782c83a12e275e90130a35a11"
+  ],
+  "tikz_examples_extra.tex": [
+    "b697eddecfe0b3d9d046dde785bf0fdb7a272a3f817c7ac02fef060339fc798f"
+  ],
+  "tikz_rules.md": [
+    "cb6d1875d64e25febc3b4b2aeb133559d09a5054629664caf976bb7bb5bc3805",
+    "2325df89ebe37e83758f5f4c403d9508d5c579682b7f87bf884b097f407d1c64",
+    "53857658c4043c55c18a9fab954a2cf61ac09f4636ce488342f436c63591d7cd"
+  ],
+  "writing_check.sh": [
+    "61f47d8911c7907b4cb87f2aba3a4db3a0db3fea33840f70f561720c0b5dbd1b",
+    "4b3fd5ab1319cd177c003908b14958df131c39af4fd5c417380ee922df3ffb0f",
+    "608aa4ac5513ba4b102e6d616710dea4108796caf3f531a079c779ace837cfad"
+  ],
+  "writing_rules.md": [
+    "36bee60e6b67b0cdbb52e3faac47d5328dd32b5aaec5b8a393b4f9c002c1348a",
+    "2c5097fa89f073a0adfa2eec77036633cb95a5812d9b5bbe7c292375067dc954"
+  ],
+  "palettes.json": [
+    "fdeb37c0b79d61b6021a616b7be0693620265a2430e1b3e6eea96a0c6cec3f60",
+    "322a90ab9c444227f2a14b22c27ac3453971d254f0729b04c49436f90e07977b",
+    "a413433304650181b42e1fa6044adbb94eff5e132383271cc1a72cac3d22848d",
+    "1c042fc9918380639869ab728e4c7f414fc9ba74d12178e3c6a975158c1ca02c",
+    "3334a19a2c88bd2f8fe6312ac3285fbb0775388a9ac4c0ce8db113bd758bb179"
+  ],
+  "figure_recipes_screenshot.md": [
+    "e8f19f982d50a20ce44da6d87143f06de0ecccb52bf931925295382bf80b5203",
+    "88d1ce02f8ac19fbb00b5f6e0a420d558616c97cfcdba0b9ca32c6731a1d685a",
+    "07c8beb519c5b7b5eace0dc7aec7b2b3aa77193021cf80c76be2a32137b9dd90",
+    "f494e0beb55f95a9dba48826049e94bd67840578ce6511870d884b08831be1b3"
+  ],
+  "vivid_config.py": [
+    "eca6b9c37cbc4dffe84734c3d2b971bf8962a2b2a020f589d0284aee08538995",
+    "c2d424dbc2d9f024194f790c841d0758efb12f5e8714ebdc716baa6bdd15d28f",
+    "0284ec5fb1b1bb45da3acda9d05357ddecffac297d0e2e8d1b3be20d609eda87"
+  ],
+  "figure_color_reference.md": [
+    "168f48ab0a98858e388a38e38fc0f5acf7f131efee6c1b1550776aaaac24def0",
+    "2c49f20455e20ce7e39267376ee6a222a552716daa16c0d2f0f783c76645a9b2"
+  ],
+  "figure_layout_reference.md": [
+    "650be3c1769e89fe94c2f8cfab94d874af76373d6fc39ad07af2ffb48b647f4a",
+    "56edef59587396860ad98d2a4b330dee63969ef8613ccca5ce1a8b820e858fdf"
+  ],
+  "figure_selection_reference.md": [
+    "f269aa60df2e05e895a7f56cfd22085ee11caee5f59afb0870842d10c67c740b",
+    "412f08e3e2e09be6e52ef44827f83c2ddd9b7c77aaa448bf5226b222679a9f63",
+    "e3f96a88f6a13a110f987a32229a2eebe7bb012c86f5793d76d18677d5c3d729"
+  ],
+  "figure_techniques.md": [
+    "49100985970eb12b7e1481c2b5d14c39b3f55bc3c52cd51c9520d225d04118e7",
+    "daab1158e0e91be9100036d3614026561a967d973e883c539c0352f197dc9d49"
+  ],
+  "palette_maps.py": [
+    "ae96e91a898a75b6feafd2c5ca54693298d38775ee1cf90717c0a894ac119d8a"
+  ],
+  "recipe_style_review.py": [
+    "b3320bd27a3be2fe0141d65457520c0c86f550dca6ba231e467815fc62b3315e",
+    "f848c0b03c54d7a5423d19f02f2a6bcd35f4ce3df2a367b307eb0fdd521150a1",
+    "eab01dbe9ee8b5fa3e825b6f3040ae99a45e135bea82c0d5d4e79e69e22aea08",
+    "5fcf1b4374869ee00bce7088a1c089ec0975c9f2a45093a0daab2716fba07c04"
+  ],
+  "template_sources.py": [
+    "1da7064701d96e110ba6026a6b32dd0335b031bb9faf9b81384baf6e98c61734",
+    "86019fa082e4de8a207a6a42b541318e164863273402779f04cfda2c0e2ff234"
+  ],
+  "tikz_layout_templates.md": [
+    "9967b2287ed8552424cfeb2801e933a015f17342773594deb27eb88e9beaf5a2",
+    "607cb6fd39c5fddfe09faf935c621f5ecd0e2f8e9fb93d5c1fe1e86991a61486"
+  ]
+}

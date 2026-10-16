@@ -1,0 +1,22 @@
+{
+  "source_type": "missing_data",
+  "status": "代码截图恢复，原数据缺失",
+  "attribution": "小明的代码美学",
+  "figure_page": 27,
+  "code_pages": [
+    28
+  ],
+  "all_pages": [
+    4,
+    5,
+    27,
+    28,
+    29
+  ],
+  "changes": [
+    "vortex.csv未提供，005/029只是部分数值截图；默认改用明确标注的解析涡旋合成场。",
+    "原代码sizeref=60依赖原向量单位；演示场用1.3。真实数据须按单位调整。",
+    "使用Plotly交互显示；预览通过Kaleido导出，画布和边距适配截图检查。3D PDF内部仍含栅格渲染。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

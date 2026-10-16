@@ -1,0 +1,1654 @@
+{
+  "archive_name": "绘图+代码.zip",
+  "archive_sha256": "f36b7e0e641e81ed1139cc6088f239030a633ab8cec223fbe7cc0fae9236d368",
+  "page_count": 120,
+  "design_count": 32,
+  "page_order": "ZIP entry sequence; figure order excludes preceding duplicate/code-only pages",
+  "pages": [
+    {
+      "order": 1,
+      "archive_path": "绘图+代码/.trashed-1792068919-Screenshot_2026-09-15-20-37-20-28_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "001.jpg",
+      "bytes": 346810,
+      "sha256": "923faea739001a7c8cb1b060dac3283b1ec96e49e77333336aef1a21314ea063"
+    },
+    {
+      "order": 2,
+      "archive_path": "绘图+代码/.trashed-1792068919-Screenshot_2026-09-15-20-37-25-38_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "002.jpg",
+      "bytes": 460654,
+      "sha256": "67ab69077c233ea9beee0affa2289613f9e8348abda290c09f8745ca217e0d59"
+    },
+    {
+      "order": 3,
+      "archive_path": "绘图+代码/.trashed-1792068919-Screenshot_2026-09-15-20-37-28-76_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "003.jpg",
+      "bytes": 319724,
+      "sha256": "99e2425e48a21ce90045447a3d70b2fa40c8787a8620ba652231e37011f7a058"
+    },
+    {
+      "order": 4,
+      "archive_path": "绘图+代码/.trashed-1792068919-Screenshot_2026-09-15-20-37-36-44_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "004.jpg",
+      "bytes": 395079,
+      "sha256": "b7075b3cc1661f092831f4959b534b82b0b75ad2f93f74f1435a68290a65c542"
+    },
+    {
+      "order": 5,
+      "archive_path": "绘图+代码/.trashed-1792068919-Screenshot_2026-09-15-20-37-38-90_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "005.jpg",
+      "bytes": 800248,
+      "sha256": "732b3f137a331a1b43361b04fd63b8a1005a0f78d1d170dfb7db699bf532f51a"
+    },
+    {
+      "order": 6,
+      "archive_path": "绘图+代码/.trashed-1792068919-Screenshot_2026-09-15-20-40-12-11_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "006.jpg",
+      "bytes": 530470,
+      "sha256": "bf4fe98b4238343ba42e1b93ddb52d1a0a93bdb9905b99d6861f60cc8a2bf978"
+    },
+    {
+      "order": 7,
+      "archive_path": "绘图+代码/.trashed-1792068919-Screenshot_2026-09-15-20-46-45-54_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "007.jpg",
+      "bytes": 523567,
+      "sha256": "018d01d51a4b31431ea3ea8bb9c65d8b7c018d897bf485a0c3e7c83afc7e7ef5"
+    },
+    {
+      "order": 8,
+      "archive_path": "绘图+代码/.trashed-1792069498-Screenshot_2026-09-15-21-04-44-58_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "008.jpg",
+      "bytes": 534432,
+      "sha256": "02c32fecb345932e7d2ceab9714a2a4bad28ceaa25501a8528dcb8e8fc3e604d"
+    },
+    {
+      "order": 9,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-40-33-12_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "009.jpg",
+      "bytes": 277570,
+      "sha256": "4db7ae590d6b14fcc3ffa5a5b07e5bda90965f808f5cf30cd5f1751fe8afe94c"
+    },
+    {
+      "order": 10,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-46-19-98_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "010.jpg",
+      "bytes": 317360,
+      "sha256": "b8754c64937680ef9d6898ae2f3254f63e16944516652701d93115e0316a4214"
+    },
+    {
+      "order": 11,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-03-82_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "011.jpg",
+      "bytes": 353581,
+      "sha256": "a5b7e8c6b836efbc2096ca6b50a7de7fd3eff1245464593e2f30c00a2081d9ea"
+    },
+    {
+      "order": 12,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-06-29_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "012.jpg",
+      "bytes": 481659,
+      "sha256": "834ebeb9f4950da3f39782f581415e112fe95ff53707bcb4b8eb013ebea3831f"
+    },
+    {
+      "order": 13,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-08-47_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "013.jpg",
+      "bytes": 322292,
+      "sha256": "18d03bbb5d73b44fd74cd78820bb70a9f7c98afc5204f1e3a2a8f66e7f319558"
+    },
+    {
+      "order": 14,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-23-77_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "014.jpg",
+      "bytes": 429080,
+      "sha256": "bc84f7f61d3c4c160f457984e148e19b949f087dfbea959e245a75f12818a76c"
+    },
+    {
+      "order": 15,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-25-98_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "015.jpg",
+      "bytes": 551953,
+      "sha256": "62952e75c5d7f26298fd58138451c354064f459d3a27e6f0f4b87772ac6dfa72"
+    },
+    {
+      "order": 16,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-28-29_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "016.jpg",
+      "bytes": 490207,
+      "sha256": "490d4d931c12343a08d8157382ffa3ef2ab41a8fe951ff784a55a4789c895274"
+    },
+    {
+      "order": 17,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-30-66_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "017.jpg",
+      "bytes": 443462,
+      "sha256": "4b5d855968b93c159898014c01c750d81283dc6c29c34ac1417dd8a1bb9a4f79"
+    },
+    {
+      "order": 18,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-33-05_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "018.jpg",
+      "bytes": 480520,
+      "sha256": "3aa5bb961ae7516ff3403f8c5064ea3e660aed9a17d468342bda10551da95870"
+    },
+    {
+      "order": 19,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-35-68_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "019.jpg",
+      "bytes": 396040,
+      "sha256": "fbe2a8fdea135257bdbe5cddfe3e84dd82c5e27a2ad6660e04640c842b6acae5"
+    },
+    {
+      "order": 20,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-39-58_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "020.jpg",
+      "bytes": 399394,
+      "sha256": "982442dfe9911a12998cd34e80a1e6a7ed9990fa3a4a04c3b224a55432174592"
+    },
+    {
+      "order": 21,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-57-42-98_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "021.jpg",
+      "bytes": 347717,
+      "sha256": "440c1f82832adc36d7acbc3c208cdd461607feca8fb6067aeb631e8bb43eabdb"
+    },
+    {
+      "order": 22,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-58-11-52_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "022.jpg",
+      "bytes": 607085,
+      "sha256": "302a65dbed0bb9a09e981b398d8c75e42531f1ab2485d9c14f2c91441d08c001"
+    },
+    {
+      "order": 23,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-58-13-96_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "023.jpg",
+      "bytes": 538310,
+      "sha256": "99901ac68eb6f1734081b0b1e09c67067286f1cf6cc546b10d80419a4f2fd6bb"
+    },
+    {
+      "order": 24,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-58-16-56_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "024.jpg",
+      "bytes": 592579,
+      "sha256": "50dd7a1f83162ff637b336a67608b797b4b9dc11a30b42c258997306d8a9fdfa"
+    },
+    {
+      "order": 25,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-58-18-86_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "025.jpg",
+      "bytes": 519370,
+      "sha256": "682fb6a903e7e7621ce903cb087f99460dd3cfaa34e4b51e8a0d05f0520510ea"
+    },
+    {
+      "order": 26,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-58-21-28_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "026.jpg",
+      "bytes": 565985,
+      "sha256": "f28f9acf9ee3eaa37185b985a54dcd26330c5bb8a4659ee692841b99a66934dd"
+    },
+    {
+      "order": 27,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-00-37_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "027.jpg",
+      "bytes": 465455,
+      "sha256": "330cd6b85ea118e9fb8a345009ebd17bd12133846118b565ac8f76ee9da69075"
+    },
+    {
+      "order": 28,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-02-95_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "028.jpg",
+      "bytes": 371906,
+      "sha256": "27493ee5f06ac69498d212ca4c111e848d9ce3c4e7c2f339683caa230389a9b6"
+    },
+    {
+      "order": 29,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-07-60_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "029.jpg",
+      "bytes": 817325,
+      "sha256": "9cbd5dea0de9875c35ca6f1cde3750f56840335ae689ae76351d925dba46855a"
+    },
+    {
+      "order": 30,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-12-70_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "030.jpg",
+      "bytes": 404971,
+      "sha256": "4054c3857a64b8d55f9295b3d5df19d6faed617cc32d35aba857e5d99c950739"
+    },
+    {
+      "order": 31,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-15-05_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "031.jpg",
+      "bytes": 431863,
+      "sha256": "b6ea25e8b6b9aa867ee745f0d2e2e644644d404c171219f8a79dbf6bb5b8bb61"
+    },
+    {
+      "order": 32,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-22-62_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "032.jpg",
+      "bytes": 462153,
+      "sha256": "89fb6c74129374c549ad590f22d416598e58691775a2656a2391cfd124452d0d"
+    },
+    {
+      "order": 33,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-25-06_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "033.jpg",
+      "bytes": 475158,
+      "sha256": "9c532516082fc4ad8b041d169b1544b3e55b92f6e28225209cdf688a9a7bb1eb"
+    },
+    {
+      "order": 34,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-27-52_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "034.jpg",
+      "bytes": 326251,
+      "sha256": "8b6a007999ccc835b59655c5fe96c936c1e23d4b3e1264536f46deae93f4d2b2"
+    },
+    {
+      "order": 35,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-31-71_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "035.jpg",
+      "bytes": 415304,
+      "sha256": "9374deeab4514d537823d140fbd143a8f819596fae826d516fbf6f1fcef2b75d"
+    },
+    {
+      "order": 36,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-33-87_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "036.jpg",
+      "bytes": 487894,
+      "sha256": "41ba73559e2337166f0e9462f21694afb340d56ca6804c7aac811b3bed6f85c6"
+    },
+    {
+      "order": 37,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-39-78_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "037.jpg",
+      "bytes": 477355,
+      "sha256": "f294c3908a7f10cf71797ca4bd51eacfceb7666094dd8af07c21628141cab1df"
+    },
+    {
+      "order": 38,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-41-89_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "038.jpg",
+      "bytes": 496698,
+      "sha256": "aa6bf8026402eb5cb70189b33a35bcc7424a7eef1b0293c3a18f4b437c0fa9cd"
+    },
+    {
+      "order": 39,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-45-59_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "039.jpg",
+      "bytes": 460264,
+      "sha256": "fe72de1a1d6834f4259cafa1d3fd92da7232f27994234eb7e701667a470f79f2"
+    },
+    {
+      "order": 40,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-47-92_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "040.jpg",
+      "bytes": 564281,
+      "sha256": "e5494f5b27bfd1503d7eee5126feab08d14c39bfa1e1553d1a0f13237707fabe"
+    },
+    {
+      "order": 41,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-50-38_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "041.jpg",
+      "bytes": 308945,
+      "sha256": "523cce8250f171cf69fbb5101f59967d5e196a7ce505a953b7bc606904dd4be3"
+    },
+    {
+      "order": 42,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-54-41_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "042.jpg",
+      "bytes": 415562,
+      "sha256": "8a88a6209e8cda3c5405c005f6480b0c933942e3d711f89066840d750269e65f"
+    },
+    {
+      "order": 43,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-20-59-58-10_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "043.jpg",
+      "bytes": 517128,
+      "sha256": "30505dec02cda5cee883915f75561064ad9fa339be5fac72d74294c5212178de"
+    },
+    {
+      "order": 44,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-00-03-50_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "044.jpg",
+      "bytes": 563343,
+      "sha256": "9208ea2b45d683b75cc28f7e6727ba3beac692beb836e59fa2b83b4fb9caaca7"
+    },
+    {
+      "order": 45,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-00-06-29_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "045.jpg",
+      "bytes": 399147,
+      "sha256": "be4bbc5a76630d3c4c397e7d851290dac84766d14def1d14bcdeebf191cfef66"
+    },
+    {
+      "order": 46,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-00-12-25_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "046.jpg",
+      "bytes": 449983,
+      "sha256": "91b8ddc39610c7af154d7bb504e249fd146a3234b9c296081b3e8b39ff19e863"
+    },
+    {
+      "order": 47,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-00-14-72_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "047.jpg",
+      "bytes": 480602,
+      "sha256": "6dda5a29528998819abe5174607d31bf95dc6639b7baf0f60cfe4d7dab06e77b"
+    },
+    {
+      "order": 48,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-01-12-01_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "048.jpg",
+      "bytes": 423994,
+      "sha256": "248158886263a166abf56bbef80b560d9e2ee3135d34114e673c144957092ca2"
+    },
+    {
+      "order": 49,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-01-14-94_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "049.jpg",
+      "bytes": 520028,
+      "sha256": "40f57fe068001a515a002de1b6bde16c845e9fb631e95269ae3d4085c2827056"
+    },
+    {
+      "order": 50,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-01-17-28_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "050.jpg",
+      "bytes": 488929,
+      "sha256": "96c72829b0ed869046b9bf03278083c087620f9c0d3e1c42a14406b39d13b53c"
+    },
+    {
+      "order": 51,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-01-19-77_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "051.jpg",
+      "bytes": 446854,
+      "sha256": "add4ba8453210100a894e9e6c445dd8ef1f50a92fdb981b204b84b90cd8d42ed"
+    },
+    {
+      "order": 52,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-10-52_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "052.jpg",
+      "bytes": 409401,
+      "sha256": "6ac6f99610e833d47df0d9cbc1ba700fda02211aa51ff859813855f0dabf52a7"
+    },
+    {
+      "order": 53,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-13-00_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "053.jpg",
+      "bytes": 567314,
+      "sha256": "9a23661c652a377bdc120745bf44111f2dba6428ae0d0ce6eb26c3746b2dbbd2"
+    },
+    {
+      "order": 54,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-15-55_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "054.jpg",
+      "bytes": 448922,
+      "sha256": "6f44e4c108c159e8808074b332b3d78d9ac2a07de020f2e8aca557c6ac550e64"
+    },
+    {
+      "order": 55,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-18-87_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "055.jpg",
+      "bytes": 436704,
+      "sha256": "bc3ed3d5298d3bc481f3c2681863386a7bce7281df2e769451f2a66b5ef35d40"
+    },
+    {
+      "order": 56,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-26-83_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "056.jpg",
+      "bytes": 351809,
+      "sha256": "fa0bf275a50e9de3d245912d2bd1bfe990bd8ab0c7c69b7635567ab5f688daa6"
+    },
+    {
+      "order": 57,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-29-77_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "057.jpg",
+      "bytes": 526465,
+      "sha256": "f2e37400eae5e56747a0d8fabf1bf264e5f95575a6156974e2839a00a2327496"
+    },
+    {
+      "order": 58,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-32-30_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "058.jpg",
+      "bytes": 510047,
+      "sha256": "1d34840d7ef2f9a76727135ae01c2c49109cbda2cc4c3b3579ae90acdd6b121a"
+    },
+    {
+      "order": 59,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-37-87_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "059.jpg",
+      "bytes": 325839,
+      "sha256": "f89010df72f9dd63e10c58d4f6c191e3f0c2b1021bb07416f5887a18d91e292b"
+    },
+    {
+      "order": 60,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-40-93_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "060.jpg",
+      "bytes": 517638,
+      "sha256": "b7a58d39ec48f2ceab0328fc081cf409a491ba31cbf46c7755eb0720a1287bf6"
+    },
+    {
+      "order": 61,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-43-84_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "061.jpg",
+      "bytes": 550878,
+      "sha256": "bae43b07b45ea5fa1b6c593b8bad98b171589bb62f64ae9765871d7b31b650f9"
+    },
+    {
+      "order": 62,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-47-58_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "062.jpg",
+      "bytes": 430120,
+      "sha256": "9005312fd2467a947c6dc28b4df54998b864be530964be978acdd79960ae8bf4"
+    },
+    {
+      "order": 63,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-53-15_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "063.jpg",
+      "bytes": 503718,
+      "sha256": "ec26ecfb74404603eeb2ab517f0ce09b4618417b5fc15619266720ffb3c3aa19"
+    },
+    {
+      "order": 64,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-55-71_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "064.jpg",
+      "bytes": 538497,
+      "sha256": "f93b6978dfcf62f4f410889a9817340a1d82892787fa73609ec8863f25b4c138"
+    },
+    {
+      "order": 65,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-02-58-38_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "065.jpg",
+      "bytes": 540423,
+      "sha256": "d01af6c099b0cdad477d838601edb61d23afda55cdee7f714815cc61a8773720"
+    },
+    {
+      "order": 66,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-00-97_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "066.jpg",
+      "bytes": 526501,
+      "sha256": "391d1355abe66af91a407fdb5f90cbaf52216f569328606bfb66484e1e202001"
+    },
+    {
+      "order": 67,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-06-13_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "067.jpg",
+      "bytes": 559278,
+      "sha256": "b126a41ae309a4f9191ac7e1ed8492e64ccd5e4f219600cda460076fe049e22c"
+    },
+    {
+      "order": 68,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-08-62_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "068.jpg",
+      "bytes": 499493,
+      "sha256": "8c654fb755425e7face8c5e2ae2729e3580194a49d6461cb9d99ad18e6337320"
+    },
+    {
+      "order": 69,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-10-99_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "069.jpg",
+      "bytes": 575614,
+      "sha256": "d8d7ff21cc079c58b1a69ad010c0ac6b831fbc62f181184536b1dae8cd02772f"
+    },
+    {
+      "order": 70,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-13-77_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "070.jpg",
+      "bytes": 533467,
+      "sha256": "900819b27dc834159c3b4d8732d26887265f14fb82000e821c7978a4e163ae8a"
+    },
+    {
+      "order": 71,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-29-00_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "071.jpg",
+      "bytes": 378628,
+      "sha256": "fbbf65e33226b9ac6659523ca7460d51d981bdd0ee2ac8001b908ea92def8c8f"
+    },
+    {
+      "order": 72,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-31-66_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "072.jpg",
+      "bytes": 514494,
+      "sha256": "2adadccf785d216f87f680ce267a289440e4fd23b7d6090c191ad88aebc51526"
+    },
+    {
+      "order": 73,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-34-09_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "073.jpg",
+      "bytes": 471305,
+      "sha256": "f9135b1e6bd0ec779933d810b3b7e76bc970f2be4499bd18abc3c8cd1b3c99f3"
+    },
+    {
+      "order": 74,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-36-44_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "074.jpg",
+      "bytes": 369157,
+      "sha256": "f2cc158b967178934b79b06a719bbcc784cdc22ef1bb0896fb2c45163a58fdb7"
+    },
+    {
+      "order": 75,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-40-88_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "075.jpg",
+      "bytes": 424237,
+      "sha256": "7844eafebc29dbd03ea667ef00fd3f4bcb51e8922dc99d3df4382a52cecfcb04"
+    },
+    {
+      "order": 76,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-43-38_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "076.jpg",
+      "bytes": 505912,
+      "sha256": "a7a674d296aa51eab12c8c187c5243c76993dd69a52864fe8ade74cadfe41f0f"
+    },
+    {
+      "order": 77,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-45-72_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "077.jpg",
+      "bytes": 565566,
+      "sha256": "6892aa55d085b465618c1dd5222bfd85fe86d978475b509a83e015392da1a05a"
+    },
+    {
+      "order": 78,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-54-59_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "078.jpg",
+      "bytes": 597458,
+      "sha256": "a3724f39f75fc6f86fed771192cd4aa915b25683385557444df0df80614aede1"
+    },
+    {
+      "order": 79,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-57-17_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "079.jpg",
+      "bytes": 581957,
+      "sha256": "989810c7ebea0c843cd53bca39200b17f75234aa2e82e877740911f088006de5"
+    },
+    {
+      "order": 80,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-03-59-66_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "080.jpg",
+      "bytes": 513778,
+      "sha256": "863beb0d1b716f4b93a0bddad8785eca36b020d964056fd436abe87762788ee5"
+    },
+    {
+      "order": 81,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-04-02-08_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "081.jpg",
+      "bytes": 460138,
+      "sha256": "965a5d187b0a7fa554f838a27b42d9c6aab51393e2744c837d2b84920bcbb1c6"
+    },
+    {
+      "order": 82,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-04-04-55_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "082.jpg",
+      "bytes": 593339,
+      "sha256": "9de8ddb5bce941b7c1ac3f4b3778db60408078bd6f953ab845239dbc61d50371"
+    },
+    {
+      "order": 83,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-04-07-03_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "083.jpg",
+      "bytes": 409758,
+      "sha256": "1b2cff6ff1f944828479973b7bdd5b1879b63e11739fc93b6c08b6cc908da100"
+    },
+    {
+      "order": 84,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-04-23-37_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "084.jpg",
+      "bytes": 486406,
+      "sha256": "28ec22309da91ed1013b7877a6d1f8cf66ffeefddf3b2cc7b4622dde8b1da119"
+    },
+    {
+      "order": 85,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-04-25-85_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "085.jpg",
+      "bytes": 547474,
+      "sha256": "c6d6945fce9089561fbc2abf0ba7b9abbc027162493b83c201cc3d40a7440c8c"
+    },
+    {
+      "order": 86,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-04-28-14_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "086.jpg",
+      "bytes": 610748,
+      "sha256": "bdc8ca84f10b8ef231b71c7013314e42d52c1f0a50a189b85914ef793df70a22"
+    },
+    {
+      "order": 87,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-04-41-65_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "087.jpg",
+      "bytes": 523098,
+      "sha256": "64fdfe92700176e3e989d3bd1858b4d8263e4de2c96e24bd1a698d1b11adafca"
+    },
+    {
+      "order": 88,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-01-24_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "088.jpg",
+      "bytes": 496732,
+      "sha256": "a7580194a09a0feb1ba33709543f1ed2405fabba5aba0ce33ff1445240a22f81"
+    },
+    {
+      "order": 89,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-03-66_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "089.jpg",
+      "bytes": 453732,
+      "sha256": "488c187086625220be5639238082e19672722b33c6da90b89e2da4d26b4d0eb1"
+    },
+    {
+      "order": 90,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-06-06_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "090.jpg",
+      "bytes": 543690,
+      "sha256": "2900106c9a95d3e721052a696e63e0ab05a773a82dfe3461b370a70f6d8b3cf2"
+    },
+    {
+      "order": 91,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-20-50_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "091.jpg",
+      "bytes": 447048,
+      "sha256": "575c6e635c5106e85ec2c19ea9f27a6ee73f00724433a79634d998e24f745481"
+    },
+    {
+      "order": 92,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-23-61_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "092.jpg",
+      "bytes": 566872,
+      "sha256": "6fc7ff53a2bfa2679db01a17af45cd6b8133e05d19df35e7c3641fd3f26b29a2"
+    },
+    {
+      "order": 93,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-25-95_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "093.jpg",
+      "bytes": 531738,
+      "sha256": "26aac66bc00aa738e02163ef1add7238920c40822b1426d91037e695f2627b37"
+    },
+    {
+      "order": 94,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-28-96_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "094.jpg",
+      "bytes": 489329,
+      "sha256": "37900846baa0bf7cc1e44931b83508402568c4ce6fecac33670f42a7f7241fe2"
+    },
+    {
+      "order": 95,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-31-80_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "095.jpg",
+      "bytes": 492363,
+      "sha256": "7a53db56e26cb0db512e369c10b4b67abe35b385400df90b8c6f13581d774b96"
+    },
+    {
+      "order": 96,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-35-99_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "096.jpg",
+      "bytes": 576425,
+      "sha256": "b458058df5f42def98a321f7e54e8daa6ca303471bb90ddee9bbe12a2465f822"
+    },
+    {
+      "order": 97,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-39-14_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "097.jpg",
+      "bytes": 315787,
+      "sha256": "ccdedecffbea70568bc8dbbc14965e0451e27d18995e8359f940c8b95403d32c"
+    },
+    {
+      "order": 98,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-46-80_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "098.jpg",
+      "bytes": 426435,
+      "sha256": "f8164243b101e6bbb64613be020d173d810a58ed67354488fdcd1b07ca78d56e"
+    },
+    {
+      "order": 99,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-49-59_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "099.jpg",
+      "bytes": 476211,
+      "sha256": "496123b934af6d7367f4fec20a930ee331a61a99a7b4b64f8b973c74099781b5"
+    },
+    {
+      "order": 100,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-51-86_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "100.jpg",
+      "bytes": 490313,
+      "sha256": "d4085e329d6e4d473e9a11a80b46a3254b0923fccb22b8723de460e0364eff65"
+    },
+    {
+      "order": 101,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-54-17_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "101.jpg",
+      "bytes": 433472,
+      "sha256": "1fb2f40a8a2f19bb5e2bb220ef58158ab2bd4b813938d434dd98955f8e032fdb"
+    },
+    {
+      "order": 102,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-05-56-70_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "102.jpg",
+      "bytes": 468492,
+      "sha256": "f58c992f2574a7d957f3d3f5318fe0e669a73973861d72d4bacf98a2a0ac85a8"
+    },
+    {
+      "order": 103,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-06-00-29_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "103.jpg",
+      "bytes": 516257,
+      "sha256": "26d52eb915c98e52616c53de306c424659c2ffc20695950630a05e1f8be07fe7"
+    },
+    {
+      "order": 104,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-06-03-07_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "104.jpg",
+      "bytes": 524346,
+      "sha256": "fa582fcde9bd71ba4a525ecfd3b4eb1090bd996c22c6d054de371b1e0e309a07"
+    },
+    {
+      "order": 105,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-06-05-62_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "105.jpg",
+      "bytes": 489706,
+      "sha256": "e149bc1f1202bb48c000f1f9dd8dc00e738f06b3502772cb185e57e5a0b65968"
+    },
+    {
+      "order": 106,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-06-20-08_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "106.jpg",
+      "bytes": 475521,
+      "sha256": "2622896ca57c6b800df38c84adbad978ac4c9331d51d09633629f1338668776e"
+    },
+    {
+      "order": 107,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-06-22-41_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "107.jpg",
+      "bytes": 533995,
+      "sha256": "e3d46be24809e1b4e4c3c820695561b1a3eaf22813df18005b0a026240e16fdb"
+    },
+    {
+      "order": 108,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-06-24-60_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "108.jpg",
+      "bytes": 626479,
+      "sha256": "a613f5fae09fef0ff4ee50661e583aa00ee0a86facea90b9a16bbaf59a1f02b9"
+    },
+    {
+      "order": 109,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-06-26-80_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "109.jpg",
+      "bytes": 296580,
+      "sha256": "e9666fb4f7233333e8e18abb37b31788a3327fd8c06051032a4645af68e1c63f"
+    },
+    {
+      "order": 110,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-06-30-39_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "110.jpg",
+      "bytes": 409593,
+      "sha256": "6dd4e485efe4a2cc254631b0b92d9f673d84bb329495f7bd3f3b0e066facdd9c"
+    },
+    {
+      "order": 111,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-06-32-58_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "111.jpg",
+      "bytes": 515833,
+      "sha256": "d4e253f5c8d6e4d58e7f29f0aad55fa3c4aa7e819ee8c9d3a25f0336a9ffea85"
+    },
+    {
+      "order": 112,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-06-34-89_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "112.jpg",
+      "bytes": 342157,
+      "sha256": "307a515b459aaa8750c54e68f86cdd6be702090694f2818cfb7f24b3e1fb31f7"
+    },
+    {
+      "order": 113,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-07-07-29_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "113.jpg",
+      "bytes": 479547,
+      "sha256": "60b45b040afc157ce65b1b50ebed3a337ac38453e8fb596eb6f14e3756017f67"
+    },
+    {
+      "order": 114,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-07-09-73_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "114.jpg",
+      "bytes": 552540,
+      "sha256": "cf7cf0483940e354852c9700f5a0123fad6223bb0c21a6057d706436fb0a167f"
+    },
+    {
+      "order": 115,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-07-12-16_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "115.jpg",
+      "bytes": 505925,
+      "sha256": "e10e53db256c9eb2fd661109534375ec13b88b6c7259c78313e7679c3b52c7f8"
+    },
+    {
+      "order": 116,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-07-55-47_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "116.jpg",
+      "bytes": 503641,
+      "sha256": "0063f02194103399e8ee711bbde71276412286949ff2a5de43510806f3e08bd6"
+    },
+    {
+      "order": 117,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-07-57-93_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "117.jpg",
+      "bytes": 540353,
+      "sha256": "ddfa5ea4338572b6aab9c9484b93056353a909c621775d83c26747e6a82abaa6"
+    },
+    {
+      "order": 118,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-08-00-42_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "118.jpg",
+      "bytes": 599339,
+      "sha256": "1ae583d23393c053497f661368d67f451e874cd49230e94f47037345367e3bd9"
+    },
+    {
+      "order": 119,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-08-02-86_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "119.jpg",
+      "bytes": 676902,
+      "sha256": "14bce6ced69887462e7fdffedb348164e4c7b74a3845710e2925f7559fb8ceec"
+    },
+    {
+      "order": 120,
+      "archive_path": "绘图+代码/Screenshot_2026-09-15-21-08-05-32_a2db1b9502c98f25523e43284b79cce6.jpg",
+      "file": "120.jpg",
+      "bytes": 423832,
+      "sha256": "c62f597d0ac2afe65bcbe827d4d24c3cb02fa47c55a118adcf99570f3b3338d6"
+    }
+  ],
+  "designs": [
+    {
+      "order": 1,
+      "id": "screenshot.fan_violin_heatmap",
+      "slug": "fan_violin_heatmap",
+      "title": "扇形小提琴与热图",
+      "chart_page": 6,
+      "code_pages": [],
+      "pages": [
+        6
+      ],
+      "tags": [
+        "分布",
+        "矩阵",
+        "极坐标",
+        "组合图"
+      ],
+      "data_requirements": "各类别的样本分布，以及类别×指标数值矩阵",
+      "features": "半圆热图、小提琴分布、外圈刻度与色标",
+      "status": "image_only"
+    },
+    {
+      "order": 2,
+      "id": "screenshot.layered_area_3d",
+      "slug": "layered_area_3d",
+      "title": "三维分层面积图",
+      "chart_page": 9,
+      "code_pages": [
+        7
+      ],
+      "pages": [
+        7,
+        9
+      ],
+      "tags": [
+        "3D",
+        "趋势",
+        "分布"
+      ],
+      "data_requirements": "有序 x 和多个情景数值序列",
+      "features": "透明层叠面积、平滑曲线、三维轴与深色轮廓",
+      "status": "partial_code"
+    },
+    {
+      "order": 3,
+      "id": "screenshot.heatmap_slabs_3d",
+      "slug": "heatmap_slabs_3d",
+      "title": "三维分层热图",
+      "chart_page": 10,
+      "code_pages": [],
+      "pages": [
+        10
+      ],
+      "tags": [
+        "3D",
+        "矩阵",
+        "组合图"
+      ],
+      "data_requirements": "同形状的多层数值矩阵",
+      "features": "多层热图平面、共享发散色标、单元格与三维轴",
+      "status": "image_only"
+    },
+    {
+      "order": 4,
+      "id": "screenshot.sunburst",
+      "slug": "sunburst",
+      "title": "多层旭日图",
+      "chart_page": 11,
+      "code_pages": [
+        12,
+        13
+      ],
+      "pages": [
+        11,
+        12,
+        13
+      ],
+      "tags": [
+        "层级",
+        "占比",
+        "极坐标"
+      ],
+      "data_requirements": "labels、parents、values 树形表；节点唯一且无环",
+      "features": "多层扇区、白色分界、标签与根节点百分比",
+      "status": "code"
+    },
+    {
+      "order": 5,
+      "id": "screenshot.peak_stacked_area",
+      "slug": "peak_stacked_area",
+      "title": "峰值标注堆叠面积图",
+      "chart_page": 14,
+      "code_pages": [
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "tags": [
+        "趋势",
+        "占比",
+        "注释"
+      ],
+      "data_requirements": "有序 x 和多条非负序列",
+      "features": "累计面积、白色边界、顶层峰值空心标记及数值",
+      "status": "code"
+    },
+    {
+      "order": 6,
+      "id": "screenshot.triangle_heatmap",
+      "slug": "triangle_heatmap",
+      "title": "双指标三角热图",
+      "chart_page": 22,
+      "code_pages": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "pages": [
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "tags": [
+        "矩阵",
+        "比较",
+        "双指标"
+      ],
+      "data_requirements": "形状及行列标签一致的两张矩阵",
+      "features": "每格双三角、独立色标、数值文本、透明填充和白边",
+      "status": "code"
+    },
+    {
+      "order": 7,
+      "id": "screenshot.cone_vortex",
+      "slug": "cone_vortex",
+      "title": "三维涡旋向量图",
+      "chart_page": 27,
+      "code_pages": [
+        28
+      ],
+      "pages": [
+        4,
+        5,
+        27,
+        28,
+        29
+      ],
+      "tags": [
+        "3D",
+        "向量场"
+      ],
+      "data_requirements": "x、y、z、u、v、w 六列；坐标和向量单位明确",
+      "features": "三维锥体方向、速度色阶、场景背景与长宽比",
+      "status": "missing_data"
+    },
+    {
+      "order": 8,
+      "id": "screenshot.isosurface",
+      "slug": "isosurface",
+      "title": "三维等值面",
+      "chart_page": 30,
+      "code_pages": [
+        31
+      ],
+      "pages": [
+        30,
+        31
+      ],
+      "tags": [
+        "3D",
+        "标量场"
+      ],
+      "data_requirements": "三维规则网格与每个网格点的标量",
+      "features": "五层等值面、开口截面、连续色标与坐标壁",
+      "status": "code"
+    },
+    {
+      "order": 9,
+      "id": "screenshot.spiral_bubbles_3d",
+      "slug": "spiral_bubbles_3d",
+      "title": "三维螺旋气泡",
+      "chart_page": 32,
+      "code_pages": [
+        33,
+        34
+      ],
+      "pages": [
+        2,
+        3,
+        32,
+        33,
+        34
+      ],
+      "tags": [
+        "3D",
+        "散点",
+        "多变量"
+      ],
+      "data_requirements": "x、y、z 与非负气泡大小变量",
+      "features": "半透明气泡、大小与连续色彩编码、三维轨迹",
+      "status": "code"
+    },
+    {
+      "order": 10,
+      "id": "screenshot.volume",
+      "slug": "volume",
+      "title": "三维体绘制",
+      "chart_page": 35,
+      "code_pages": [
+        36
+      ],
+      "pages": [
+        35,
+        36
+      ],
+      "tags": [
+        "3D",
+        "标量场",
+        "透明叠加"
+      ],
+      "data_requirements": "三维网格上的标量场",
+      "features": "低透明度多层体表面、连续色阶与深度叠加",
+      "status": "code"
+    },
+    {
+      "order": 11,
+      "id": "screenshot.gridded_scatter_3d",
+      "slug": "gridded_scatter_3d",
+      "title": "三维网格散点场",
+      "chart_page": 37,
+      "code_pages": [
+        38
+      ],
+      "pages": [
+        1,
+        37,
+        38
+      ],
+      "tags": [
+        "3D",
+        "散点",
+        "标量场"
+      ],
+      "data_requirements": "规则 x/y 网格上的高度 z",
+      "features": "规则点阵、位置高度与色阶双重编码、色标",
+      "status": "code"
+    },
+    {
+      "order": 12,
+      "id": "screenshot.contour_lines_3d",
+      "slug": "contour_lines_3d",
+      "title": "三维等高线",
+      "chart_page": 39,
+      "code_pages": [
+        40,
+        41
+      ],
+      "pages": [
+        39,
+        40,
+        41
+      ],
+      "tags": [
+        "3D",
+        "等高线",
+        "标量场"
+      ],
+      "data_requirements": "规则 x/y 网格和连续高度矩阵",
+      "features": "多高度等值曲线、逐层连续颜色与三维轴",
+      "status": "code"
+    },
+    {
+      "order": 13,
+      "id": "screenshot.block_surface_3d",
+      "slug": "block_surface_3d",
+      "title": "三维方柱曲面",
+      "chart_page": 42,
+      "code_pages": [
+        43,
+        44,
+        45
+      ],
+      "pages": [
+        42,
+        43,
+        44,
+        45
+      ],
+      "tags": [
+        "3D",
+        "柱状",
+        "标量场"
+      ],
+      "data_requirements": "二维网格及每格非负高度；本例高度并非频数",
+      "features": "独立网格方柱、全局高度色阶、十二条白色立方体棱线",
+      "status": "code"
+    },
+    {
+      "order": 14,
+      "id": "screenshot.mesh_surface_3d",
+      "slug": "mesh_surface_3d",
+      "title": "三维网格曲面",
+      "chart_page": 46,
+      "code_pages": [
+        47
+      ],
+      "pages": [
+        46,
+        47
+      ],
+      "tags": [
+        "3D",
+        "曲面",
+        "标量场"
+      ],
+      "data_requirements": "规则网格 X、Y、Z",
+      "features": "连续曲面色阶、白色横纵等值网格、三维坐标",
+      "status": "code"
+    },
+    {
+      "order": 15,
+      "id": "screenshot.depreciation_area",
+      "slug": "depreciation_area",
+      "title": "多型号价格堆叠面积",
+      "chart_page": 48,
+      "code_pages": [
+        49,
+        50,
+        51
+      ],
+      "pages": [
+        48,
+        49,
+        50,
+        51
+      ],
+      "tags": [
+        "趋势",
+        "占比",
+        "分组"
+      ],
+      "data_requirements": "Model、Yas、Fiyat ($) 长表；同一年龄覆盖全部型号",
+      "features": "按总量排序、透明面积、白色分界和两列图例",
+      "status": "missing_data"
+    },
+    {
+      "order": 16,
+      "id": "screenshot.concentric_bars",
+      "slug": "concentric_bars",
+      "title": "同心环形柱状图",
+      "chart_page": 52,
+      "code_pages": [
+        53,
+        54,
+        55
+      ],
+      "pages": [
+        52,
+        53,
+        54,
+        55
+      ],
+      "tags": [
+        "排名",
+        "比较",
+        "极坐标"
+      ],
+      "data_requirements": "类别及非负数值；所有环共享角度尺度",
+      "features": "同心圆弧、三档颜色、圆弧内数值和径向标签",
+      "status": "code"
+    },
+    {
+      "order": 17,
+      "id": "screenshot.rose",
+      "slug": "rose",
+      "title": "南丁格尔玫瑰图",
+      "chart_page": 56,
+      "code_pages": [
+        57,
+        58
+      ],
+      "pages": [
+        56,
+        57,
+        58
+      ],
+      "tags": [
+        "比较",
+        "极坐标"
+      ],
+      "data_requirements": "正值类别表；角宽与半径都编码值，不按面积读比例",
+      "features": "变角宽扇柱、中心留白、白色分隔和标签框",
+      "status": "code"
+    },
+    {
+      "order": 18,
+      "id": "screenshot.nested_donut",
+      "slug": "nested_donut",
+      "title": "嵌套环形图",
+      "chart_page": 59,
+      "code_pages": [
+        60,
+        61,
+        62
+      ],
+      "pages": [
+        59,
+        60,
+        61,
+        62
+      ],
+      "tags": [
+        "层级",
+        "占比",
+        "极坐标"
+      ],
+      "data_requirements": "父类别和子类别的非负数值，父值等于子值之和",
+      "features": "内外两层圆环、外圈半透明、内外注释框",
+      "status": "code"
+    },
+    {
+      "order": 19,
+      "id": "screenshot.ranked_arcs",
+      "slug": "ranked_arcs",
+      "title": "排名圆弧条形图",
+      "chart_page": 63,
+      "code_pages": [
+        64,
+        65,
+        66
+      ],
+      "pages": [
+        63,
+        64,
+        65,
+        66
+      ],
+      "tags": [
+        "排名",
+        "比较",
+        "极坐标"
+      ],
+      "data_requirements": "类别及可排序的非负百分比",
+      "features": "按值排序圆弧、连续色阶、起点名称和端点值",
+      "status": "code"
+    },
+    {
+      "order": 20,
+      "id": "screenshot.horizon",
+      "slug": "horizon",
+      "title": "正负折叠地平线图",
+      "chart_page": 67,
+      "code_pages": [
+        68,
+        69,
+        70
+      ],
+      "pages": [
+        67,
+        68,
+        69,
+        70
+      ],
+      "tags": [
+        "趋势",
+        "多序列",
+        "正负偏差"
+      ],
+      "data_requirements": "同一 x 上多条有符号序列，统一折叠层宽",
+      "features": "正负色彩、四层透明折叠、白边与多行偏移",
+      "status": "code"
+    },
+    {
+      "order": 21,
+      "id": "screenshot.radial_bars",
+      "slug": "radial_bars",
+      "title": "极坐标径向柱状图",
+      "chart_page": 71,
+      "code_pages": [
+        72,
+        73,
+        74
+      ],
+      "pages": [
+        71,
+        72,
+        73,
+        74
+      ],
+      "tags": [
+        "比较",
+        "极坐标"
+      ],
+      "data_requirements": "非负类别值；类别角度等分",
+      "features": "径向条形、空心基座、三档颜色、旋转数值",
+      "status": "code"
+    },
+    {
+      "order": 22,
+      "id": "screenshot.chord",
+      "slug": "chord",
+      "title": "透明弦图",
+      "chart_page": 75,
+      "code_pages": [
+        76,
+        77
+      ],
+      "pages": [
+        75,
+        76,
+        77
+      ],
+      "tags": [
+        "网络",
+        "流量",
+        "关系"
+      ],
+      "data_requirements": "非负方阵，行列类别顺序一致；明确方向语义",
+      "features": "扇区轨道、透明弦带、刻度和白色轨道边界",
+      "status": "code"
+    },
+    {
+      "order": 23,
+      "id": "screenshot.marginal_heatmap",
+      "slug": "marginal_heatmap",
+      "title": "带边际柱形的表格热图",
+      "chart_page": 78,
+      "code_pages": [
+        79,
+        80,
+        81,
+        82,
+        83
+      ],
+      "pages": [
+        78,
+        79,
+        80,
+        81,
+        82,
+        83
+      ],
+      "tags": [
+        "矩阵",
+        "汇总",
+        "组合图"
+      ],
+      "data_requirements": "有行列标签的数值矩阵，边际求和有意义",
+      "features": "热图文本、白格线、上方列和、右方行和及数值",
+      "status": "code"
+    },
+    {
+      "order": 24,
+      "id": "screenshot.interval_steps",
+      "slug": "interval_steps",
+      "title": "阶梯折线与区间带",
+      "chart_page": 84,
+      "code_pages": [
+        85,
+        86
+      ],
+      "pages": [
+        84,
+        85,
+        86
+      ],
+      "tags": [
+        "趋势",
+        "不确定性",
+        "多序列"
+      ],
+      "data_requirements": "x、各组估计值及上下界；真实区间必须来自计算",
+      "features": "阶梯曲线、阶梯透明区间、双色层次和注释",
+      "status": "code"
+    },
+    {
+      "order": 25,
+      "id": "screenshot.streamgraph",
+      "slug": "streamgraph",
+      "title": "双向峰形河流图",
+      "chart_page": 87,
+      "code_pages": [
+        8,
+        88,
+        89,
+        90
+      ],
+      "pages": [
+        8,
+        87,
+        88,
+        89,
+        90
+      ],
+      "tags": [
+        "趋势",
+        "流量",
+        "多序列"
+      ],
+      "data_requirements": "同一 x 上的非负序列",
+      "features": "wiggle 基线、144条峰形带、白色边界和分档颜色",
+      "status": "code"
+    },
+    {
+      "order": 26,
+      "id": "screenshot.correlation_network",
+      "slug": "correlation_network",
+      "title": "相关矩阵与连线网络",
+      "chart_page": 91,
+      "code_pages": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97
+      ],
+      "pages": [
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97
+      ],
+      "tags": [
+        "相关",
+        "矩阵",
+        "网络",
+        "组合图"
+      ],
+      "data_requirements": "相关矩阵及每个网络节点到特征的 r/p 表",
+      "features": "三角矩阵、方块大小及发散色、连线宽度颜色、三种图例",
+      "status": "code"
+    },
+    {
+      "order": 27,
+      "id": "screenshot.radial_heatmap",
+      "slug": "radial_heatmap",
+      "title": "径向环形热图",
+      "chart_page": 98,
+      "code_pages": [
+        99,
+        100,
+        101,
+        102
+      ],
+      "pages": [
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "tags": [
+        "矩阵",
+        "极坐标"
+      ],
+      "data_requirements": "有行列标签的二维数值矩阵",
+      "features": "分层环形单元、白边、缺口行标签、外圈列标签与色标",
+      "status": "code"
+    },
+    {
+      "order": 28,
+      "id": "screenshot.hexbin",
+      "slug": "hexbin",
+      "title": "六边形空间热图",
+      "chart_page": 103,
+      "code_pages": [
+        104,
+        105
+      ],
+      "pages": [
+        103,
+        104,
+        105
+      ],
+      "tags": [
+        "空间",
+        "密度",
+        "聚合"
+      ],
+      "data_requirements": "x、y 和测量值 z；按六边形内均值聚合",
+      "features": "六边形网格、白色细边、发散色阶和共享色标",
+      "status": "code"
+    },
+    {
+      "order": 29,
+      "id": "screenshot.classified_scatter",
+      "slug": "classified_scatter",
+      "title": "分类散点与决策区域",
+      "chart_page": 106,
+      "code_pages": [
+        107,
+        108,
+        109
+      ],
+      "pages": [
+        106,
+        107,
+        108,
+        109
+      ],
+      "tags": [
+        "分类",
+        "散点",
+        "机器学习"
+      ],
+      "data_requirements": "两个数值特征和类别标签；背景为拟合模型预测",
+      "features": "半透明散点、淡色决策背景、横纵 rug 边际标记",
+      "status": "code"
+    },
+    {
+      "order": 30,
+      "id": "screenshot.polar_scatter",
+      "slug": "polar_scatter",
+      "title": "带背景圆环的极坐标散点",
+      "chart_page": 110,
+      "code_pages": [
+        111,
+        112
+      ],
+      "pages": [
+        110,
+        111,
+        112
+      ],
+      "tags": [
+        "极坐标",
+        "散点",
+        "分组"
+      ],
+      "data_requirements": "角度（弧度）和非负半径，以及分组",
+      "features": "三组透明散点、交替浅色背景圆环、角度轴和图例",
+      "status": "code"
+    },
+    {
+      "order": 31,
+      "id": "screenshot.polar_step_area",
+      "slug": "polar_step_area",
+      "title": "环形刻度阶梯面积图",
+      "chart_page": 113,
+      "code_pages": [
+        113,
+        114,
+        115
+      ],
+      "pages": [
+        113,
+        114,
+        115
+      ],
+      "tags": [
+        "极坐标",
+        "趋势",
+        "阶梯"
+      ],
+      "data_requirements": "按角度有序的非负半径；源码为随机阶梯面积，不是真正频数直方图",
+      "features": "交替背景环、角度射线、描边径向刻度、阶梯填充与轮廓",
+      "status": "code"
+    },
+    {
+      "order": 32,
+      "id": "screenshot.polar_area",
+      "slug": "polar_area",
+      "title": "平滑极坐标面积叠加",
+      "chart_page": 116,
+      "code_pages": [
+        118,
+        119,
+        120
+      ],
+      "pages": [
+        116,
+        117,
+        118,
+        119,
+        120
+      ],
+      "tags": [
+        "极坐标",
+        "周期",
+        "透明叠加"
+      ],
+      "data_requirements": "angle（度）和多个 value 列；角度严格递增且不重复360°",
+      "features": "闭合平滑曲线、半透明重叠、深轮廓、空心基座和外置图例",
+      "status": "missing_data"
+    }
+  ]
+}

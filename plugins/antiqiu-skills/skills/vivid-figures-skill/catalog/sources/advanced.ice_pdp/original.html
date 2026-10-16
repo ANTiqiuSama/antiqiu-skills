@@ -1,0 +1,76 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from matplotlib.gridspec import GridSpec</span>
+<span id="L4"><a href="#L4">   4</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L5"><a href="#L5">   5</a> </span>
+<span id="L6"><a href="#L6">   6</a> setup_style()</span>
+<span id="L7"><a href="#L7">   7</a> np.random.seed(42)</span>
+<span id="L8"><a href="#L8">   8</a> </span>
+<span id="L9"><a href="#L9">   9</a> # === 模拟 ICE 曲线（200 个样本，特征 x 从 0 到 10）===</span>
+<span id="L10"><a href="#L10">  10</a> n_samples = 200</span>
+<span id="L11"><a href="#L11">  11</a> x_grid = np.linspace(0, 10, 80)</span>
+<span id="L12"><a href="#L12">  12</a> # 每个样本的随机基线 + 非线性形状</span>
+<span id="L13"><a href="#L13">  13</a> baselines = np.random.normal(0.5, 0.15, n_samples)</span>
+<span id="L14"><a href="#L14">  14</a> shape_strength = np.random.normal(1.0, 0.25, n_samples)</span>
+<span id="L15"><a href="#L15">  15</a> ice_curves = np.array([</span>
+<span id="L16"><a href="#L16">  16</a>     baselines[i] + shape_strength[i] * (0.45 / (1 + np.exp(-1.2*(x_grid - 4))) + 0.08 * np.sin(x_grid * 0.6))</span>
+<span id="L17"><a href="#L17">  17</a>     + np.random.normal(0, 0.02, len(x_grid))</span>
+<span id="L18"><a href="#L18">  18</a>     for i in range(n_samples)</span>
+<span id="L19"><a href="#L19">  19</a> ])</span>
+<span id="L20"><a href="#L20">  20</a> pdp = ice_curves.mean(axis=0)</span>
+<span id="L21"><a href="#L21">  21</a> pdp_ci_lo = np.percentile(ice_curves, 5, axis=0)</span>
+<span id="L22"><a href="#L22">  22</a> pdp_ci_hi = np.percentile(ice_curves, 95, axis=0)</span>
+<span id="L23"><a href="#L23">  23</a> </span>
+<span id="L24"><a href="#L24">  24</a> # 样本特征分布（边际）</span>
+<span id="L25"><a href="#L25">  25</a> x_samples = np.random.beta(2.5, 2.0, n_samples * 3) * 10  # 中心偏左的分布</span>
+<span id="L26"><a href="#L26">  26</a> </span>
+<span id="L27"><a href="#L27">  27</a> # === 双面板：上 ICE+PDP，下 边际分布 ===</span>
+<span id="L28"><a href="#L28">  28</a> fig = plt.figure(figsize=(7, 5.2))</span>
+<span id="L29"><a href="#L29">  29</a> gs = GridSpec(2, 1, height_ratios=[4, 1], hspace=0.04)</span>
+<span id="L30"><a href="#L30">  30</a> ax = fig.add_subplot(gs[0])</span>
+<span id="L31"><a href="#L31">  31</a> ax_marg = fig.add_subplot(gs[1], sharex=ax)</span>
+<span id="L32"><a href="#L32">  32</a> </span>
+<span id="L33"><a href="#L33">  33</a> # ★ ICE 细线（每条 alpha 极低，重叠出&quot;密度感&quot;）</span>
+<span id="L34"><a href="#L34">  34</a> for i in range(n_samples):</span>
+<span id="L35"><a href="#L35">  35</a>     ax.plot(x_grid, ice_curves[i], color=PALETTE[0], linewidth=0.5, alpha=0.06, zorder=1)</span>
+<span id="L36"><a href="#L36">  36</a> </span>
+<span id="L37"><a href="#L37">  37</a> # ★ PDP 95% CI 带（外层浅、内层稍深）</span>
+<span id="L38"><a href="#L38">  38</a> ax.fill_between(x_grid, pdp_ci_lo, pdp_ci_hi, color=_lighten(PALETTE[0], 0.55),</span>
+<span id="L39"><a href="#L39">  39</a>                 alpha=0.45, linewidth=0, zorder=2, label=&#x27;90% 区间&#x27;)</span>
+<span id="L40"><a href="#L40">  40</a> </span>
+<span id="L41"><a href="#L41">  41</a> # ★ PDP 中位数线 — 主信号</span>
+<span id="L42"><a href="#L42">  42</a> ax.plot(x_grid, pdp, color=PALETTE[0], linewidth=2.6, zorder=3, label=&#x27;PDP (均值)&#x27;)</span>
+<span id="L43"><a href="#L43">  43</a> # 加白色描边让曲线在 ICE 海里更突出</span>
+<span id="L44"><a href="#L44">  44</a> ax.plot(x_grid, pdp, color=&#x27;white&#x27;, linewidth=4.5, zorder=2.5, alpha=0.6)</span>
+<span id="L45"><a href="#L45">  45</a> ax.plot(x_grid, pdp, color=PALETTE[0], linewidth=2.6, zorder=3)</span>
+<span id="L46"><a href="#L46">  46</a> </span>
+<span id="L47"><a href="#L47">  47</a> # ★ 拐点标注</span>
+<span id="L48"><a href="#L48">  48</a> turn_idx = np.argmax(np.abs(np.gradient(pdp)))</span>
+<span id="L49"><a href="#L49">  49</a> ax.scatter([x_grid[turn_idx]], [pdp[turn_idx]], s=80, color=COLORS[&#x27;highlight&#x27;],</span>
+<span id="L50"><a href="#L50">  50</a>            edgecolor=&#x27;white&#x27;, linewidth=1.5, zorder=5, marker=&#x27;o&#x27;)</span>
+<span id="L51"><a href="#L51">  51</a> ax.annotate(f&#x27;拐点\n(x={x_grid[turn_idx]:.1f})&#x27;,</span>
+<span id="L52"><a href="#L52">  52</a>             xy=(x_grid[turn_idx], pdp[turn_idx]),</span>
+<span id="L53"><a href="#L53">  53</a>             xytext=(15, 18), textcoords=&#x27;offset points&#x27;,</span>
+<span id="L54"><a href="#L54">  54</a>             fontsize=8, fontweight=&#x27;bold&#x27;, color=COLORS[&#x27;highlight&#x27;],</span>
+<span id="L55"><a href="#L55">  55</a>             arrowprops=dict(arrowstyle=&#x27;-&gt;&#x27;, color=COLORS[&#x27;highlight&#x27;], lw=1.1, alpha=0.7),</span>
+<span id="L56"><a href="#L56">  56</a>             bbox=dict(boxstyle=&#x27;round,pad=0.3&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L57"><a href="#L57">  57</a>                       edgecolor=COLORS[&#x27;highlight&#x27;], alpha=0.9, linewidth=0.6))</span>
+<span id="L58"><a href="#L58">  58</a> </span>
+<span id="L59"><a href="#L59">  59</a> ax.set_ylabel(&#x27;预测值 (P(y=1))&#x27;, fontsize=10)</span>
+<span id="L60"><a href="#L60">  60</a> ax.legend(loc=&#x27;lower right&#x27;, frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8)</span>
+<span id="L61"><a href="#L61">  61</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L62"><a href="#L62">  62</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L63"><a href="#L63">  63</a> ax.tick_params(axis=&#x27;x&#x27;, labelbottom=False)</span>
+<span id="L64"><a href="#L64">  64</a> ax.grid(axis=&#x27;y&#x27;, alpha=0.1, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L65"><a href="#L65">  65</a> </span>
+<span id="L66"><a href="#L66">  66</a> # ★ 底部 rug + 直方图：告诉读者 PDP 在哪些 x 上有数据</span>
+<span id="L67"><a href="#L67">  67</a> ax_marg.hist(x_samples, bins=40, color=_lighten(PALETTE[0], 0.4), alpha=0.85,</span>
+<span id="L68"><a href="#L68">  68</a>              edgecolor=PALETTE[0], linewidth=0.4)</span>
+<span id="L69"><a href="#L69">  69</a> ax_marg.set_xlabel(&#x27;特征 x&#x27;, fontsize=10)</span>
+<span id="L70"><a href="#L70">  70</a> ax_marg.set_ylabel(&#x27;样本密度&#x27;, fontsize=8)</span>
+<span id="L71"><a href="#L71">  71</a> ax_marg.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L72"><a href="#L72">  72</a> ax_marg.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L73"><a href="#L73">  73</a> ax_marg.tick_params(axis=&#x27;y&#x27;, labelsize=7)</span>
+<span id="L74"><a href="#L74">  74</a> </span>
+<span id="L75"><a href="#L75">  75</a> save_fig(fig, &#x27;figures/fig_ice_pdp.pdf&#x27;)</span>
+</pre>

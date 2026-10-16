@@ -1,0 +1,55 @@
+<!doctype html><meta charset="utf-8"><title>带边际柱形的表格热图 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>带边际柱形的表格热图</h1><p>代码截图恢复与适配 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;带边际柱形的表格热图</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [79, 80, 81, 82, 83].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 小明的代码美学 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np; from _utils.palette_maps import palette_cmap, palette_stops, contrast_text</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> from matplotlib.gridspec import GridSpec</span>
+<span id="L18"><a href="#L18">  18</a> plt.rcParams.update({&#x27;axes.edgecolor&#x27;:&#x27;white&#x27;,&#x27;xtick.major.size&#x27;:0,&#x27;ytick.major.size&#x27;:0,&#x27;xtick.labelsize&#x27;:7,&#x27;ytick.labelsize&#x27;:7,&#x27;text.color&#x27;:&#x27;#3680ae&#x27;,&#x27;xtick.color&#x27;:&#x27;#3680ae&#x27;,&#x27;ytick.color&#x27;:&#x27;#3680ae&#x27;})</span>
+<span id="L19"><a href="#L19">  19</a> cmap=LinearSegmentedColormap.from_list(&#x27;custom&#x27;,palette_stops(&#x27;diverging&#x27;,count=5),N=300)</span>
+<span id="L20"><a href="#L20">  20</a> years=np.arange(1985,2021)</span>
+<span id="L21"><a href="#L21">  21</a> months=[&#x27;Jan&#x27;,&#x27;Feb&#x27;,&#x27;Mar&#x27;,&#x27;Apr&#x27;,&#x27;May&#x27;,&#x27;Jun&#x27;,&#x27;Jul&#x27;,&#x27;Aug&#x27;,&#x27;Sep&#x27;,&#x27;Oct&#x27;,&#x27;Nov&#x27;,&#x27;Dec&#x27;]</span>
+<span id="L22"><a href="#L22">  22</a> np.random.seed(10)</span>
+<span id="L23"><a href="#L23">  23</a> data=np.random.uniform(-1,1,(len(months),len(years)))</span>
+<span id="L24"><a href="#L24">  24</a> for i in range(len(months)):data[i]+=np.linspace(-1,2,len(years))</span>
+<span id="L25"><a href="#L25">  25</a> data+=np.random.uniform(-1.5,1.5,data.shape)</span>
+<span id="L26"><a href="#L26">  26</a> bar_data_year=data.sum(axis=0);bar_data_month=data.sum(axis=1)</span>
+<span id="L27"><a href="#L27">  27</a> fig=plt.figure(figsize=(12,6),dpi=150)</span>
+<span id="L28"><a href="#L28">  28</a> gs=GridSpec(2,2,width_ratios=[10,1.5],height_ratios=[1,2],wspace=.04,hspace=.05)</span>
+<span id="L29"><a href="#L29">  29</a> ax_heatmap=fig.add_subplot(gs[1,0])</span>
+<span id="L30"><a href="#L30">  30</a> ax_heatmap.imshow(data,cmap=cmap,aspect=&#x27;auto&#x27;,vmin=-np.max(np.abs(data)),vmax=np.max(np.abs(data)))</span>
+<span id="L31"><a href="#L31">  31</a> for i in range(data.shape[0]):</span>
+<span id="L32"><a href="#L32">  32</a>     for j in range(data.shape[1]):</span>
+<span id="L33"><a href="#L33">  33</a>         v=data[i,j];color=contrast_text(cmap((v/np.max(np.abs(data))+1)/2))</span>
+<span id="L34"><a href="#L34">  34</a>         ax_heatmap.text(j,i,f&#x27;{v:.1f}&#x27;,ha=&#x27;center&#x27;,va=&#x27;center&#x27;,fontsize=6,color=color,fontweight=&#x27;bold&#x27;)</span>
+<span id="L35"><a href="#L35">  35</a> for i in range(data.shape[0]+1):ax_heatmap.plot([-.5,data.shape[1]-.5],[i-.5]*2,color=&#x27;white&#x27;,linewidth=1)</span>
+<span id="L36"><a href="#L36">  36</a> for j in range(data.shape[1]+1):ax_heatmap.plot([j-.5]*2,[-.5,data.shape[0]-.5],color=&#x27;white&#x27;,linewidth=1)</span>
+<span id="L37"><a href="#L37">  37</a> ax_heatmap.set_xticks(np.arange(len(years)),years,rotation=90,fontweight=&#x27;bold&#x27;)</span>
+<span id="L38"><a href="#L38">  38</a> ax_heatmap.set_yticks(np.arange(len(months)),months,fontweight=&#x27;bold&#x27;)</span>
+<span id="L39"><a href="#L39">  39</a> ax_top=fig.add_subplot(gs[0,0],sharex=ax_heatmap)</span>
+<span id="L40"><a href="#L40">  40</a> ax_top.bar(np.arange(len(years)),bar_data_year,color=[palette_stops(&#x27;diverging&#x27;)[0] if v&lt;0 else palette_stops(&#x27;diverging&#x27;)[-1] for v in bar_data_year])</span>
+<span id="L41"><a href="#L41">  41</a> ax_top.tick_params(axis=&#x27;both&#x27;,bottom=False,left=False,labelbottom=False,labelleft=False)</span>
+<span id="L42"><a href="#L42">  42</a> ax_top.grid(False)</span>
+<span id="L43"><a href="#L43">  43</a> ax_right=fig.add_subplot(gs[1,1],sharey=ax_heatmap)</span>
+<span id="L44"><a href="#L44">  44</a> ax_right.barh(np.arange(len(months)),bar_data_month,color=[palette_stops(&#x27;diverging&#x27;)[0] if v&lt;0 else palette_stops(&#x27;diverging&#x27;)[-1] for v in bar_data_month])</span>
+<span id="L45"><a href="#L45">  45</a> ax_right.tick_params(axis=&#x27;both&#x27;,bottom=False,left=False,labelbottom=False,labelleft=False)</span>
+<span id="L46"><a href="#L46">  46</a> ax_right.grid(False)</span>
+<span id="L47"><a href="#L47">  47</a> for i,v in enumerate(bar_data_year):</span>
+<span id="L48"><a href="#L48">  48</a>     ax_top.text(i,v+(.2 if v&gt;0 else -.8),f&#x27;{v:.1f}&#x27;,ha=&#x27;center&#x27;,va=&#x27;bottom&#x27; if v&gt;0 else &#x27;top&#x27;,fontsize=6,color=palette_stops(&#x27;diverging&#x27;)[-1] if v&gt;0 else palette_stops(&#x27;diverging&#x27;)[0],fontweight=&#x27;bold&#x27;)</span>
+<span id="L49"><a href="#L49">  49</a> ax_top.margins(y=.25)</span>
+<span id="L50"><a href="#L50">  50</a> for i,v in enumerate(bar_data_month):</span>
+<span id="L51"><a href="#L51">  51</a>     ax_right.text(v-1 if v&gt;0 else v+1,i,f&#x27;{v:.1f}&#x27;,ha=&#x27;right&#x27; if v&gt;0 else &#x27;left&#x27;,va=&#x27;center&#x27;,fontsize=7,color=&#x27;white&#x27;,fontweight=&#x27;bold&#x27;)</span>
+<span id="L52"><a href="#L52">  52</a> fig.suptitle(&#x27;表格热图与边际汇总&#x27;,x=.06,y=.98,ha=&#x27;left&#x27;,fontsize=22,color=&#x27;#3680ae&#x27;)</span>
+<span id="L53"><a href="#L53">  53</a> fig.subplots_adjust(left=.06,bottom=.14,right=.97,top=.88)</span>
+<span id="L54"><a href="#L54">  54</a> plt.show()</span>
+<span id="L55"><a href="#L55">  55</a> </span></pre>

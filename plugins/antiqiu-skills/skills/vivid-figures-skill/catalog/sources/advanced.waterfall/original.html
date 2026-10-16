@@ -1,0 +1,90 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L2"><a href="#L2">   2</a> setup_style()</span>
+<span id="L3"><a href="#L3">   3</a> import matplotlib.pyplot as plt</span>
+<span id="L4"><a href="#L4">   4</a> import matplotlib.patches as mpatches</span>
+<span id="L5"><a href="#L5">   5</a> import numpy as np</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> labels = [&#x27;Baseline&#x27;, &#x27;+Attention&#x27;, &#x27;+Augment&#x27;, &#x27;+Pretrain&#x27;, &#x27;-Dropout&#x27;]</span>
+<span id="L8"><a href="#L8">   8</a> deltas = [0.82,        0.04,          0.02,       0.05,       -0.01]</span>
+<span id="L9"><a href="#L9">   9</a> </span>
+<span id="L10"><a href="#L10">  10</a> cum = [deltas[0]]</span>
+<span id="L11"><a href="#L11">  11</a> for d in deltas[1:]:</span>
+<span id="L12"><a href="#L12">  12</a>     cum.append(cum[-1] + d)</span>
+<span id="L13"><a href="#L13">  13</a> final_val = cum[-1]</span>
+<span id="L14"><a href="#L14">  14</a> total_delta = final_val - deltas[0]</span>
+<span id="L15"><a href="#L15">  15</a> </span>
+<span id="L16"><a href="#L16">  16</a> layer_colors = [COLORS[&#x27;up&#x27;] if d &gt;= 0 else COLORS[&#x27;down&#x27;] for d in deltas[1:]]</span>
+<span id="L17"><a href="#L17">  17</a> n = len(labels)</span>
+<span id="L18"><a href="#L18">  18</a> </span>
+<span id="L19"><a href="#L19">  19</a> fig, ax = plt.subplots(figsize=(9, 5))</span>
+<span id="L20"><a href="#L20">  20</a> ax.grid(axis=&#x27;y&#x27;, alpha=0.12, linestyle=&#x27;-&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L21"><a href="#L21">  21</a> ax.set_axisbelow(True)</span>
+<span id="L22"><a href="#L22">  22</a> </span>
+<span id="L23"><a href="#L23">  23</a> x_positions = np.arange(n)</span>
+<span id="L24"><a href="#L24">  24</a> </span>
+<span id="L25"><a href="#L25">  25</a> # ── 色带层叠（每步增量的层带位置，延伸到最右边）</span>
+<span id="L26"><a href="#L26">  26</a> for i in range(1, n):</span>
+<span id="L27"><a href="#L27">  27</a>     c = layer_colors[i - 1]</span>
+<span id="L28"><a href="#L28">  28</a>     bottom = min(cum[i-1], cum[i])</span>
+<span id="L29"><a href="#L29">  29</a>     top = max(cum[i-1], cum[i])</span>
+<span id="L30"><a href="#L30">  30</a>     ax.fill_between([x_positions[i] - 0.5, x_positions[-1] + 0.5], bottom, top,</span>
+<span id="L31"><a href="#L31">  31</a>                     alpha=0.15, color=c, zorder=1 + i)</span>
+<span id="L32"><a href="#L32">  32</a>     ax.plot([x_positions[i] - 0.5, x_positions[-1] + 0.5], [cum[i], cum[i]],</span>
+<span id="L33"><a href="#L33">  33</a>             color=c, linewidth=0.7, linestyle=&#x27;--&#x27;, alpha=0.35, zorder=1 + i)</span>
+<span id="L34"><a href="#L34">  34</a> </span>
+<span id="L35"><a href="#L35">  35</a> # Baseline 底层</span>
+<span id="L36"><a href="#L36">  36</a> ax.fill_between([x_positions[0] - 0.5, x_positions[-1] + 0.5], 0, cum[0],</span>
+<span id="L37"><a href="#L37">  37</a>                 alpha=0.06, color=PALETTE[0], zorder=0)</span>
+<span id="L38"><a href="#L38">  38</a> </span>
+<span id="L39"><a href="#L39">  39</a> # ── 阶梯连线</span>
+<span id="L40"><a href="#L40">  40</a> ax.step(x_positions, cum, where=&#x27;mid&#x27;, color=PALETTE[0], linewidth=2.8, zorder=10)</span>
+<span id="L41"><a href="#L41">  41</a> </span>
+<span id="L42"><a href="#L42">  42</a> # ── 圆点</span>
+<span id="L43"><a href="#L43">  43</a> for i in range(n):</span>
+<span id="L44"><a href="#L44">  44</a>     c = PALETTE[0] if i == 0 else layer_colors[i - 1]</span>
+<span id="L45"><a href="#L45">  45</a>     ax.scatter(x_positions[i], cum[i], color=c, s=90, zorder=11,</span>
+<span id="L46"><a href="#L46">  46</a>                edgecolors=&#x27;white&#x27;, linewidths=2.0)</span>
+<span id="L47"><a href="#L47">  47</a> </span>
+<span id="L48"><a href="#L48">  48</a> # ── 数值标注 —— 所有步骤都标，统一放在圆点上方</span>
+<span id="L49"><a href="#L49">  49</a> for i in range(n):</span>
+<span id="L50"><a href="#L50">  50</a>     c = PALETTE[0] if i == 0 else layer_colors[i - 1]</span>
+<span id="L51"><a href="#L51">  51</a>     ax.text(x_positions[i], cum[i] + 0.008, f&#x27;{cum[i]:.3f}&#x27;, ha=&#x27;center&#x27;, va=&#x27;bottom&#x27;,</span>
+<span id="L52"><a href="#L52">  52</a>             fontsize=8.5, fontweight=&#x27;bold&#x27; if (i == 0 or i == n-1) else &#x27;normal&#x27;,</span>
+<span id="L53"><a href="#L53">  53</a>             color=c,</span>
+<span id="L54"><a href="#L54">  54</a>             bbox=dict(boxstyle=&#x27;round,pad=0.15&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L55"><a href="#L55">  55</a>                       edgecolor=c if (i == 0 or i == n-1) else &#x27;none&#x27;,</span>
+<span id="L56"><a href="#L56">  56</a>                       alpha=0.9, linewidth=0.5), zorder=12)</span>
+<span id="L57"><a href="#L57">  57</a> </span>
+<span id="L58"><a href="#L58">  58</a> # ── 总增量标注（右上角）</span>
+<span id="L59"><a href="#L59">  59</a> ax.text(0.97, 0.95, f&#x27;Total: +{total_delta:.2f} (+{total_delta/deltas[0]*100:.1f}%)&#x27;,</span>
+<span id="L60"><a href="#L60">  60</a>         transform=ax.transAxes, fontsize=9.5, ha=&#x27;right&#x27;, va=&#x27;top&#x27;,</span>
+<span id="L61"><a href="#L61">  61</a>         fontweight=&#x27;bold&#x27;, color=COLORS[&#x27;up&#x27;],</span>
+<span id="L62"><a href="#L62">  62</a>         bbox=dict(boxstyle=&#x27;round,pad=0.4&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L63"><a href="#L63">  63</a>                   edgecolor=COLORS[&#x27;up&#x27;], alpha=0.9, linewidth=1.0), zorder=15)</span>
+<span id="L64"><a href="#L64">  64</a> </span>
+<span id="L65"><a href="#L65">  65</a> # ── 贡献图例（将贡献信息全部放在图例，而非图面上标）</span>
+<span id="L66"><a href="#L66">  66</a> legend_patches = []</span>
+<span id="L67"><a href="#L67">  67</a> for i in range(1, n):</span>
+<span id="L68"><a href="#L68">  68</a>     d = deltas[i]</span>
+<span id="L69"><a href="#L69">  69</a>     c = layer_colors[i - 1]</span>
+<span id="L70"><a href="#L70">  70</a>     sign = &#x27;+&#x27; if d &gt;= 0 else &#x27;&#x27;</span>
+<span id="L71"><a href="#L71">  71</a>     pct = abs(d) / total_delta * 100</span>
+<span id="L72"><a href="#L72">  72</a>     patch = mpatches.Patch(facecolor=_lighten(c, 0.4), edgecolor=c, linewidth=1.2,</span>
+<span id="L73"><a href="#L73">  73</a>                            label=f&#x27;{labels[i]}  {sign}{d:.2f} ({pct:.0f}%)&#x27;)</span>
+<span id="L74"><a href="#L74">  74</a>     legend_patches.append(patch)</span>
+<span id="L75"><a href="#L75">  75</a> legend = ax.legend(handles=legend_patches, loc=&#x27;lower right&#x27;,</span>
+<span id="L76"><a href="#L76">  76</a>                    frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8.5,</span>
+<span id="L77"><a href="#L77">  77</a>                    facecolor=&#x27;white&#x27;, title=&#x27;Contribution&#x27;, title_fontsize=9,</span>
+<span id="L78"><a href="#L78">  78</a>                    handlelength=1.5, handleheight=1.0)</span>
+<span id="L79"><a href="#L79">  79</a> legend.set_zorder(15)</span>
+<span id="L80"><a href="#L80">  80</a> </span>
+<span id="L81"><a href="#L81">  81</a> ax.set_xticks(x_positions)</span>
+<span id="L82"><a href="#L82">  82</a> ax.set_xticklabels(labels, fontsize=10)</span>
+<span id="L83"><a href="#L83">  83</a> ax.set_ylabel(&#x27;Accuracy&#x27;, fontsize=11)</span>
+<span id="L84"><a href="#L84">  84</a> ax.set_xlim(-0.7, n - 0.3)</span>
+<span id="L85"><a href="#L85">  85</a> ax.set_ylim(deltas[0] * 0.92, final_val * 1.12)</span>
+<span id="L86"><a href="#L86">  86</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L87"><a href="#L87">  87</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L88"><a href="#L88">  88</a> fig.tight_layout()</span>
+<span id="L89"><a href="#L89">  89</a> save_fig(fig, &#x27;figures/fig_waterfall.pdf&#x27;)</span>
+</pre>

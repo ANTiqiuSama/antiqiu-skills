@@ -1,0 +1,2162 @@
+{
+  "schemaVersion": 1,
+  "bundleVersion": "0.1.3",
+  "recipes": [
+    {
+      "id": "basic.grouped_bar",
+      "file": "figure_recipes_basic.md",
+      "title": "分组柱状图（Grouped Bar）— 淡色填充 + 原色边框 + 参考线 + 顶部数值 + 最优高亮",
+      "legacy": "basic #1",
+      "contentSha256": "389438c4cee19b42c2debef2123b621600103d7817f931bcf2af12d03aded11d",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "7109fb1dc201598fe0e5406a2e9f985131d4dff8416523162516c64bec97158e"
+        }
+      }
+    },
+    {
+      "id": "basic.stacked_bar",
+      "file": "figure_recipes_basic.md",
+      "title": "堆叠柱状图（Stacked Bar）— 淡色填充 + 原色边框 + 趋势线 + 自动对比度标签 + 同比变化",
+      "legacy": "basic #2",
+      "contentSha256": "b4028936b1fe02fdcf5d6eaa673898844c7e071dcf8e7ea29756abf12548db58",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "b0c0a3e2f7a7f20f2340d80001ff525bac737fd916e81e9e5103754a348ab641"
+        }
+      }
+    },
+    {
+      "id": "basic.line",
+      "file": "figure_recipes_basic.md",
+      "title": "折线图（渐变填充 + 极值标注箭头 + 微妙网格）",
+      "legacy": "basic #3",
+      "contentSha256": "b85dba2439be57af18d4508ed89bc7ca6af641b055b3dd32f42cb1539f8b356d",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "0af09146821f6490c8e5172f32446038d772f01f6703e65003571db38c654268"
+        }
+      }
+    },
+    {
+      "id": "basic.scatter_regression",
+      "file": "figure_recipes_basic.md",
+      "title": "散点图（KDE 等高线 + 柔和边际密度 + 回归公式框 + 年份标签）",
+      "legacy": "basic #4",
+      "contentSha256": "f8161d868b32136934b70693b70f3b4121d61f33679eb7e799d76f8076f0967d",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "4e3db2fa26a20258b992e6090cfd8cf439de45f61a5f558a4d1b52c7aa476f1e"
+        }
+      }
+    },
+    {
+      "id": "basic.heatmap",
+      "file": "figure_recipes_basic.md",
+      "title": "热力图（fig.add_axes 手动布局 + 聚类树状图 + 下三角遮罩 + 分组色条）",
+      "legacy": "basic #5",
+      "contentSha256": "fa4d50510449fe4b5ffc7db3ba3878ddd0762191e0bbe1779e072b86764246f6",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "5336c3cadd29c37926e58166419150d0c3d5ab9990538da0baf1187bde66d826"
+        }
+      }
+    },
+    {
+      "id": "basic.donut",
+      "file": "figure_recipes_basic.md",
+      "title": "环形图（淡色填充 + 原色边框 + 外部连线标签 + 变化率标注）",
+      "legacy": "basic #6",
+      "contentSha256": "eae515dc7667ab2c72c8b3b14c02e918458fb52b0a75f25cd7f590ec2a61763a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "1ac7adc54f4557b68c6b18c65c1c6d74a8a9167a0776def4c2918c325d0397a9"
+        }
+      }
+    },
+    {
+      "id": "basic.raincloud",
+      "file": "figure_recipes_basic.md",
+      "title": "Rain Cloud 图（淡色填充 + 原色边框 + 半小提琴 + 箱线 + 抖动散点 + 均值菱形）",
+      "legacy": "basic #7",
+      "contentSha256": "f697562bc38440f3d61828b60ee857a44c24eae5af2d6a9477a64890797dbc93",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "f5ef6a8ab89b97f16e3e0d551e20fc4fced0aab738fa7c55ffe430291451c855"
+        }
+      }
+    },
+    {
+      "id": "basic.area",
+      "file": "figure_recipes_basic.md",
+      "title": "面积图（渐变填充 + 事件标记线 + 端点标注）",
+      "legacy": "basic #8",
+      "contentSha256": "7774e2f13449e166049595e88bd1634058978e7e19735678328fceda4cc7a67e",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "77cb73d387e09672f36f34abf8b3b7849462dd4093cdf3014af4f01af143cd14"
+        }
+      }
+    },
+    {
+      "id": "basic.pareto",
+      "file": "figure_recipes_basic.md",
+      "title": "竖向帕累托图（柱状图 + 累积百分比折线 + 80% 分界线）",
+      "legacy": "basic #9",
+      "contentSha256": "ccbcdd63f06f7f8d6969bf199cbf6d5cf964e0858c35dbf114a65d688e1f103c",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "132366c153392a0fec674b5acb9274c3398d8e9eaa60574388e9109073e0586c"
+        }
+      }
+    },
+    {
+      "id": "basic.dual_axis",
+      "file": "figure_recipes_basic.md",
+      "title": "双轴图（淡色填充 + 原色边框柱 + 渐变填充折线 + 相关性标注框 + 峰值高亮）",
+      "legacy": "basic #10",
+      "contentSha256": "74dcf691b770b07628a265955da77e0772b24aab9632fd4071b6f78cc25104a6",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "92b0cc9615c0a0953ae5d888bcb0727979803dd6358bc50df10a0c7d97ca8261"
+        }
+      }
+    },
+    {
+      "id": "basic.raincloud_violin",
+      "file": "figure_recipes_basic.md",
+      "title": "Rain Cloud 小提琴图（淡色填充 + 原色边框 + 显著性括号 + 完整分布展示）",
+      "legacy": "basic #11",
+      "contentSha256": "a21c296fdddba5d1ec610e0d3e37fafd6e4c6644a928b5323882eb9e0ac02bc8",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "a83432679bd1b77b997931fbfd84e6382201280c97b00221d5278bc18e3eb697"
+        }
+      }
+    },
+    {
+      "id": "basic.multipanel",
+      "file": "figure_recipes_basic.md",
+      "title": "多面板子图（淡色填充 + 原色边框 + 带背景框标签 + 统一风格）",
+      "legacy": "basic #12",
+      "contentSha256": "8ef93b1f5debf3b14fb81395cbb353d127f3ad19edf0f1ad23b7f7d0738c2a94",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "e60a5cad9d4cd5106c6067eee66913276fa45af1b5998ac31ed9e82640577faa"
+        }
+      }
+    },
+    {
+      "id": "advanced.lollipop",
+      "file": "figure_recipes_advanced.md",
+      "title": "Lollipop Chart — 棒棒糖图（渐变色茎 + 排名徽章 + 中位数参考线）",
+      "legacy": "advanced #1",
+      "contentSha256": "525f7a12e43de4af7e1669772279337f442d139a60a18b1caefcdca188642a15",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "e7e6025d219c62f5ee619b0b9d8af2b0c920fc7f0b651dfb49156ba9217b60f4"
+        }
+      }
+    },
+    {
+      "id": "advanced.dumbbell",
+      "file": "figure_recipes_advanced.md",
+      "title": "Dumbbell Chart — 哑铃图（连接线 + 变化率 + 显著性标记）",
+      "legacy": "advanced #2",
+      "contentSha256": "67271d7827dc9ece296a81ca165374f41a5e6723b55562298370adcbff760dd5",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "463553cffbbe706535b7737efa8ae65654cd6c3061757b7a07e22307e68b14bc"
+        }
+      }
+    },
+    {
+      "id": "advanced.slope",
+      "file": "figure_recipes_advanced.md",
+      "title": "Slope Chart — 斜率图（颜色编码线 + 排名变化标注）",
+      "legacy": "advanced #3",
+      "contentSha256": "fd65b89d40567f7f3fc5fbed5056a00555c81b19d9a45f56fc9a30a35959d261",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "5bb82ef04903b0699658052b968ccd1ec35e41f582a4f44d1c1319a424ea4b2e"
+        }
+      }
+    },
+    {
+      "id": "advanced.bump",
+      "file": "figure_recipes_advanced.md",
+      "title": "Bump Chart — 凹凸图（色带高亮 + 两端排名标签 + \"本文\"高亮）",
+      "legacy": "advanced #4",
+      "contentSha256": "62f242937b875dc85f871699ff0b9f76623f30bb46e96867355c62145b263b85",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "860711c1ef0815ba0f2172e90ab366e2107b0d0e9e6e86af76edc8b9010ae414"
+        }
+      }
+    },
+    {
+      "id": "advanced.sankey",
+      "file": "figure_recipes_advanced.md",
+      "title": "Sankey Diagram — 桑基图（D3 风格，矩形节点 + 贝塞尔流带）",
+      "legacy": "advanced #5",
+      "contentSha256": "2a394c5ff5bc4fd7631134af4a1263aee3346ac36a38f8e2a63b6fcb7714ae87",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "53720821b325c1a77c8c0f9af6a9fc560c6d3b5140e6dbf1a5ac1c782fa86062"
+        }
+      }
+    },
+    {
+      "id": "advanced.waterfall",
+      "file": "figure_recipes_advanced.md",
+      "title": "Waterfall Chart — 瀑布图（彩色渐变柱图 + 连接线 + 顶部数值标注）",
+      "legacy": "advanced #6",
+      "contentSha256": "ccd19e501c44966dc9df6d822f38bfb035db3de45342728be0dab166bf90f691",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "ca23765f2b05646ae33850b6b023c21473d468fdd6af492c85da3bc15eff1f45"
+        }
+      }
+    },
+    {
+      "id": "advanced.shap_summary",
+      "file": "figure_recipes_advanced.md",
+      "title": "SHAP Summary Plot — SHAP 特征重要性图",
+      "legacy": "advanced #7",
+      "contentSha256": "4667bbbbc739b808beefd08b440c49872d5aa3db7db66a4c0e2c073b6a5bf197",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "5433fd7d29e4877afaeb3eecb43321590c751bc9994af2373efe12988f70a698"
+        }
+      }
+    },
+    {
+      "id": "advanced.bland_altman",
+      "file": "figure_recipes_advanced.md",
+      "title": "Bland-Altman Plot — Bland-Altman 一致性图（分层 CI 带 + 比例偏差线 + 异常值标签）",
+      "legacy": "advanced #8",
+      "contentSha256": "77b8bb1cf8729236d62ba1cb85a87813185b2cc2f280419ae0409b4b6c999e48",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "6a7aa78fa99785404e8293636f77204a5dca0e01a29e50a607fa5c5942cabfb4"
+        }
+      }
+    },
+    {
+      "id": "advanced.kaplan_meier",
+      "file": "figure_recipes_advanced.md",
+      "title": "Kaplan-Meier Survival Curve — 生存曲线（CI 带 + 中位数标记 + 风险人数表 + Log-Rank p）",
+      "legacy": "advanced #9",
+      "contentSha256": "8bd10c1924ee0b643c2151e913368f6f0a32eebb2fda2e794c4371d53f3e08f2",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "8528cbe9e0e44de9a9d31d768996005e2f97c585116b96772c7cfd4c7df499e4"
+        }
+      }
+    },
+    {
+      "id": "advanced.volcano",
+      "file": "figure_recipes_advanced.md",
+      "title": "Volcano Plot — 火山图（基因差异表达：渐变密度背景 + 基因标签 + 倍数变化阴影）",
+      "legacy": "advanced #10",
+      "contentSha256": "1238fffb336964eadd2009fdc2270bd8229ab57aad47a2f8e7fc148eeb775e05",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "6d720376f0fcdbe09a14e8bfa6eadb40c1b3570a59e41dca14d2539b1578a7e3"
+        }
+      }
+    },
+    {
+      "id": "advanced.calibration",
+      "file": "figure_recipes_advanced.md",
+      "title": "Calibration Plot — 校准曲线（渐变 CI 带 + 底部直方图 + Brier Score 标注）",
+      "legacy": "advanced #11",
+      "contentSha256": "6d6ff1b17b125e223498378ba1caf849340aaa7aab7c1a690d84e94de9e9b454",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "286c54f1692dc8251004d7f4d7677e1da0ede99e389180aedcb64ef425f362a8"
+        }
+      }
+    },
+    {
+      "id": "advanced.funnel",
+      "file": "figure_recipes_advanced.md",
+      "title": "Funnel Plot — 漏斗图（Meta 分析：渐变 CI 带 90/95/99% + 研究标签 + Egger 检验）",
+      "legacy": "advanced #12",
+      "contentSha256": "5d6ba62cc97bb46f0c2619c43ab25153e0b73c9b7d40807523cb4b6d214cda04",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "5906e72f6fdd5b16278af5cb0f1a164dd14164964ff97193f7263d191a2a97db"
+        }
+      }
+    },
+    {
+      "id": "advanced.dot_ci",
+      "file": "figure_recipes_advanced.md",
+      "title": "Dot Plot with CI — 点图+置信区间（按显著性渐变着色 + 汇总菱形）",
+      "legacy": "advanced #13",
+      "contentSha256": "c35da3f410a20313817179674a8cf40adee7183649c7943290b1f8ecf342cf1e",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "2d798fefa3fd35800a3480fb26018276d857ebcd1b854d802792c66763d3863f"
+        }
+      }
+    },
+    {
+      "id": "advanced.cluster_heatmap",
+      "file": "figure_recipes_advanced.md",
+      "title": "Cluster Heatmap — 聚类热力图（带树状图 + 聚类边界 + 轮廓系数标注）",
+      "legacy": "advanced #14",
+      "contentSha256": "cedf679717abe4595e60ff8bf4fa57ace9d7aaf628131c9b77501fda4cda3476",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "9596c75a8cd816bedc5347e8a761878dafcfc16eba71a38c841d917f39ecd9bd"
+        },
+        "two_way": {
+          "blocks": [
+            2
+          ],
+          "codeSha256": "9977b4e6fdc5ff9be024b5565f78f8e9e2fa884311614c780bf7b9edc2065357",
+          "requiredInputs": [
+            "data: numeric matrix",
+            "labels_row: row labels",
+            "labels_col: column labels"
+          ]
+        }
+      }
+    },
+    {
+      "id": "advanced.network",
+      "file": "figure_recipes_advanced.md",
+      "title": "Network Graph — 网络图（节点大小映射度 + 社区凸包 + 边权渐变）",
+      "legacy": "advanced #15",
+      "contentSha256": "8e3413982eae71c3c36d8135464ae8b95ebb9dd1f344b715d24ee85a961590f2",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "a5e2a665d9a6e50fc38ceaf39d56c87cde9028f56e77e9a4cd4aa43d30e16d56"
+        }
+      }
+    },
+    {
+      "id": "advanced.method_heatmap",
+      "file": "figure_recipes_advanced.md",
+      "title": "Method Comparison Heatmap — 方法对比热力图（排名标注 🥇🥈🥉 + 树状图 + 列最优高亮 + 综合排名）",
+      "legacy": "advanced #16",
+      "contentSha256": "03641ff2a1050da7c7af89f9d499ad1f8fe226013ec9758708e72de5ea6892ee",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "446e148399bf5bdb9c2c0a05461f8c8a92fac6d539cecfd8edaeea8cc2dad51a"
+        }
+      }
+    },
+    {
+      "id": "advanced.parallel_coordinates",
+      "file": "figure_recipes_advanced.md",
+      "title": "Parallel Coordinates — 平行坐标图（实线 + \"本文\"高亮 + 最优区域阴影）",
+      "legacy": "advanced #17",
+      "contentSha256": "6dc0abc4e6240192e2be75c30dbede3486db6b0462b8b23128caf3c8dab76601",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "97b6da1c401aac585bb3b1ca31fb98a42847c3e2ca48b54d1cdfae03b67e12f2"
+        }
+      }
+    },
+    {
+      "id": "advanced.pca_biplot",
+      "file": "figure_recipes_advanced.md",
+      "title": "PCA Biplot — PCA 双标图（载荷箭头 + 智能标签 + 解释方差）",
+      "legacy": "advanced #18",
+      "contentSha256": "0012e39e39ae07ace7d7da048025fe5f6bf5ffc106150b7f453627555615d7b0",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "030707d3c0dc5a150203f12639f91c752aad27882a196db6072b6ee131ff28af"
+        }
+      }
+    },
+    {
+      "id": "advanced.taylor",
+      "file": "figure_recipes_advanced.md",
+      "title": "Taylor Diagram — Taylor 图（多模型对比：相关系数 + 标准差 + RMSE）",
+      "legacy": "advanced #19",
+      "contentSha256": "7dc646c5ba56142fb68f13bb3654f9b7de7d493ae6d166e92bc5a281eda37a3a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "96fc24b72f1696b5175e8dd8875a7b2a8f1025e5b53b8c3ef8cb0e5d9e1e9aa9"
+        }
+      }
+    },
+    {
+      "id": "advanced.diverging_bar",
+      "file": "figure_recipes_advanced.md",
+      "title": "Diverging Bar Chart — 发散柱状图（淡色填充 + 原色边框 + 相对基线 + 颜色编码方向 + 数值标签）",
+      "legacy": "advanced #20",
+      "contentSha256": "a8373e76381283e93e71571eb3c3d5ed2c12711b56accb740cf684a50cf4aa10",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "b44c78e2ead3770346e0081791a95af1f0609009317dfe7507a560521d9286bf"
+        }
+      }
+    },
+    {
+      "id": "advanced.back_to_back_bar",
+      "file": "figure_recipes_advanced.md",
+      "title": "Back-to-Back Bar Chart — 背靠背柱状图（浅色填充 + 原色边框 + 镜像对比 + 共享 Y 轴 + 差值标签）",
+      "legacy": "advanced #21",
+      "contentSha256": "09f593d0b0a81961871a5d23a2c6233b15a37b67a4e2eb1d36e30fe90b15b808",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "71b3be273494951dae3be78a48c35874e9273fd13aba3f1e3dd546e4c87bf25e"
+        }
+      }
+    },
+    {
+      "id": "advanced.paired_dot",
+      "file": "figure_recipes_advanced.md",
+      "title": "Paired Dot Plot — 配对点图（个体变化连线 + 均值偏移箭头 + 显著性）",
+      "legacy": "advanced #22",
+      "contentSha256": "9760e1a60f8e912bb54db0a6448d6a3e7fabfdfdd8fd1f4aa34ab194e5b26f63",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "aafa63c083d33d1cc21e3ffd4bc504eedf1af7da41f085d8e5db5c24933d756f"
+        }
+      }
+    },
+    {
+      "id": "advanced.ridgeline",
+      "file": "figure_recipes_advanced.md",
+      "title": "Ridgeline Plot — 山脊图（堆叠分布对比 + 渐变填充 + 中位数线）",
+      "legacy": "advanced #23",
+      "contentSha256": "4a843950d6056321ad40bbcbaee27364007113de08a445238036b1168ef0f270",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "d20dff969bc2b024a1b13eceedb90b7f5a26ca1637ef9aac5ff9f401cbccd0ad"
+        }
+      }
+    },
+    {
+      "id": "advanced.grouped_violin",
+      "file": "figure_recipes_advanced.md",
+      "title": "Grouped Violin Plot (Multi-Group Distribution Comparison + Median + Quartile Lines)",
+      "legacy": "advanced #24",
+      "contentSha256": "eea71c29f841a4506d943538c5b33ed4d4f751251a9c732cf7e7c872146a4a2c",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "4fbeced5c9777ff2e96fb84f42fd97dfc16afa56129fa169b4a7974f3913ae7f"
+        }
+      }
+    },
+    {
+      "id": "advanced.performance_profile",
+      "file": "figure_recipes_advanced.md",
+      "title": "Performance Profile (Dolan-Moré) — 性能剖面图（多算法跨问题对比标准画法）",
+      "legacy": "advanced #25",
+      "contentSha256": "a821b77c8c8ef2c0fa5eca9aca3eb3870d1be0f317621efe85ce28f143afda9b",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "52d13f6d0a1deb2934d12f88d015f1b7b1bc8cd89d59234d62862a132a79da14"
+        }
+      }
+    },
+    {
+      "id": "advanced.ice_pdp",
+      "file": "figure_recipes_advanced.md",
+      "title": "ICE + PDP — 可解释机器学习（多条 ICE 细线 + 粗 PDP 均值线 + 边际分布）",
+      "legacy": "advanced #26",
+      "contentSha256": "a933ccc21e069bb321539aedfafd727371744bdc6363cfd1f40c17632f1f2977",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "3b46093c8f252f2d3b5b39c65fad463b5895eeb15a939628712b5ec641269ca3"
+        }
+      }
+    },
+    {
+      "id": "advanced.fan",
+      "file": "figure_recipes_advanced.md",
+      "title": "Fan Chart — 预测扇形图（多层 CI 带 + 历史/预测分隔 + 中位数线）",
+      "legacy": "advanced #27",
+      "contentSha256": "47fa24be68ef03c214a2a5e3516d655990331c6ecceb6c3abeaa7fa6af4466f1",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "9b6118b7818726a2ce793ae35c922b7af0bc06662fcbabba7d4ca9da65673287"
+        }
+      }
+    },
+    {
+      "id": "advanced.calendar_heatmap",
+      "file": "figure_recipes_advanced.md",
+      "title": "Calendar Heatmap — 日历热图（一年 7×53 网格 + 月份分隔 + 顶部色条）",
+      "legacy": "advanced #28",
+      "contentSha256": "a6f98186e891864b0ce417d847c44f58d93e20fbf067947353b52fa6de51e62a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "22f43904c79b886f93d5293a5d174aa4b41bffe86a624c70f049ff3e0082266e"
+        }
+      }
+    },
+    {
+      "id": "advanced.hovmoller",
+      "file": "figure_recipes_advanced.md",
+      "title": "Hovmöller — 时空双轴图（时间纵 + 空间横 + 偏离均值色阶 + 事件标注）",
+      "legacy": "advanced #29",
+      "contentSha256": "46267dd3f6cb9aee4e81f99af3bc1446ff1d90eb9b9b938cbaae703271b7eeaf",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "427b6d3d8e665965832997c851d465e291fc00d38af85bce03e988f1650245bb"
+        }
+      }
+    },
+    {
+      "id": "advanced.pair_plot",
+      "file": "figure_recipes_advanced.md",
+      "title": "Pair Plot / Scatter Matrix — 配对图（对角线 KDE + 上三角相关系数 + 下三角散点拟合）",
+      "legacy": "advanced #30",
+      "contentSha256": "65efa9c00b85df8f7e73edf573a020bed417170cd0f37c090b11c979b1c23615",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "7f22daa56691d2d322e3a8e0e20554bec46a7597764d3eb7988b133fc1ef4984"
+        }
+      }
+    },
+    {
+      "id": "advanced.triptych",
+      "file": "figure_recipes_advanced.md",
+      "title": "Triptych — 三联图（input / 中间表示 / output 横向对比 + 流向箭头）",
+      "legacy": "advanced #31",
+      "contentSha256": "2d81d215d00d7d5ba9b524e7499ea86c7c7de064797e394da2878abd849f50e2",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "595809311933882ff3a8245a6255bf968a08cb5217f5b5f9798769b7040c1a0f"
+        }
+      }
+    },
+    {
+      "id": "advanced.posterior_trace_density",
+      "file": "figure_recipes_advanced.md",
+      "title": "Posterior Trace + Density — 贝叶斯 MCMC 双面板（多链 trace + 边际密度 + Rhat 标注）",
+      "legacy": "advanced #32",
+      "contentSha256": "8cd4f3aecd814032699c34241213c296722340e21a8af0086272305de982cc8f",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "3141ff7455c22ae521697afbf5e272db82ee7a6ac4aad55b6f811b9edeb7a8f1"
+        }
+      }
+    },
+    {
+      "id": "advanced.streamgraph",
+      "file": "figure_recipes_advanced.md",
+      "title": "Streamgraph — 流图（居中堆叠基线 + 多类别 + 末端标签）",
+      "legacy": "advanced #33",
+      "contentSha256": "ca7e550b94c108873c1e34164c732020e3dbe613218734481049b8f47dc1c0d6",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "c466e7636454592a8b1dbc7dbebd27fe2bc8fbbacf2e3e1e3e49fdabe46d548d"
+        }
+      }
+    },
+    {
+      "id": "advanced.bivariate_choropleth",
+      "file": "figure_recipes_advanced.md",
+      "title": "Bivariate Choropleth / 双变量热图 — 二维联合分布（3×3 配色矩阵 + 主图 + 图例）",
+      "legacy": "advanced #34",
+      "contentSha256": "b68244d3557b44a961f82a56f5b87e73cf2544fb093ba8b6776529eed891f874",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "fef09dc62aba071c18ffcf3f68857f7ddedc62ab7b7e87aa9f347a679f132bf2"
+        }
+      }
+    },
+    {
+      "id": "empirical.forest",
+      "file": "figure_recipes_empirical.md",
+      "title": "Forest Plot (Stata/SCI style)",
+      "legacy": "empirical #1",
+      "contentSha256": "841f29a172ed3e9f451b4d1c0ddf19f8bf2f57a311efab0864e853f9f5766fdb",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "a42b5971381e796679e7ad06c20981235bc962d05e438a22b17c6d4864383d92"
+        }
+      }
+    },
+    {
+      "id": "empirical.parallel_trends",
+      "file": "figure_recipes_empirical.md",
+      "title": "Parallel Trends (DID)",
+      "legacy": "empirical #2",
+      "contentSha256": "3671d8d04481400d5bec99904664d3284fcc567e892a2f228ea4bb01341fb52e",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "8c58bb0289f04473657199c03d34be91920d626fa53f76d3b3748e47b64c4566"
+        }
+      }
+    },
+    {
+      "id": "empirical.event_study",
+      "file": "figure_recipes_empirical.md",
+      "title": "Event Study",
+      "legacy": "empirical #3",
+      "contentSha256": "a09008c86e9bbb1e14fb644d4a3c45fa3b03b33219349363f9179d3e6f16a4c1",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "83ac0907aeda103e45d8d433feed1bab77eadde6b6f207b47c182e2d64ce77dd"
+        }
+      }
+    },
+    {
+      "id": "empirical.placebo",
+      "file": "figure_recipes_empirical.md",
+      "title": "Placebo Test",
+      "legacy": "empirical #4",
+      "contentSha256": "3079caea6a2c1afd2ff75b9e9059b65b18b61a6471d9ab8d1aa40a7bd4dac825",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "8cb97d77c94b07c95986a8e5cbdfddbfbc03840043c7a5d84c80c6beb95c8e9b"
+        }
+      }
+    },
+    {
+      "id": "empirical.correlation_heatmap",
+      "file": "figure_recipes_empirical.md",
+      "title": "Correlation Heatmap",
+      "legacy": "empirical #5",
+      "contentSha256": "18746276a4ddf1f0bf367861e62fd0ed9068a07a3afee7704d4be7f0b6f6028f",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "4649c255c4ba4a2dd3a1a9a4daa88d52e2671bb806e48c8de315799c29f71ded"
+        }
+      }
+    },
+    {
+      "id": "empirical.raincloud",
+      "file": "figure_recipes_empirical.md",
+      "title": "Distribution (Rain Cloud with Gradient KDE)",
+      "legacy": "empirical #6",
+      "contentSha256": "38b3ddbb2c5e8d07b301b50ce6caa566ed7d801a1c8d28946858c2dd0331aa3a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "cf44c4fd48582cc6d3bfcc17c56e2016e578621aae44663b712aca6485008fb4"
+        }
+      }
+    },
+    {
+      "id": "empirical.time_series",
+      "file": "figure_recipes_empirical.md",
+      "title": "Time Series Trend (Dual Y-axis)",
+      "legacy": "empirical #7",
+      "contentSha256": "9e32ec49431893a55ff0f7975ea501fc8b0ba78c04b5196b7fab65a52afebe15",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "f512f1be83c26f0b838d2b60eb5595a8f1c652e217858c6804de97442bfe01b6"
+        }
+      }
+    },
+    {
+      "id": "empirical.residual_diagnostics",
+      "file": "figure_recipes_empirical.md",
+      "title": "Residual Diagnostics (4-panel)",
+      "legacy": "empirical #8",
+      "contentSha256": "f04c0dcd7250c2087b65aa6be20b5ddbc331d50a24d947112ed633f78fc1c92b",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "a9ee73493673b35c19c762622b7b13bc2f29823bdd68ed1d411d7d4ba342c168"
+        }
+      }
+    },
+    {
+      "id": "empirical.marginal_effects",
+      "file": "figure_recipes_empirical.md",
+      "title": "Moderation / Marginal Effects",
+      "legacy": "empirical #9",
+      "contentSha256": "227c6fff50703586678506425430ce8a5dddd4a529ec088da00172bb70f0b8b8",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "62a45fccbf669d4fe4a550215af221d1c1766effeed1d2a1c6d7f5a48ee6bb3a"
+        }
+      }
+    },
+    {
+      "id": "empirical.subgroup_forest",
+      "file": "figure_recipes_empirical.md",
+      "title": "Subgroup Forest / Heterogeneity",
+      "legacy": "empirical #10",
+      "contentSha256": "c2346e2cc03fd53c823b4c7508517ebc63cc81092e59170ba4579260ecd7bed0",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "122e54b286c4ef3dafe2ea2a45afd85570e9eacd2635e13e1eae5d4f4bfe33af"
+        }
+      }
+    },
+    {
+      "id": "empirical.quantile_regression",
+      "file": "figure_recipes_empirical.md",
+      "title": "Quantile Regression",
+      "legacy": "empirical #11",
+      "contentSha256": "ff7871f535bee39f3066adb21ce8acb55a9f50ef66a025e5024d810dcd6c834c",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "9f4e103a5b22a20eab49ea2f5f0387f235bfc1dc7fc0d9e2552928d4ae85bccd"
+        }
+      }
+    },
+    {
+      "id": "empirical.psm_balance",
+      "file": "figure_recipes_empirical.md",
+      "title": "PSM Balance (Love Plot)",
+      "legacy": "empirical #12",
+      "contentSha256": "bad5aadacc30758be6ad162a010c810a7bb52df38950b45094fdae1674f636c9",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "b39c64cdd5520a896f364bb02f790b7854730c95d54084994e6f902a269f704b"
+        }
+      }
+    },
+    {
+      "id": "empirical.prediction_ci",
+      "file": "figure_recipes_empirical.md",
+      "title": "Prediction vs Actual with CI Band",
+      "legacy": "empirical #13",
+      "contentSha256": "29402626bde7549c2583e3b21dd9c41b39d06d437624ca31612f7a15073e1da8",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "f5caa1fb00f9115bb7b34a574ab72a315027c79c1082d0c72e6c6fed6fa08769"
+        }
+      }
+    },
+    {
+      "id": "empirical.prediction_accuracy_heatmap",
+      "file": "figure_recipes_empirical.md",
+      "title": "Multi-Model Prediction Accuracy Heatmap",
+      "legacy": "empirical #14",
+      "contentSha256": "6e72911e57706e2e920352f481edd849f05b766c4970321a72309eb1f79fd71f",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "48a5961bb4af988c44ea0e75f742aaa9a7f0457a45ed7e9b315bd912270f2871"
+        }
+      }
+    },
+    {
+      "id": "empirical.prediction_error_raincloud",
+      "file": "figure_recipes_empirical.md",
+      "title": "Prediction Error Distribution (Rain Cloud)",
+      "legacy": "empirical #15",
+      "contentSha256": "33efddb46d60d150d3b194f5e863be8c06ae693ccec7dea0dd04d49b0ebdbb78",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "cd2600c19ba345093c981659ae42ffb6ad2a7d9088228ca7aa69ffad04c8021f"
+        }
+      }
+    },
+    {
+      "id": "empirical.multistep_decay",
+      "file": "figure_recipes_empirical.md",
+      "title": "Multi-Step Prediction Decay",
+      "legacy": "empirical #16",
+      "contentSha256": "1a9637dc3cb40085f95c80cfdbd76eb16aad4b0353c483fc3a8176e48838e0b9",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "3a4919bdbf524ada0d6338b408dc7ba2fdfcbf19aafdbc93aff94c8caca0aba6"
+        }
+      }
+    },
+    {
+      "id": "empirical.moran_scatter",
+      "file": "figure_recipes_empirical.md",
+      "title": "Moran's I Scatter Plot (真实空间自相关 + esda 计算 + Queen 权重)",
+      "legacy": "empirical #17",
+      "contentSha256": "c33a56062e7664a9c5db7ccf45eb47059ca77931c7baefdfeb87ff62cc063621",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "80e0e3394071abca4577647dc5fc465a270cc45a43cdd03232cd535d1176a9b8"
+        }
+      }
+    },
+    {
+      "id": "empirical.lisa_map",
+      "file": "figure_recipes_empirical.md",
+      "title": "LISA Cluster Map (真实局部空间自相关 + esda.Moran_Local + 中国省级地图)",
+      "legacy": "empirical #18",
+      "contentSha256": "3f105c4583e355bf5ca282f7b37de84b6bd415d24dfa8f47651bce9f01a9817a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "f853a1b00ac08a6d93acb5377612271d81b148570e9aa228959ac810d43cc427"
+        }
+      }
+    },
+    {
+      "id": "empirical.coefficient_stability",
+      "file": "figure_recipes_empirical.md",
+      "title": "Coefficient Stability Plot (Sequential Control Variable Addition)",
+      "legacy": "empirical #19",
+      "contentSha256": "f73b4fc80f916f35d581728679a43587c1011fd8acb6e8533acf2d06170c881a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "89cc4d820b0d5df8c9d34ee2c8435600d049cb07b8f01fc8990d03e26d7005aa"
+        }
+      }
+    },
+    {
+      "id": "empirical.variance_decomposition",
+      "file": "figure_recipes_empirical.md",
+      "title": "Variance Decomposition (Stacked Area with Smart Scaling)",
+      "legacy": "empirical #20",
+      "contentSha256": "6c8fd5b62d54c5621a60cdd64b03fa08cbfc0f931f31337108fd80337cc608b0",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "6e845a3c9da576dfb5620686e46c047ab960df34acdd65520b45e4041d54d6e3"
+        }
+      }
+    },
+    {
+      "id": "empirical.impulse_response",
+      "file": "figure_recipes_empirical.md",
+      "title": "Impulse Response Function (IRF with Gradient CI + Multi-Panel)",
+      "legacy": "empirical #21",
+      "contentSha256": "8d9b600136179ce4824c85d1c6e6ce0d803dd1654e766cc2153151ff31f44eb1",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "584e869eb7ece61970cc929cc0a9aa10d0799a0217a8c04a9345b5cb04b88078"
+        }
+      }
+    },
+    {
+      "id": "academic.ablation",
+      "file": "figure_recipes_academic.md",
+      "title": "Ablation Study Bar Chart — 消融实验柱状图",
+      "legacy": "academic #1",
+      "contentSha256": "0be8a792c3b2ccafa2bb26e034250eef0f49823672aa55a8610d770806ee350b",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "a6f10aa71276052578fe0c1cb1a754d809194815c51b2bf7d7ccbe514d96848c"
+        }
+      }
+    },
+    {
+      "id": "academic.training_curves",
+      "file": "figure_recipes_academic.md",
+      "title": "Training Curves — 训练曲线（Loss + Metric 双轴）",
+      "legacy": "academic #2",
+      "contentSha256": "c75e9ff275c0a89a7bf7e276775c6f1cef0d15271c55fa5a77c1491044c27f6a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "0614df4cc9fe6ea408ddabcc900bd02207f4109aced11dd6d5f14fb2ade79bee"
+        }
+      }
+    },
+    {
+      "id": "academic.tsne_umap",
+      "file": "figure_recipes_academic.md",
+      "title": "t-SNE / UMAP Visualization — 降维可视化",
+      "legacy": "academic #3",
+      "contentSha256": "648f109535af28ef3f9dce88e3ac5a429240fcc3bcf4f0acb20565ef57a3623b",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "9aaeffd00e02d163440dfbb4559976c398be923028411a771e96724acb9a576f"
+        }
+      }
+    },
+    {
+      "id": "academic.attention_heatmap",
+      "file": "figure_recipes_academic.md",
+      "title": "Attention Heatmap — 注意力热力图",
+      "legacy": "academic #4",
+      "contentSha256": "8e7259092772ebc8232c207ca43562e556b82418c3c7cce3513f8dc30c37fcb3",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "10deed009cab459b17002924a030c353e4a793ff83d29cb5d16752746c2080fc"
+        }
+      }
+    },
+    {
+      "id": "academic.radar",
+      "file": "figure_recipes_academic.md",
+      "title": "Architecture Comparison Radar — 架构对比雷达图",
+      "legacy": "academic #5",
+      "contentSha256": "1b260b9208bd6d3ad36d30449f8642019dcbd5148aaf061fc9c6f38dc4df5eca",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "af0a0e6dde04842e6d00429a19da9f37968b6bb68ba308fadc5e104d883ff1fa"
+        }
+      }
+    },
+    {
+      "id": "academic.hyperparameter_sensitivity",
+      "file": "figure_recipes_academic.md",
+      "title": "Hyperparameter Sensitivity — 超参数灵敏度图",
+      "legacy": "academic #6",
+      "contentSha256": "f14b885ba96a68173e2d41bc0c19982a09ffb401e2d714f652f40531e7d7b462",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "19d9d399387ea91cfeaf485818d75e268689f1319a7f8e7caadac28d28fa6be9"
+        }
+      }
+    },
+    {
+      "id": "academic.confusion_matrix",
+      "file": "figure_recipes_academic.md",
+      "title": "Confusion Matrix — 混淆矩阵",
+      "legacy": "academic #7",
+      "contentSha256": "b6802fab7fd26904b8360caf22e766c60c4b912d3987a6ed3a811992a5cf0659",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "15b0a1ac1382e8e0747694338917f44e707bebedaf3e27047d0a1a694deda4f8"
+        }
+      }
+    },
+    {
+      "id": "academic.feature_importance",
+      "file": "figure_recipes_academic.md",
+      "title": "Feature Importance (SHAP-style) — 特征重要性",
+      "legacy": "academic #8",
+      "contentSha256": "abcdbe0063125fa12bd87426e77e935a4467f8c30a0c53bce96570313596de91",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "5d3fca422dcce32211501dada9f62b637ca1635350fa0a1baaceaf7b3b82de2c"
+        }
+      }
+    },
+    {
+      "id": "academic.learning_rate",
+      "file": "figure_recipes_academic.md",
+      "title": "Learning Rate Schedule — 学习率调度曲线",
+      "legacy": "academic #9",
+      "contentSha256": "659cc34d7339b37cf58c0527a15bb470a67529a8ee72554b12a3005396d10561",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "e18ac0558ad9f4c3be92e2ecd52a549a714744a007e5194e7e8a0d4789218dd7"
+        }
+      }
+    },
+    {
+      "id": "academic.latent_interpolation",
+      "file": "figure_recipes_academic.md",
+      "title": "Latent Space Interpolation — 隐空间插值",
+      "legacy": "academic #10",
+      "contentSha256": "e6e70444611d6893578f435d91450d098a1fc709ceabc73c53c16c12bb8d6c95",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "0a507785e7d36ec4f5e75d26b695b869ebdfa9eaa9f469a3feef0a0c2e798afc"
+        }
+      }
+    },
+    {
+      "id": "academic.benchmark_table",
+      "file": "figure_recipes_academic.md",
+      "title": "Multi-Dataset Benchmark Table — 多数据集基准表",
+      "legacy": "academic #11",
+      "contentSha256": "33fd75aa34a2df48213e2ebdcee3ab363a884818b10ccd4ea2856aa4a6b70f19",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "00e8316c161679a3ba97e64c4131c6d80f76a4639ab2b1fca36d57fb084a73ca"
+        }
+      }
+    },
+    {
+      "id": "academic.error_analysis",
+      "file": "figure_recipes_academic.md",
+      "title": "Error Analysis — 错误分析图",
+      "legacy": "academic #12",
+      "contentSha256": "9da56de41f54bb43bebcafb66320d5d24f8279720152eb7a7d2659d2e29ef49a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "7e83927a8aed9fa2ba241207d61f077219f52a689545262e57e6dc6f23e000d7"
+        }
+      }
+    },
+    {
+      "id": "competition.convergence",
+      "file": "figure_recipes_competition.md",
+      "title": "收敛曲线对比图",
+      "legacy": "competition #1",
+      "contentSha256": "f7236a3feb4ae6a05335ff8868597e69269ae03dda590f7419f6f77e74bb3c1a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "08303b39583f6358c2cbd17d76b44f48422aa7be4f3de741ba9da14c467aa290"
+        }
+      }
+    },
+    {
+      "id": "competition.tornado",
+      "file": "figure_recipes_competition.md",
+      "title": "灵敏度图（Tornado / Sensitivity）",
+      "legacy": "competition #2",
+      "contentSha256": "0d4bdcc61912f7c416ad06039b3fc6e2eddc1a6ec6a0901c68a15940a2e88a27",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "9167697aef838f53a50d060145b5299f3800d43fb6b69c8b36eaec99e80b04f8"
+        }
+      }
+    },
+    {
+      "id": "competition.pareto_front",
+      "file": "figure_recipes_competition.md",
+      "title": "Pareto 前沿图",
+      "legacy": "competition #3",
+      "contentSha256": "eeef8fe8ef633d8c8e8d10440c821e4bd315a497f022a9d89a0fce8b47685654",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "fc3b8339b52c09a62e17b7d6a2b98f48f4622be3643a283bd6f180ec37ad7006"
+        }
+      }
+    },
+    {
+      "id": "competition.prediction_actual",
+      "file": "figure_recipes_competition.md",
+      "title": "预测值 vs 实际值（上下放大 + 残差分布图）",
+      "legacy": "competition #4",
+      "contentSha256": "ddc260e54708f1e6bf96248deaa3c557b28d096d664aef477ace7c5560368861",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "1f5b5fb0379c1731e7cf925b91f7d24a2baf88c5a6b890ea6cc386a62cefa882"
+        }
+      }
+    },
+    {
+      "id": "competition.radar",
+      "file": "figure_recipes_competition.md",
+      "title": "雷达图（多方案对比 + 渐变背景 + 多维度覆盖 + 顶部数值标注）",
+      "legacy": "competition #5",
+      "contentSha256": "65be8493cdcb192e125b57b8604f1bb4a5d9bfe4bd636fdb79ce356a10b93948",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "9f03422ff8329a8135cc640f91d09785173e1403f76fb5db0db4e7c4e6998adb"
+        }
+      }
+    },
+    {
+      "id": "competition.surface_3d",
+      "file": "figure_recipes_competition.md",
+      "title": "3D 曲面图（目标函数地形）",
+      "legacy": "competition #6",
+      "contentSha256": "024f06a2020a6c48298c24919b357d9c0ceb2464dba2d44b9f98b89ca3080f54",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "1c4eaf4c6caafd775357b9b21593c96053322afc9f7d054ed96467f70e79d745"
+        }
+      }
+    },
+    {
+      "id": "competition.china_choropleth",
+      "file": "figure_recipes_competition.md",
+      "title": "中国省份地图（Choropleth Map）",
+      "legacy": "competition #7",
+      "contentSha256": "a05adf016dc33cd316a202b0a07df0e4822bf775a9ad027c3fb6eaa2d6efc84d",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "6b489d6995dc084deaeb72c269046bfc6dcd668a86fba8cf9ba9045deeab6275"
+        }
+      }
+    },
+    {
+      "id": "competition.residual_diagnostics",
+      "file": "figure_recipes_competition.md",
+      "title": "残差诊断四合一图",
+      "legacy": "competition #8",
+      "contentSha256": "4862ceb77b02016a80cef28e3fea0bb180c5028f17114fbef3225831d3284eb6",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "03fbe96bd214f6f339e09dd71f8e7d7edc277345162b8ba0fb2fde860b7893e7"
+        }
+      }
+    },
+    {
+      "id": "competition.feature_importance",
+      "file": "figure_recipes_competition.md",
+      "title": "特征重要性排序图（渐变柱状图）",
+      "legacy": "competition #9",
+      "contentSha256": "38f62f74da62d0fdc69cccf7900bac040c80e00afed29fe920bca33c642e0411",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "b3310d6c9cf952e0c96bc3245224eab415efcfd52d984825e731d471c1223d05"
+        }
+      }
+    },
+    {
+      "id": "competition.confusion_matrix",
+      "file": "figure_recipes_competition.md",
+      "title": "混淆矩阵热力图",
+      "legacy": "competition #10",
+      "contentSha256": "4dca0a80c0f2cab62b5e2858f8c1da3a6b51ce2685f94532c4bc2b26acf25468",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "17bb5c40408c8aa9bf3cfcdc3e82e184482415b6cb417ea0d55030d160f938ab"
+        }
+      }
+    },
+    {
+      "id": "competition.roc",
+      "file": "figure_recipes_competition.md",
+      "title": "ROC 曲线 + AUC 对比",
+      "legacy": "competition #11",
+      "contentSha256": "3cfe7daf2f18fe4d1c821aa8d904b4e2e311adfec01e31f6b66aa9f6067540d9",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "06d2bff444addc9cce9d59156d29c91927532ca1d2fc804be0f4069a7976109b"
+        }
+      }
+    },
+    {
+      "id": "competition.correlation_matrix",
+      "file": "figure_recipes_competition.md",
+      "title": "相关性矩阵图（下三角 + 数值标注）",
+      "legacy": "competition #12",
+      "contentSha256": "89ba81ab522615e77d1650d909a9371f835d611b018dc8f93c368771ef57be52",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "7ca58eb84402225da0040d23384f079e674171e46568ac6ea70f69524ebfbe95"
+        }
+      }
+    },
+    {
+      "id": "competition.gravity_migration",
+      "file": "figure_recipes_competition.md",
+      "title": "重心迁移轨迹图",
+      "legacy": "competition #13",
+      "contentSha256": "3c3676583f313ec8e6be1f44c637d13cdfdd7c14f54435fb17c06bf91bcf1863",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "f1c40a5f2a4eeeaabb12f2c1768e539aaf6448d9adade0292e1fbde9bd06dd49"
+        }
+      }
+    },
+    {
+      "id": "competition.contour",
+      "file": "figure_recipes_competition.md",
+      "title": "等高线图（双变量参数搜索）",
+      "legacy": "competition #14",
+      "contentSha256": "b70c00ac38fe8c7399da15d8ae910e639c7d23c0ceba7f371ce7d05b2f21210f",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "1ba48dfb348713ff1e9614f4277ba76cf8429d33458710db7635e8b673b5ccc6"
+        }
+      }
+    },
+    {
+      "id": "competition.gantt",
+      "file": "figure_recipes_competition.md",
+      "title": "甘特图（彩色条形 + 原色边框 + 里程碑/排斥标记）",
+      "legacy": "competition #15",
+      "contentSha256": "0b66d2f6c75068957d0857510791c0b802f4b62c69032267c1a96bd66f7c65cb",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "ccaaa7424cf40008f162c24c8ac802d087ca94e500339ef49049dfb68fc30725"
+        }
+      }
+    },
+    {
+      "id": "competition.network_path",
+      "file": "figure_recipes_competition.md",
+      "title": "网络路径/路线规划图（彩色边 + 原色边框节点）",
+      "legacy": "competition #16",
+      "contentSha256": "93d0080426e58d1a467de241d17d3157a4e197bf4065ef2989cf020ac5c19f7f",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "3b402b5a8a1034930dd5da9eddae5c5e15fc3d1cb0948228390b86d8a1bd2327"
+        }
+      }
+    },
+    {
+      "id": "competition.multistep_decay",
+      "file": "figure_recipes_competition.md",
+      "title": "多步预测衰减图",
+      "legacy": "competition #17",
+      "contentSha256": "9d0680b49ddb17694bed9efe0048d4d79cc8e3331117e318b06ec7742ac19cc2",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "9c05236fd5bf94ccd8268d0f96fc676eaa6c7a2dd1f8ba7463154944fed38d4b"
+        }
+      }
+    },
+    {
+      "id": "competition.spatiotemporal_heatmap",
+      "file": "figure_recipes_competition.md",
+      "title": "时空经济热力图",
+      "legacy": "competition #18",
+      "contentSha256": "04aacf9c46e9299f292ce62b4a297b37d76bbe28a8aefcbf742776503efb3ac9",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "16467570c97d0e50e280789d5fc54ab32206bf60e987363c7f44b8b0df35d407"
+        }
+      }
+    },
+    {
+      "id": "competition.pareto_surface_3d",
+      "file": "figure_recipes_competition.md",
+      "title": "3D Pareto 曲面（三目标优化）",
+      "legacy": "competition #19",
+      "contentSha256": "7a03edeb1d9c12ae7b6bbc37fb208c473e1b0f386e24ff9f1c77ae5cfde3735c",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "80b64a7e54f23fa504e87088abeafaacd7d99678088331cebdbc3192fa71f1bd"
+        }
+      }
+    },
+    {
+      "id": "competition.waterfall",
+      "file": "figure_recipes_competition.md",
+      "title": "瀑布图（彩色渐变柱图 + 连接线 + 顶部数值标注）",
+      "legacy": "competition #20",
+      "contentSha256": "5b9f1ea3605424dc8df81672218321c6ca743146e6fd34772c26b50097db8f89",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "bf57d6ef05a02f20e1f01bef1a83b44b73e0740747e84b8fa99f2cfb2fcc1b75"
+        }
+      }
+    },
+    {
+      "id": "competition.bubble_joint",
+      "file": "figure_recipes_competition.md",
+      "title": "气泡图 + KDE 联合分布（Jointplot 风格）",
+      "legacy": "competition #21",
+      "contentSha256": "1e2726358b320d6b2d3698946229dff408fa9d1a67a7895c5703c9f6335f0224",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "a6bca6e7633bf3b252bc09bda5cfb4a2460b9b0dca6c298b8076d8bb7fed2e90"
+        }
+      }
+    },
+    {
+      "id": "competition.bubble_kde",
+      "file": "figure_recipes_competition.md",
+      "title": "气泡图 + KDE 叠加",
+      "legacy": "competition #22",
+      "contentSha256": "50cc6d931e30aa82e8f5615f683b9b77217b1759708c2df3b59b2ac2d8026b4d",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "cac01b2adfb83e73d864b326f529aa189ea5620a6032ac4665cfd7a1bbc69612"
+        }
+      }
+    },
+    {
+      "id": "competition.kmeans",
+      "file": "figure_recipes_competition.md",
+      "title": "K-means 聚类双面板图（外部轮廓 + 内部散点）",
+      "legacy": "competition #23",
+      "contentSha256": "d878dee23065cd7eddd4a0788fb836bbd7d9bda64ac537fdc6e66c9d71c230c7",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "5af59a0c071fb2b292bd69f91263cea36ce21e752bc1a513543f2d1010c99abc"
+        }
+      }
+    },
+    {
+      "id": "competition.hexbin_joint",
+      "file": "figure_recipes_competition.md",
+      "title": "Hexbin 联合分布图（六边形分箱 + 边际直方图）",
+      "legacy": "competition #24",
+      "contentSha256": "5091cfd319229ae210b618343953e500af9df2500637df5345fa9d83005cfeee",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "7b73d17d1efc5fb5ff9401b91e3cc036ef86a8c7cbb24db47abe51e0371240ef"
+        }
+      }
+    },
+    {
+      "id": "competition.kde_joint",
+      "file": "figure_recipes_competition.md",
+      "title": "KDE 热力联合分布图（散点 + 热力图 + 边际密度）",
+      "legacy": "competition #25",
+      "contentSha256": "6832d81e6c8b4b3d6665b13562d058eacd0cd5a590797b8684255e5836b8fb69",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "bc660fb5bd4aeccfb1201412956159dd007c8dda023c6c6023bc7c8743a1d86e"
+        }
+      }
+    },
+    {
+      "id": "competition.scatter_regression_marginals",
+      "file": "figure_recipes_competition.md",
+      "title": "散点 + 回归 + 边际密度图（通用版）",
+      "legacy": "competition #26",
+      "contentSha256": "6043bed2c6fde3818ce879a93d16b5181a83df4facd4299d2453c539038ed55f",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "be8c67cd02a8f2469db9d2eb20d505ba29eb4b7772ef33018572f0de883e11e2"
+        }
+      }
+    },
+    {
+      "id": "competition.cluster_3d",
+      "file": "figure_recipes_competition.md",
+      "title": "3D 聚类散点图（彩色分组 + 原色边框点 + 文本标注）",
+      "legacy": "competition #27",
+      "contentSha256": "8c7ce9e5b00d499ea6b73b92c257615a899632d285f9608856cced6fc5f6c198",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "e98eeedd8919d4e8920db333858a7db63818d31ca4e252fe6326f158cd0e4f62"
+        }
+      }
+    },
+    {
+      "id": "competition.feasible_region",
+      "file": "figure_recipes_competition.md",
+      "title": "可行域图（约束满足分区 + 边界 + 最优点）",
+      "legacy": "competition #28",
+      "contentSha256": "a17b5a99dfe22cc57019b2ed9a17481ac6a47f62d0db2dba67c6c6a390930ef7",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "1c54d126a29d2d25e539be0261d956600e8dde3b0879dae2766d24df396a3425"
+        }
+      }
+    },
+    {
+      "id": "competition.state_grid",
+      "file": "figure_recipes_competition.md",
+      "title": "离散状态栅格图（仿真逐帧/逐时隙状态热图）",
+      "legacy": "competition #29",
+      "contentSha256": "08597a18e66847b97224c9e11a48677c1e0cf62132ef6d852d6ff2ecc226ee60",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "b9a48cd606ec44b44b9e16ff5e4eb1c2117fe54b8d9457c9e75ee4c19244e3a2"
+        }
+      }
+    },
+    {
+      "id": "screenshot.fan_violin_heatmap",
+      "file": "figure_recipes_screenshot.md",
+      "title": "扇形小提琴与热图",
+      "legacy": "screenshot #1",
+      "contentSha256": "01d320e426d991408b5d4a724bedb86e0345e3b43b3f88f7716798694b489876",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "4a0e49d188ff9b21c1a0a2826199bbe294c167a7b0c2dfac2725442cd91977e9"
+        }
+      }
+    },
+    {
+      "id": "screenshot.layered_area_3d",
+      "file": "figure_recipes_screenshot.md",
+      "title": "三维分层面积图",
+      "legacy": "screenshot #2",
+      "contentSha256": "0e822547e47650f12069d21e948047bd240f7b1c3736fa6d1260fee8e9810890",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "1749464b3580dafe5e46a054d14549ad5d0fb3943514096d5766bc6c4d47e1e1"
+        }
+      }
+    },
+    {
+      "id": "screenshot.heatmap_slabs_3d",
+      "file": "figure_recipes_screenshot.md",
+      "title": "三维分层热图",
+      "legacy": "screenshot #3",
+      "contentSha256": "6a3c43883bfce18965ccd97b91f011fe7a1dad85e2e27d3cb4dc9b307e6cda3a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "6e46bd67e33980ac6e1edb8fdd26828aefb693a293ea7bd5bc42f83bbb0be6f8"
+        }
+      }
+    },
+    {
+      "id": "screenshot.sunburst",
+      "file": "figure_recipes_screenshot.md",
+      "title": "多层旭日图",
+      "legacy": "screenshot #4",
+      "contentSha256": "27452ced9c827f4c7563ecf536c3159be77f47a0461719a2887a1a75cee61048",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "26dea2052228528c7a79481fc2c9a29337e932dea59be7d8f74d4e6d4bf862f9"
+        }
+      }
+    },
+    {
+      "id": "screenshot.peak_stacked_area",
+      "file": "figure_recipes_screenshot.md",
+      "title": "峰值标注堆叠面积图",
+      "legacy": "screenshot #5",
+      "contentSha256": "671513ff83d8e12a1cacdfa834b359da49ade2bcba0eb2aa8e6512b79e20dc4c",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "32783406075940310d8058f5f5593014e023186c093df5442e0ba1133f185842"
+        }
+      }
+    },
+    {
+      "id": "screenshot.triangle_heatmap",
+      "file": "figure_recipes_screenshot.md",
+      "title": "双指标三角热图",
+      "legacy": "screenshot #6",
+      "contentSha256": "1ff5f799fb03fa13e29ad5d2293eda2ecbf2c876910077205622b6adc0077b27",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "f3f250acd3e2ae1306f09107b33f3cf109e5c85cd76f8ef2909de89a8abd6574"
+        }
+      }
+    },
+    {
+      "id": "screenshot.cone_vortex",
+      "file": "figure_recipes_screenshot.md",
+      "title": "三维涡旋向量图",
+      "legacy": "screenshot #7",
+      "contentSha256": "e71896825b8e73ff1edbe528190ba9eaf742098303e8eb54935b46aa14d5e8c3",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "2916e1f410196e3fe88d97b3092e3f7e8fece77ed07187c5af3ecb6781748126"
+        }
+      }
+    },
+    {
+      "id": "screenshot.isosurface",
+      "file": "figure_recipes_screenshot.md",
+      "title": "三维等值面",
+      "legacy": "screenshot #8",
+      "contentSha256": "d248851825b0568571a314e95fceca619786acb1260173dc1a34796a88d6127f",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "2ce0ab0ae5b065afc348edb055a1381439b2a9d9c541864a312cae18e49612c9"
+        }
+      }
+    },
+    {
+      "id": "screenshot.spiral_bubbles_3d",
+      "file": "figure_recipes_screenshot.md",
+      "title": "三维螺旋气泡",
+      "legacy": "screenshot #9",
+      "contentSha256": "3511402eef2bae5909ee587d3b4cdeaa23f54d2ed6a319802d9d98d44cbff564",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "24c66e912bb52301e3b6f7ff3e342d41395970920a007e1b4cc0789aa3245e4d"
+        }
+      }
+    },
+    {
+      "id": "screenshot.volume",
+      "file": "figure_recipes_screenshot.md",
+      "title": "三维体绘制",
+      "legacy": "screenshot #10",
+      "contentSha256": "1eaed8b4aee65546793b64b332bdb1e216b7dbe5959eac9bc86a03336d0f09d2",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "39ab5e80e0ecc5d6fe59b85915749caa43e61be6b2df5bd206e8c6d1b74c203e"
+        }
+      }
+    },
+    {
+      "id": "screenshot.gridded_scatter_3d",
+      "file": "figure_recipes_screenshot.md",
+      "title": "三维网格散点场",
+      "legacy": "screenshot #11",
+      "contentSha256": "f2c1a43aa2e73391c6b04d0395d7821d0fbf928afbf8698ff80e22417e5d3f6e",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "42b0ef5ed9e2128912b083187a4eab6f4081884d03165574c397f7a2753097e2"
+        }
+      }
+    },
+    {
+      "id": "screenshot.contour_lines_3d",
+      "file": "figure_recipes_screenshot.md",
+      "title": "三维等高线",
+      "legacy": "screenshot #12",
+      "contentSha256": "ecd9c0ad419dcc3cdacadcc92f74da9b8d0aa27f0c37791578bacb8913d19eac",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "539f8cd970289e8a08e9718ba40684661c051866b6aeee521b597b572440a403"
+        }
+      }
+    },
+    {
+      "id": "screenshot.block_surface_3d",
+      "file": "figure_recipes_screenshot.md",
+      "title": "三维方柱曲面",
+      "legacy": "screenshot #13",
+      "contentSha256": "040b2e58d27d654f7ac1e436336eebd902a2cfec64b0250e97ab284c8bfeb02a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "75cc3801aae7d1ab3b31f303e318cc68e27f8f6628bde05ec7fc680313d608e4"
+        }
+      }
+    },
+    {
+      "id": "screenshot.mesh_surface_3d",
+      "file": "figure_recipes_screenshot.md",
+      "title": "三维网格曲面",
+      "legacy": "screenshot #14",
+      "contentSha256": "0dc05e975966fa351c90be5c48338793eb6a36fe3f45f4ffcef12a25f42dcef7",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "95ac64ac0d59681f3306033952512f022f7f07c82f07d6814d5695fa22cb61e6"
+        }
+      }
+    },
+    {
+      "id": "screenshot.depreciation_area",
+      "file": "figure_recipes_screenshot.md",
+      "title": "多型号价格堆叠面积",
+      "legacy": "screenshot #15",
+      "contentSha256": "4f2af909ddd7dcc0be7243c1e25695804bc023217b3477fd2a549e936c80f5ae",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "aa282f4ff73c112740f31985fc28bbd463ec44039856e8d3573e0bf4bd97dfff"
+        }
+      }
+    },
+    {
+      "id": "screenshot.concentric_bars",
+      "file": "figure_recipes_screenshot.md",
+      "title": "同心环形柱状图",
+      "legacy": "screenshot #16",
+      "contentSha256": "d57a09fc467d0d962171ecc97e567a983abba4e0d6601134a854f64db49a37bb",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "afd39e23b69c01de5e7b6f2e1aea5f7b0d622e66353466739a1e52811a1c334a"
+        }
+      }
+    },
+    {
+      "id": "screenshot.rose",
+      "file": "figure_recipes_screenshot.md",
+      "title": "南丁格尔玫瑰图",
+      "legacy": "screenshot #17",
+      "contentSha256": "159469378b2c4831d99fe27c1190931e215fdaccd347563c83d2264614db6022",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "bd95e37e72993b837cfa31686b719df6d2c21da1eb72a813db37bbe39296c4c0"
+        }
+      }
+    },
+    {
+      "id": "screenshot.nested_donut",
+      "file": "figure_recipes_screenshot.md",
+      "title": "嵌套环形图",
+      "legacy": "screenshot #18",
+      "contentSha256": "883fe4060fde3dc8647c75a8714faa01cd23e9d2dfcdad4251b0e367aee78463",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "27815244d989b4569a30abc5c848d936e7d9119d2b693dd433f643edaf7845e1"
+        }
+      }
+    },
+    {
+      "id": "screenshot.ranked_arcs",
+      "file": "figure_recipes_screenshot.md",
+      "title": "排名圆弧条形图",
+      "legacy": "screenshot #19",
+      "contentSha256": "ef75b7405e4ea84a9c216787da8302d5053ec7b2d53f32959841ee1f72fd5a35",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "3ef2eb94c2175feaf4b42e3f53218b3464f5d496338813e49a1c6b7834c6328c"
+        }
+      }
+    },
+    {
+      "id": "screenshot.horizon",
+      "file": "figure_recipes_screenshot.md",
+      "title": "正负折叠地平线图",
+      "legacy": "screenshot #20",
+      "contentSha256": "d250cb9770793990c2b9b3ce17a3c713c58b51f41ab168c83d6ec4e5654717d2",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "31b2a6dcdd35b06b48b1a4df54a27368c03184e501c1ef52a4a13cd75620dcd3"
+        }
+      }
+    },
+    {
+      "id": "screenshot.radial_bars",
+      "file": "figure_recipes_screenshot.md",
+      "title": "极坐标径向柱状图",
+      "legacy": "screenshot #21",
+      "contentSha256": "e9b2d32d06abce5eb034383b47a04eef44c170f81027dddb23fdb4e075c8e1fc",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "e0eefc9f78a7a829740096aa78456314f12d51691f4df7218441f2a697c64647"
+        }
+      }
+    },
+    {
+      "id": "screenshot.chord",
+      "file": "figure_recipes_screenshot.md",
+      "title": "透明弦图",
+      "legacy": "screenshot #22",
+      "contentSha256": "ce184814b73d5675f6f8ebff3cb826931112caab0b089a3e58c28f0ee8f95da8",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "e6437da1bac748ea97fcf7f8391efb00b8ec6da7b923c2f71836743ef99dacf7"
+        }
+      }
+    },
+    {
+      "id": "screenshot.marginal_heatmap",
+      "file": "figure_recipes_screenshot.md",
+      "title": "带边际柱形的表格热图",
+      "legacy": "screenshot #23",
+      "contentSha256": "60f11917637539e807c49daced9b42d0fa4ae751424d0041cb884829d53dda14",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "76e887cb59e789da9da96e430aa7b37aa809ed3a39d1fb93b27e29e8f8e8f3d1"
+        }
+      }
+    },
+    {
+      "id": "screenshot.interval_steps",
+      "file": "figure_recipes_screenshot.md",
+      "title": "阶梯折线与区间带",
+      "legacy": "screenshot #24",
+      "contentSha256": "e3846a021f9f6594f7488e26fc94ec8e05fb0df54fff6ac944347c0758b15a82",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "a64409c00102dc78bd4f7509aea3478dd55ebe62ff12bab6531f53cf8477c974"
+        }
+      }
+    },
+    {
+      "id": "screenshot.streamgraph",
+      "file": "figure_recipes_screenshot.md",
+      "title": "双向峰形河流图",
+      "legacy": "screenshot #25",
+      "contentSha256": "584a72af0f17e32d348061a0a1b4969ce6e182e7944786fab568e438813074c1",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "c6c0e8055aa23af096d94de99006bdd5c29cce8be2e7f441a9c9381cf35088f1"
+        }
+      }
+    },
+    {
+      "id": "screenshot.correlation_network",
+      "file": "figure_recipes_screenshot.md",
+      "title": "相关矩阵与连线网络",
+      "legacy": "screenshot #26",
+      "contentSha256": "18d80ecd9f222eb2690b6122e2799a3ad318b94b93776b3a9433ee796636a2df",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "de1da9575461e33df4cfe8f0e17ca0ca57105b4948ccadb5d07b9a2d70911458"
+        }
+      }
+    },
+    {
+      "id": "screenshot.radial_heatmap",
+      "file": "figure_recipes_screenshot.md",
+      "title": "径向环形热图",
+      "legacy": "screenshot #27",
+      "contentSha256": "95148e7d0f5941fcebe8a678c6bcd71d7cf175bfa5c26bd6f707c5fa9bcd4018",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "668323cde9945214275c5ae0636653cf47a018686aa3e1672ff74eaaaf228100"
+        }
+      }
+    },
+    {
+      "id": "screenshot.hexbin",
+      "file": "figure_recipes_screenshot.md",
+      "title": "六边形空间热图",
+      "legacy": "screenshot #28",
+      "contentSha256": "9f489f2a69f5adbd629daea0d9c52b2e8a2a2f6a01b286520b263dd6f5cfe96a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "b63bcab56e2f173ce68fa8d86728d9d6bb786fc43203ebd379aa233d50b240d9"
+        }
+      }
+    },
+    {
+      "id": "screenshot.classified_scatter",
+      "file": "figure_recipes_screenshot.md",
+      "title": "分类散点与决策区域",
+      "legacy": "screenshot #29",
+      "contentSha256": "0a68741106572943ec3979e57cb200b2f95842fc7824a4336db9ecdf5a65146d",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "2fa740fd29389032ff83297c60df1096862d97a216d8ad79e6700f676a54d012"
+        }
+      }
+    },
+    {
+      "id": "screenshot.polar_scatter",
+      "file": "figure_recipes_screenshot.md",
+      "title": "带背景圆环的极坐标散点",
+      "legacy": "screenshot #30",
+      "contentSha256": "73314a218fe553d9bdd574a787872b8a07fc9b72518156d9a694077768ccd935",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "e6e4de54279aa83b8e40d79844a8da8839038242abd7b87276cf0e56abad3f67"
+        }
+      }
+    },
+    {
+      "id": "screenshot.polar_step_area",
+      "file": "figure_recipes_screenshot.md",
+      "title": "环形刻度阶梯面积图",
+      "legacy": "screenshot #31",
+      "contentSha256": "ea5a376b91104d57a043d2f0f930bcdad747933e68213cedf0da662ec87bf8fd",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "f797b6b3712bb3879a1e389e2b23fcb91517a4915a9b5788d4b1736df1c36de1"
+        }
+      }
+    },
+    {
+      "id": "screenshot.polar_area",
+      "file": "figure_recipes_screenshot.md",
+      "title": "平滑极坐标面积叠加",
+      "legacy": "screenshot #32",
+      "contentSha256": "db9e954f7c234da08f544389e8987dd33534a1b98d40fe9d22a2b6a9e4d8eb1a",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "cd92a784d6dab31bdc41d9d470f6b0ffa3ce9871837debb1e493f8ea1e828799"
+        }
+      }
+    },
+    {
+      "id": "advanced.grouped_bar_3d",
+      "file": "figure_recipes_advanced.md",
+      "title": "三维分组渐变柱状图",
+      "legacy": "advanced #35",
+      "contentSha256": "9a54c13b2e3fc68616e20a682374beac04b9eac39b8decbaa46be9345068e5b8",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "8792de25e3db5f8c1eced13f50ed47c7a61eff2e0a25b2db09722af4a267b722"
+        }
+      }
+    },
+    {
+      "id": "advanced.multi_y_gradient_hist",
+      "file": "figure_recipes_advanced.md",
+      "title": "多Y轴渐变直方图与正态拟合",
+      "legacy": "advanced #36",
+      "contentSha256": "8cbe4dffa748268feb5876bc7bb60d69653b6dabd542871b835606b1b4c4c1fa",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "df18fabca541884c2e16957f8fbe961deb48b421b09257d0f9e664f3b4779f41"
+        }
+      }
+    },
+    {
+      "id": "advanced.relief_correlation_heatmap",
+      "file": "figure_recipes_advanced.md",
+      "title": "立体方块相关性热图",
+      "legacy": "advanced #37",
+      "contentSha256": "4a4679b41e59c71bfbad6ba47178cdccf3d9cf0770a034b14fdf4bfc562f52eb",
+      "scripts": {
+        "main": {
+          "blocks": [
+            0
+          ],
+          "codeSha256": "f72ce056053fd614be7a331b3c818068ac265789a419ba6a20b1250bbe500e66"
+        }
+      }
+    }
+  ]
+}

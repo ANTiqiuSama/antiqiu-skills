@@ -1,0 +1,21 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 71,
+  "code_pages": [
+    72,
+    73,
+    74
+  ],
+  "all_pages": [
+    71,
+    72,
+    73,
+    74
+  ],
+  "changes": [
+    "设置半径下界0，保留bottom=10的空心基座。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

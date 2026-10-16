@@ -1,0 +1,69 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten; from _utils.vivid_config import palette_colors</span>
+<span id="L2"><a href="#L2">   2</a> setup_style(); scale_colors = palette_colors()</span>
+<span id="L3"><a href="#L3">   3</a> import matplotlib.pyplot as plt</span>
+<span id="L4"><a href="#L4">   4</a> import matplotlib.colors as mcolors</span>
+<span id="L5"><a href="#L5">   5</a> import numpy as np</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> methods = [&#x27;Ours&#x27;, &#x27;BERT&#x27;, &#x27;GPT-4&#x27;, &#x27;LLaMA&#x27;, &#x27;T5&#x27;]</span>
+<span id="L8"><a href="#L8">   8</a> metrics = [&#x27;Acc&#x27;, &#x27;F1&#x27;, &#x27;Prec&#x27;, &#x27;Rec&#x27;]</span>
+<span id="L9"><a href="#L9">   9</a> scores = np.array([[0.92, 0.90, 0.91, 0.89],</span>
+<span id="L10"><a href="#L10">  10</a>                     [0.88, 0.86, 0.89, 0.84],</span>
+<span id="L11"><a href="#L11">  11</a>                     [0.90, 0.88, 0.87, 0.90],</span>
+<span id="L12"><a href="#L12">  12</a>                     [0.85, 0.83, 0.86, 0.81],</span>
+<span id="L13"><a href="#L13">  13</a>                     [0.87, 0.85, 0.88, 0.83]])</span>
+<span id="L14"><a href="#L14">  14</a> ci = np.random.uniform(0.01, 0.03, scores.shape)</span>
+<span id="L15"><a href="#L15">  15</a> </span>
+<span id="L16"><a href="#L16">  16</a> # Compute p-values (simulated) for gradient coloring</span>
+<span id="L17"><a href="#L17">  17</a> np.random.seed(42)</span>
+<span id="L18"><a href="#L18">  18</a> pvals = np.random.uniform(0.001, 0.1, scores.shape)</span>
+<span id="L19"><a href="#L19">  19</a> pvals[0, :] = np.random.uniform(0.001, 0.01, 4)  # Ours is most significant</span>
+<span id="L20"><a href="#L20">  20</a> </span>
+<span id="L21"><a href="#L21">  21</a> fig, ax = plt.subplots(figsize=(8, 5))</span>
+<span id="L22"><a href="#L22">  22</a> </span>
+<span id="L23"><a href="#L23">  23</a> # Subtle grid</span>
+<span id="L24"><a href="#L24">  24</a> ax.grid(axis=&#x27;x&#x27;, alpha=0.15, linestyle=&#x27;-&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L25"><a href="#L25">  25</a> ax.set_axisbelow(True)</span>
+<span id="L26"><a href="#L26">  26</a> </span>
+<span id="L27"><a href="#L27">  27</a> y_base = np.arange(len(methods))</span>
+<span id="L28"><a href="#L28">  28</a> offsets = np.linspace(-0.25, 0.25, len(metrics))</span>
+<span id="L29"><a href="#L29">  29</a> </span>
+<span id="L30"><a href="#L30">  30</a> # Gradient colormap for significance</span>
+<span id="L31"><a href="#L31">  31</a> cmap_sig = mcolors.LinearSegmentedColormap.from_list(&#x27;sig&#x27;, [scale_colors[1], scale_colors[4] if len(scale_colors) &gt; 4 else scale_colors[0], scale_colors[2] if len(scale_colors) &gt; 2 else scale_colors[0]])</span>
+<span id="L32"><a href="#L32">  32</a> </span>
+<span id="L33"><a href="#L33">  33</a> for j, metric in enumerate(metrics):</span>
+<span id="L34"><a href="#L34">  34</a>     for i in range(len(methods)):</span>
+<span id="L35"><a href="#L35">  35</a>         # Color by significance (lower p = greener)</span>
+<span id="L36"><a href="#L36">  36</a>         sig_norm = min(pvals[i, j] / 0.1, 1.0)</span>
+<span id="L37"><a href="#L37">  37</a>         dot_color = cmap_sig(1 - sig_norm)</span>
+<span id="L38"><a href="#L38">  38</a>         ax.errorbar(scores[i, j], y_base[i] + offsets[j], xerr=ci[i, j],</span>
+<span id="L39"><a href="#L39">  39</a>                      fmt=&#x27;o&#x27;, color=dot_color, markersize=8, capsize=3,</span>
+<span id="L40"><a href="#L40">  40</a>                      linewidth=1.5, markeredgecolor=&#x27;white&#x27;, markeredgewidth=0.8,</span>
+<span id="L41"><a href="#L41">  41</a>                      label=metric if i == 0 else &#x27;&#x27;, zorder=3)</span>
+<span id="L42"><a href="#L42">  42</a> </span>
+<span id="L43"><a href="#L43">  43</a> # Pooled estimate diamond for each method</span>
+<span id="L44"><a href="#L44">  44</a> pooled = np.mean(scores, axis=1)</span>
+<span id="L45"><a href="#L45">  45</a> pooled_ci = np.mean(ci, axis=1)</span>
+<span id="L46"><a href="#L46">  46</a> for i in range(len(methods)):</span>
+<span id="L47"><a href="#L47">  47</a>     diamond_x = [pooled[i] - pooled_ci[i], pooled[i], pooled[i] + pooled_ci[i], pooled[i]]</span>
+<span id="L48"><a href="#L48">  48</a>     diamond_y = [y_base[i] + 0.35, y_base[i] + 0.42, y_base[i] + 0.35, y_base[i] + 0.28]</span>
+<span id="L49"><a href="#L49">  49</a>     ax.fill(diamond_x, diamond_y, color=PALETTE[0] if i == 0 else COLORS[&#x27;ref_line&#x27;],</span>
+<span id="L50"><a href="#L50">  50</a>             alpha=0.7, zorder=4)</span>
+<span id="L51"><a href="#L51">  51</a>     ax.text(pooled[i] + pooled_ci[i] + 0.008, y_base[i] + 0.35,</span>
+<span id="L52"><a href="#L52">  52</a>             f&#x27;{pooled[i]:.3f}&#x27;, fontsize=7, va=&#x27;center&#x27;, color=COLORS[&#x27;text&#x27;])</span>
+<span id="L53"><a href="#L53">  53</a> </span>
+<span id="L54"><a href="#L54">  54</a> ax.set_yticks(y_base)</span>
+<span id="L55"><a href="#L55">  55</a> ax.set_yticklabels(methods, fontsize=10)</span>
+<span id="L56"><a href="#L56">  56</a> ax.set_xlabel(&#x27;Score&#x27;, fontsize=11)</span>
+<span id="L57"><a href="#L57">  57</a> </span>
+<span id="L58"><a href="#L58">  58</a> # Custom legend</span>
+<span id="L59"><a href="#L59">  59</a> from matplotlib.lines import Line2D</span>
+<span id="L60"><a href="#L60">  60</a> legend_elements = [Line2D([0], [0], marker=&#x27;o&#x27;, color=&#x27;w&#x27;, markerfacecolor=PALETTE[j],</span>
+<span id="L61"><a href="#L61">  61</a>                            markersize=8, label=metrics[j]) for j in range(len(metrics))]</span>
+<span id="L62"><a href="#L62">  62</a> legend_elements.append(Line2D([0], [0], marker=&#x27;D&#x27;, color=&#x27;w&#x27;, markerfacecolor=COLORS[&#x27;ref_line&#x27;],</span>
+<span id="L63"><a href="#L63">  63</a>                                markersize=8, label=&#x27;Pooled&#x27;))</span>
+<span id="L64"><a href="#L64">  64</a> ax.legend(handles=legend_elements, loc=&#x27;lower right&#x27;, frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8, ncol=3)</span>
+<span id="L65"><a href="#L65">  65</a> ax.invert_yaxis()</span>
+<span id="L66"><a href="#L66">  66</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L67"><a href="#L67">  67</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L68"><a href="#L68">  68</a> fig.tight_layout()</span>
+<span id="L69"><a href="#L69">  69</a> save_fig(fig, &#x27;figures/fig_dot_ci.pdf&#x27;)</span></pre>

@@ -1,0 +1,15 @@
+{
+  "source_type": "image_only",
+  "status": "仅效果图，按图重建",
+  "attribution": "滚筒洗衣机",
+  "figure_page": 6,
+  "code_pages": [],
+  "all_pages": [
+    6
+  ],
+  "changes": [
+    "仅有截图006效果图，未提供代码；按图重建扇形热图、KDE小提琴与四分位线，附可重复合成数据。",
+    "径向年份隔项显示并旋转，避免重叠；保留每一个热图环。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

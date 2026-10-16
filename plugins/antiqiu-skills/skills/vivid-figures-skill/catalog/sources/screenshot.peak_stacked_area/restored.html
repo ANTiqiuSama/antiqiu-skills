@@ -1,0 +1,58 @@
+<!doctype html><meta charset="utf-8"><title>峰值标注堆叠面积图 · 恢复代码</title><style>body{font-family:system-ui;margin:28px}pre{white-space:pre-wrap;font-size:13px;line-height:1.7}span:target{background:#fff2b2}a{color:#657687}</style><h1>峰值标注堆叠面积图</h1><p>代码截图恢复与适配 · <a href="SOURCE.md">来源与修改说明</a> · <a href="restored.py">下载完整代码</a></p><pre><span id="L1"><a href="#L1">   1</a> &quot;&quot;&quot;峰值标注堆叠面积图</span>
+<span id="L2"><a href="#L2">   2</a> Restored/adapted from supplied screenshots [17, 18, 19, 20, 21].</span>
+<span id="L3"><a href="#L3">   3</a> Source: 小明的代码美学 (as shown in supplied screenshots).</span>
+<span id="L4"><a href="#L4">   4</a> This is a runnable restoration, not a byte-for-byte original source file.</span>
+<span id="L5"><a href="#L5">   5</a> See SOURCE.md for missing inputs and documented corrections.</span>
+<span id="L6"><a href="#L6">   6</a> &quot;&quot;&quot;</span>
+<span id="L7"><a href="#L7">   7</a> import numpy as np</span>
+<span id="L8"><a href="#L8">   8</a> import pandas as pd</span>
+<span id="L9"><a href="#L9">   9</a> import matplotlib.pyplot as plt</span>
+<span id="L10"><a href="#L10">  10</a> from matplotlib.colors import LinearSegmentedColormap, Normalize, to_hex</span>
+<span id="L11"><a href="#L11">  11</a> from matplotlib.cm import ScalarMappable</span>
+<span id="L12"><a href="#L12">  12</a> from pathlib import Path</span>
+<span id="L13"><a href="#L13">  13</a> # Missing .mplstyle files are replaced only by explicit, portable display defaults.</span>
+<span id="L14"><a href="#L14">  14</a> plt.rcParams.update({&#x27;font.sans-serif&#x27;:[&#x27;Microsoft YaHei&#x27;,&#x27;DejaVu Sans&#x27;],</span>
+<span id="L15"><a href="#L15">  15</a>  &#x27;axes.unicode_minus&#x27;:False,&#x27;figure.facecolor&#x27;:&#x27;white&#x27;,&#x27;axes.facecolor&#x27;:&#x27;white&#x27;,</span>
+<span id="L16"><a href="#L16">  16</a>  &#x27;axes.spines.top&#x27;:False,&#x27;axes.spines.right&#x27;:False,&#x27;font.size&#x27;:9})</span>
+<span id="L17"><a href="#L17">  17</a> import plotly.graph_objects as go</span>
+<span id="L18"><a href="#L18">  18</a> import random</span>
+<span id="L19"><a href="#L19">  19</a> from scipy.signal import find_peaks</span>
+<span id="L20"><a href="#L20">  20</a> read_custom_data = False</span>
+<span id="L21"><a href="#L21">  21</a> def create_data(x,size,n,max_value):</span>
+<span id="L22"><a href="#L22">  22</a>     sigma = size/30</span>
+<span id="L23"><a href="#L23">  23</a>     return max_value*np.exp(-.5*((x-n)/sigma)**2)</span>
+<span id="L24"><a href="#L24">  24</a> if read_custom_data:</span>
+<span id="L25"><a href="#L25">  25</a>     data = pd.read_csv(&#x27;data.csv&#x27;)</span>
+<span id="L26"><a href="#L26">  26</a> else:</span>
+<span id="L27"><a href="#L27">  27</a>     random.seed(16)</span>
+<span id="L28"><a href="#L28">  28</a>     size,x_max = 300,80</span>
+<span id="L29"><a href="#L29">  29</a>     x = np.linspace(0,x_max,size)</span>
+<span id="L30"><a href="#L30">  30</a>     peaks = [5,15,23,38,35,48,53,68]</span>
+<span id="L31"><a href="#L31">  31</a>     means = [2.5,1.2,3.,2.5,1.,1.5,2.,2.2]</span>
+<span id="L32"><a href="#L32">  32</a>     data = {&#x27;x&#x27;:x}</span>
+<span id="L33"><a href="#L33">  33</a>     for i in range(4):</span>
+<span id="L34"><a href="#L34">  34</a>         y=np.zeros_like(x)</span>
+<span id="L35"><a href="#L35">  35</a>         for p,m in zip(peaks,means):</span>
+<span id="L36"><a href="#L36">  36</a>             y += create_data(x,x_max,p,m*random.random())</span>
+<span id="L37"><a href="#L37">  37</a>         data[f&#x27;类别{i+1}&#x27;]=y</span>
+<span id="L38"><a href="#L38">  38</a>     data=pd.DataFrame(data)</span>
+<span id="L39"><a href="#L39">  39</a> x=data[&#x27;x&#x27;].values</span>
+<span id="L40"><a href="#L40">  40</a> categories=[c for c in data.columns if c!=&#x27;x&#x27;]</span>
+<span id="L41"><a href="#L41">  41</a> colors=[&#x27;#e7c2cb&#x27;,&#x27;#daa2b0&#x27;,&#x27;#cd8295&#x27;,&#x27;#c0627a&#x27;]</span>
+<span id="L42"><a href="#L42">  42</a> fig=go.Figure()</span>
+<span id="L43"><a href="#L43">  43</a> for cat,color in zip(categories,colors):</span>
+<span id="L44"><a href="#L44">  44</a>     fig.add_trace(go.Scatter(x=x,y=data[cat],fill=&#x27;tonexty&#x27;,mode=&#x27;none&#x27;,name=cat,fillcolor=color,stackgroup=&#x27;one&#x27;))</span>
+<span id="L45"><a href="#L45">  45</a> y_stack=np.cumsum(data[categories].T.values,axis=0)</span>
+<span id="L46"><a href="#L46">  46</a> for ys in y_stack:</span>
+<span id="L47"><a href="#L47">  47</a>     fig.add_trace(go.Scatter(x=x,y=ys,mode=&#x27;lines&#x27;,line=dict(width=2,color=&#x27;#ffffff&#x27;),showlegend=False))</span>
+<span id="L48"><a href="#L48">  48</a> idx,_=find_peaks(y_stack[-1])</span>
+<span id="L49"><a href="#L49">  49</a> fig.add_trace(go.Scatter(x=x[idx],y=y_stack[-1][idx],mode=&#x27;markers&#x27;,marker=dict(symbol=&#x27;circle&#x27;,size=8,color=&#x27;#ffffff&#x27;,line=dict(width=2,color=&#x27;#c0627a&#x27;)),showlegend=False))</span>
+<span id="L50"><a href="#L50">  50</a> for px,py in zip(x[idx],y_stack[-1][idx]):</span>
+<span id="L51"><a href="#L51">  51</a>     fig.add_annotation(x=px,y=py+.3,text=f&#x27;{py:.2f}&#x27;,showarrow=False)</span>
+<span id="L52"><a href="#L52">  52</a> fig.update_layout(xaxis=dict(title=&#x27;X 轴&#x27;,range=[0,70]),yaxis=dict(title=&#x27;值&#x27;,range=[0,10]),width=800,height=500,</span>
+<span id="L53"><a href="#L53">  53</a>                   legend=dict(orientation=&#x27;h&#x27;,y=1.08,x=.5,xanchor=&#x27;center&#x27;))</span>
+<span id="L54"><a href="#L54">  54</a> # Match reference&#x27;s white plot background; leave room for annotations.</span>
+<span id="L55"><a href="#L55">  55</a> fig.update_layout(margin=dict(l=30,r=30,t=30,b=35))</span>
+<span id="L56"><a href="#L56">  56</a> fig.update_layout(plot_bgcolor=&#x27;white&#x27;,paper_bgcolor=&#x27;white&#x27;,font=dict(color=&#x27;#a65c70&#x27;),xaxis=dict(showgrid=False,showline=True,linecolor=&#x27;#c99baa&#x27;),yaxis=dict(showgrid=False,showline=True,linecolor=&#x27;#c99baa&#x27;))</span>
+<span id="L57"><a href="#L57">  57</a> fig.show()</span>
+<span id="L58"><a href="#L58">  58</a> </span></pre>

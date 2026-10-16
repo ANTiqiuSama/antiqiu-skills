@@ -1,0 +1,4 @@
+interface:
+  display_name: "混动团队"
+  short_description: "Grok 审查，当前模型协调，Luna Low 执行"
+  default_prompt: "使用 $team：按项目与变更范围复用或执行 Grok XHigh 隔离审查，再由当前模型裁决并默认由 Luna Low 实施和监看。"

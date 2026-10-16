@@ -1,0 +1,72 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L4"><a href="#L4">   4</a> </span>
+<span id="L5"><a href="#L5">   5</a> setup_style()</span>
+<span id="L6"><a href="#L6">   6</a> np.random.seed(42)</span>
+<span id="L7"><a href="#L7">   7</a> </span>
+<span id="L8"><a href="#L8">   8</a> # === 模拟数据：5 个算法在 30 个问题上的求解时间 ===</span>
+<span id="L9"><a href="#L9">   9</a> n_problems = 30</span>
+<span id="L10"><a href="#L10">  10</a> algos = [&#x27;本文方法&#x27;, &#x27;Baseline A&#x27;, &#x27;Baseline B&#x27;, &#x27;Baseline C&#x27;, &#x27;Heuristic&#x27;]</span>
+<span id="L11"><a href="#L11">  11</a> # 每行一个问题，每列一个算法的求解时间</span>
+<span id="L12"><a href="#L12">  12</a> times = np.abs(np.random.lognormal(0, 0.6, (n_problems, len(algos))))</span>
+<span id="L13"><a href="#L13">  13</a> times[:, 0] *= 0.7   # 本文方法更快</span>
+<span id="L14"><a href="#L14">  14</a> times[10:15, 2] = np.inf  # Baseline B 有 5 个失败</span>
+<span id="L15"><a href="#L15">  15</a> times[5:8, 3] = np.inf    # Baseline C 失败 3 个</span>
+<span id="L16"><a href="#L16">  16</a> </span>
+<span id="L17"><a href="#L17">  17</a> # === 计算 performance ratio ===</span>
+<span id="L18"><a href="#L18">  18</a> best = np.nanmin(np.where(np.isinf(times), np.nan, times), axis=1, keepdims=True)</span>
+<span id="L19"><a href="#L19">  19</a> rp = times / best  # 每问题每算法的相对比率</span>
+<span id="L20"><a href="#L20">  20</a> rp[np.isinf(times)] = np.inf</span>
+<span id="L21"><a href="#L21">  21</a> </span>
+<span id="L22"><a href="#L22">  22</a> # === 计算累计分布 ρ_s(τ) = #{p : rp(p,s) ≤ τ} / n_problems ===</span>
+<span id="L23"><a href="#L23">  23</a> tau_grid = np.logspace(0, 1.0, 200)  # τ ∈ [1, 10]</span>
+<span id="L24"><a href="#L24">  24</a> rho = np.zeros((len(tau_grid), len(algos)))</span>
+<span id="L25"><a href="#L25">  25</a> for s in range(len(algos)):</span>
+<span id="L26"><a href="#L26">  26</a>     for i, tau in enumerate(tau_grid):</span>
+<span id="L27"><a href="#L27">  27</a>         rho[i, s] = np.mean(rp[:, s] &lt;= tau)</span>
+<span id="L28"><a href="#L28">  28</a> </span>
+<span id="L29"><a href="#L29">  29</a> fig, ax = plt.subplots(figsize=(7, 4.5))</span>
+<span id="L30"><a href="#L30">  30</a> </span>
+<span id="L31"><a href="#L31">  31</a> markers = [&#x27;o&#x27;, &#x27;s&#x27;, &#x27;^&#x27;, &#x27;D&#x27;, &#x27;v&#x27;]</span>
+<span id="L32"><a href="#L32">  32</a> for s, name in enumerate(algos):</span>
+<span id="L33"><a href="#L33">  33</a>     is_self = (s == 0)</span>
+<span id="L34"><a href="#L34">  34</a>     lw = 2.4 if is_self else 1.4</span>
+<span id="L35"><a href="#L35">  35</a>     alpha = 1.0 if is_self else 0.78</span>
+<span id="L36"><a href="#L36">  36</a>     # ★ 阶梯函数 — drawstyle=&#x27;steps-post&#x27; 是 Dolan-Moré 标准</span>
+<span id="L37"><a href="#L37">  37</a>     ax.step(tau_grid, rho[:, s], where=&#x27;post&#x27;,</span>
+<span id="L38"><a href="#L38">  38</a>             color=PALETTE[s % len(PALETTE)],</span>
+<span id="L39"><a href="#L39">  39</a>             linewidth=lw, alpha=alpha,</span>
+<span id="L40"><a href="#L40">  40</a>             marker=markers[s % len(markers)], markersize=5,</span>
+<span id="L41"><a href="#L41">  41</a>             markevery=20, markeredgecolor=&#x27;white&#x27;, markeredgewidth=0.6,</span>
+<span id="L42"><a href="#L42">  42</a>             label=name + (&#x27; ★&#x27; if is_self else &#x27;&#x27;))</span>
+<span id="L43"><a href="#L43">  43</a> </span>
+<span id="L44"><a href="#L44">  44</a> # ★ τ=1 处的左端值标注（&quot;找到最优的比例&quot;）</span>
+<span id="L45"><a href="#L45">  45</a> for s, name in enumerate(algos):</span>
+<span id="L46"><a href="#L46">  46</a>     rho0 = rho[0, s]</span>
+<span id="L47"><a href="#L47">  47</a>     if rho0 &gt; 0.05:</span>
+<span id="L48"><a href="#L48">  48</a>         ax.text(1.02, rho0, f&#x27;{rho0:.2f}&#x27;, fontsize=7,</span>
+<span id="L49"><a href="#L49">  49</a>                 color=PALETTE[s % len(PALETTE)], va=&#x27;center&#x27;, ha=&#x27;left&#x27;,</span>
+<span id="L50"><a href="#L50">  50</a>                 bbox=dict(boxstyle=&#x27;round,pad=0.15&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L51"><a href="#L51">  51</a>                           edgecolor=PALETTE[s % len(PALETTE)], alpha=0.85, linewidth=0.4))</span>
+<span id="L52"><a href="#L52">  52</a> </span>
+<span id="L53"><a href="#L53">  53</a> # ★ &quot;完美求解器&quot;参考线（理论上限 ρ=1）</span>
+<span id="L54"><a href="#L54">  54</a> ax.axhline(1.0, color=COLORS[&#x27;ref_line&#x27;], linestyle=&#x27;:&#x27;, linewidth=0.8, alpha=0.5)</span>
+<span id="L55"><a href="#L55">  55</a> ax.text(tau_grid[-1] * 0.95, 1.01, &#x27;Ideal solver (ρ=1)&#x27;,</span>
+<span id="L56"><a href="#L56">  56</a>         fontsize=7, color=COLORS[&#x27;ref_line&#x27;], ha=&#x27;right&#x27;, va=&#x27;bottom&#x27;, style=&#x27;italic&#x27;)</span>
+<span id="L57"><a href="#L57">  57</a> </span>
+<span id="L58"><a href="#L58">  58</a> # ★ 灰色背景区暗示&quot;τ=1 = 全部找到最优&quot;是稀有的</span>
+<span id="L59"><a href="#L59">  59</a> ax.axvspan(1.0, 1.05, alpha=0.08, color=COLORS[&#x27;highlight&#x27;], zorder=0)</span>
+<span id="L60"><a href="#L60">  60</a> </span>
+<span id="L61"><a href="#L61">  61</a> ax.set_xscale(&#x27;log&#x27;)</span>
+<span id="L62"><a href="#L62">  62</a> ax.set_xlim(1.0, tau_grid[-1])</span>
+<span id="L63"><a href="#L63">  63</a> ax.set_ylim(0, 1.05)</span>
+<span id="L64"><a href="#L64">  64</a> ax.set_xlabel(r&#x27;性能比率 $\tau$ (相对最优解的倍数, log scale)&#x27;, fontsize=10)</span>
+<span id="L65"><a href="#L65">  65</a> ax.set_ylabel(r&#x27;$\rho_s(\tau)$  (在 $\tau$ 倍内解出的问题比例)&#x27;, fontsize=10)</span>
+<span id="L66"><a href="#L66">  66</a> ax.legend(loc=&#x27;lower right&#x27;, frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8)</span>
+<span id="L67"><a href="#L67">  67</a> ax.grid(which=&#x27;both&#x27;, alpha=0.12, linestyle=&#x27;--&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L68"><a href="#L68">  68</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L69"><a href="#L69">  69</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L70"><a href="#L70">  70</a> fig.tight_layout()</span>
+<span id="L71"><a href="#L71">  71</a> save_fig(fig, &#x27;figures/fig_perf_profile.pdf&#x27;)</span>
+</pre>

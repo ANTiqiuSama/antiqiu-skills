@@ -1,0 +1,11 @@
+--- original.py
++++ render.py
+@@ -15,7 +15,7 @@
+ norm = plt.Normalize(min(scores) - 2, max(scores) + 2)
+ colors = [cmap(norm(s)) for s in scores]
+ 
+-bars = ax.bar(range(len(configs)), scores, color=[_lighten(c, 0.35) for c in colors],
++bars = ax.bar(range(len(configs)), scores, color=[_lighten(mcolors.to_hex(c), 0.35) for c in colors],
+               edgecolor=colors, linewidth=1.2, width=0.65, zorder=3)
+ 
+ # Waterfall connector lines between bars

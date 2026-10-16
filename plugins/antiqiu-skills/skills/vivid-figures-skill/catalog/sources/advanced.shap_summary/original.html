@@ -1,0 +1,56 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L2"><a href="#L2">   2</a> setup_style()</span>
+<span id="L3"><a href="#L3">   3</a> import matplotlib.pyplot as plt</span>
+<span id="L4"><a href="#L4">   4</a> import matplotlib.gridspec as gridspec</span>
+<span id="L5"><a href="#L5">   5</a> import numpy as np</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> np.random.seed(42)</span>
+<span id="L8"><a href="#L8">   8</a> features = [&#x27;Feature A&#x27;, &#x27;Feature B&#x27;, &#x27;Feature C&#x27;, &#x27;Feature D&#x27;, &#x27;Feature E&#x27;]</span>
+<span id="L9"><a href="#L9">   9</a> n_samples = 200</span>
+<span id="L10"><a href="#L10">  10</a> </span>
+<span id="L11"><a href="#L11">  11</a> fig = plt.figure(figsize=(9, 5))</span>
+<span id="L12"><a href="#L12">  12</a> gs = gridspec.GridSpec(1, 2, width_ratios=[3, 1], wspace=0.05)</span>
+<span id="L13"><a href="#L13">  13</a> </span>
+<span id="L14"><a href="#L14">  14</a> # Left panel: SHAP beeswarm</span>
+<span id="L15"><a href="#L15">  15</a> ax_shap = fig.add_subplot(gs[0])</span>
+<span id="L16"><a href="#L16">  16</a> ax_shap.grid(axis=&#x27;x&#x27;, alpha=0.15, linestyle=&#x27;-&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L17"><a href="#L17">  17</a> ax_shap.set_axisbelow(True)</span>
+<span id="L18"><a href="#L18">  18</a> </span>
+<span id="L19"><a href="#L19">  19</a> mean_abs_shap = []</span>
+<span id="L20"><a href="#L20">  20</a> for i, feat in enumerate(features):</span>
+<span id="L21"><a href="#L21">  21</a>     shap_vals = np.random.randn(n_samples) * (len(features) - i) * 0.12</span>
+<span id="L22"><a href="#L22">  22</a>     feat_vals = np.random.rand(n_samples)</span>
+<span id="L23"><a href="#L23">  23</a>     y_jitter = np.random.uniform(-0.3, 0.3, n_samples) + i</span>
+<span id="L24"><a href="#L24">  24</a>     sc = ax_shap.scatter(shap_vals, y_jitter, c=feat_vals, cmap=&#x27;coolwarm&#x27;,</span>
+<span id="L25"><a href="#L25">  25</a>                          s=10, alpha=0.65, vmin=0, vmax=1, edgecolors=&#x27;none&#x27;)</span>
+<span id="L26"><a href="#L26">  26</a>     mean_abs_shap.append(np.mean(np.abs(shap_vals)))</span>
+<span id="L27"><a href="#L27">  27</a> </span>
+<span id="L28"><a href="#L28">  28</a> ax_shap.set_yticks(range(len(features)))</span>
+<span id="L29"><a href="#L29">  29</a> ax_shap.set_yticklabels(features, fontsize=10)</span>
+<span id="L30"><a href="#L30">  30</a> ax_shap.set_xlabel(&#x27;SHAP value (impact on prediction)&#x27;, fontsize=10)</span>
+<span id="L31"><a href="#L31">  31</a> ax_shap.axvline(x=0, color=COLORS[&#x27;ref_line&#x27;], linewidth=0.8, linestyle=&#x27;--&#x27;)</span>
+<span id="L32"><a href="#L32">  32</a> ax_shap.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L33"><a href="#L33">  33</a> ax_shap.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L34"><a href="#L34">  34</a> </span>
+<span id="L35"><a href="#L35">  35</a> # Colorbar</span>
+<span id="L36"><a href="#L36">  36</a> cbar = plt.colorbar(sc, ax=ax_shap, shrink=0.5, pad=0.02, aspect=20)</span>
+<span id="L37"><a href="#L37">  37</a> cbar.set_label(&#x27;Feature value&#x27;, fontsize=8)</span>
+<span id="L38"><a href="#L38">  38</a> cbar.ax.tick_params(labelsize=7)</span>
+<span id="L39"><a href="#L39">  39</a> </span>
+<span id="L40"><a href="#L40">  40</a> # Right panel: Mean |SHAP| importance bar —— 浅色填充 + 原色边框</span>
+<span id="L41"><a href="#L41">  41</a> ax_bar = fig.add_subplot(gs[1])</span>
+<span id="L42"><a href="#L42">  42</a> for i, v in enumerate(mean_abs_shap):</span>
+<span id="L43"><a href="#L43">  43</a>     is_top = (v == max(mean_abs_shap))</span>
+<span id="L44"><a href="#L44">  44</a>     c = PALETTE[0] if is_top else PALETTE[2]</span>
+<span id="L45"><a href="#L45">  45</a>     ax_bar.barh(i, v, color=_lighten(c, 0.4), edgecolor=c,</span>
+<span id="L46"><a href="#L46">  46</a>                 linewidth=1.5, height=0.5, alpha=0.9)</span>
+<span id="L47"><a href="#L47">  47</a>     ax_bar.text(v + 0.002, i, f&#x27;{v:.3f}&#x27;, va=&#x27;center&#x27;, fontsize=8, color=COLORS[&#x27;text&#x27;])</span>
+<span id="L48"><a href="#L48">  48</a> ax_bar.set_yticks([])</span>
+<span id="L49"><a href="#L49">  49</a> ax_bar.set_xlabel(&#x27;Mean |SHAP|&#x27;, fontsize=9)</span>
+<span id="L50"><a href="#L50">  50</a> ax_bar.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L51"><a href="#L51">  51</a> ax_bar.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L52"><a href="#L52">  52</a> ax_bar.spines[&#x27;left&#x27;].set_visible(False)</span>
+<span id="L53"><a href="#L53">  53</a> </span>
+<span id="L54"><a href="#L54">  54</a> fig.tight_layout()</span>
+<span id="L55"><a href="#L55">  55</a> save_fig(fig, &#x27;figures/fig_shap.pdf&#x27;)</span>
+</pre>

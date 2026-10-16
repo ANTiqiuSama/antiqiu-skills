@@ -1,0 +1,28 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np, matplotlib.pyplot as plt</span>
+<span id="L2"><a href="#L2">   2</a> from scipy.stats import gaussian_kde</span>
+<span id="L3"><a href="#L3">   3</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS</span>
+<span id="L4"><a href="#L4">   4</a> setup_style()</span>
+<span id="L5"><a href="#L5">   5</a> np.random.seed(42)</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> n = 300</span>
+<span id="L8"><a href="#L8">   8</a> x = np.concatenate([np.random.normal(3, 1, n//2), np.random.normal(7, 1.5, n//2)])</span>
+<span id="L9"><a href="#L9">   9</a> y = np.concatenate([np.random.normal(5, 1.2, n//2), np.random.normal(3, 1, n//2)])</span>
+<span id="L10"><a href="#L10">  10</a> </span>
+<span id="L11"><a href="#L11">  11</a> fig, ax = plt.subplots(figsize=(7, 6))</span>
+<span id="L12"><a href="#L12">  12</a> # KDE 等高线</span>
+<span id="L13"><a href="#L13">  13</a> kde = gaussian_kde(np.vstack([x, y]))</span>
+<span id="L14"><a href="#L14">  14</a> xg = np.linspace(x.min()-1, x.max()+1, 100)</span>
+<span id="L15"><a href="#L15">  15</a> yg = np.linspace(y.min()-1, y.max()+1, 100)</span>
+<span id="L16"><a href="#L16">  16</a> Xg, Yg = np.meshgrid(xg, yg)</span>
+<span id="L17"><a href="#L17">  17</a> Zg = kde(np.vstack([Xg.ravel(), Yg.ravel()])).reshape(Xg.shape)</span>
+<span id="L18"><a href="#L18">  18</a> ax.contourf(Xg, Yg, Zg, levels=10, cmap=&#x27;Blues&#x27;, alpha=0.3)</span>
+<span id="L19"><a href="#L19">  19</a> ax.contour(Xg, Yg, Zg, levels=6, colors=PALETTE[0], linewidths=0.8, alpha=0.5)</span>
+<span id="L20"><a href="#L20">  20</a> </span>
+<span id="L21"><a href="#L21">  21</a> # 散点</span>
+<span id="L22"><a href="#L22">  22</a> ax.scatter(x, y, s=12, alpha=0.4, color=PALETTE[0], edgecolor=&#x27;white&#x27;, linewidth=0.3)</span>
+<span id="L23"><a href="#L23">  23</a> </span>
+<span id="L24"><a href="#L24">  24</a> ax.set_xlabel(&#x27;变量 X&#x27;, fontsize=11); ax.set_ylabel(&#x27;变量 Y&#x27;, fontsize=11)</span>
+<span id="L25"><a href="#L25">  25</a> ax.spines[&#x27;top&#x27;].set_visible(False); ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L26"><a href="#L26">  26</a> fig.tight_layout()</span>
+<span id="L27"><a href="#L27">  27</a> save_fig(fig, &#x27;figures/fig_bubble_kde.pdf&#x27;)</span>
+</pre>

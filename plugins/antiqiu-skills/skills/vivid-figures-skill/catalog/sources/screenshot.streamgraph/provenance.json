@@ -1,0 +1,24 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 87,
+  "code_pages": [
+    8,
+    88,
+    89,
+    90
+  ],
+  "all_pages": [
+    8,
+    87,
+    88,
+    89,
+    90
+  ],
+  "changes": [
+    "合并008（第一代码页）与088–090，恢复144条双向峰形和wiggle基线。",
+    "原颜色按峰值分档但色条为连续映射；色条改为同一组阈值和颜色，使图例与实际颜色一致。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}

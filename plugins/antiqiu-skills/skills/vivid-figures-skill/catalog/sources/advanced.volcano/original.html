@@ -1,0 +1,69 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten</span>
+<span id="L2"><a href="#L2">   2</a> setup_style()</span>
+<span id="L3"><a href="#L3">   3</a> import matplotlib.pyplot as plt</span>
+<span id="L4"><a href="#L4">   4</a> import matplotlib.colors as mcolors</span>
+<span id="L5"><a href="#L5">   5</a> import numpy as np</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> np.random.seed(42)</span>
+<span id="L8"><a href="#L8">   8</a> n = 2000</span>
+<span id="L9"><a href="#L9">   9</a> log2fc = np.random.normal(0, 1.5, n)</span>
+<span id="L10"><a href="#L10">  10</a> pvals = 10 ** (-np.abs(log2fc) * np.random.uniform(0.5, 3, n))</span>
+<span id="L11"><a href="#L11">  11</a> neg_log_p = -np.log10(pvals)</span>
+<span id="L12"><a href="#L12">  12</a> gene_names = [f&#x27;Gene_{i}&#x27; for i in range(n)]</span>
+<span id="L13"><a href="#L13">  13</a> </span>
+<span id="L14"><a href="#L14">  14</a> sig_up = (log2fc &gt; 1) &amp; (neg_log_p &gt; 2)</span>
+<span id="L15"><a href="#L15">  15</a> sig_down = (log2fc &lt; -1) &amp; (neg_log_p &gt; 2)</span>
+<span id="L16"><a href="#L16">  16</a> ns = ~sig_up &amp; ~sig_down</span>
+<span id="L17"><a href="#L17">  17</a> </span>
+<span id="L18"><a href="#L18">  18</a> fig, ax = plt.subplots(figsize=(7, 5.5))</span>
+<span id="L19"><a href="#L19">  19</a> </span>
+<span id="L20"><a href="#L20">  20</a> # Gradient density background (hexbin)</span>
+<span id="L21"><a href="#L21">  21</a> hb = ax.hexbin(log2fc, neg_log_p, gridsize=30, cmap=&#x27;Blues&#x27;, alpha=0.25,</span>
+<span id="L22"><a href="#L22">  22</a>                mincnt=1, linewidths=0.0, zorder=0)</span>
+<span id="L23"><a href="#L23">  23</a> </span>
+<span id="L24"><a href="#L24">  24</a> # Fold-change threshold shading</span>
+<span id="L25"><a href="#L25">  25</a> ax.axvspan(-1, 1, alpha=0.06, color=COLORS[&#x27;ref_line&#x27;], zorder=0, label=&#x27;|FC| &lt; 2&#x27;)</span>
+<span id="L26"><a href="#L26">  26</a> ax.axvspan(1, log2fc.max() + 1, alpha=0.04, color=PALETTE[3], zorder=0)</span>
+<span id="L27"><a href="#L27">  27</a> ax.axvspan(log2fc.min() - 1, -1, alpha=0.04, color=PALETTE[0], zorder=0)</span>
+<span id="L28"><a href="#L28">  28</a> </span>
+<span id="L29"><a href="#L29">  29</a> # Subtle grid</span>
+<span id="L30"><a href="#L30">  30</a> ax.grid(alpha=0.15, linestyle=&#x27;-&#x27;, color=COLORS[&#x27;grid&#x27;])</span>
+<span id="L31"><a href="#L31">  31</a> ax.set_axisbelow(True)</span>
+<span id="L32"><a href="#L32">  32</a> </span>
+<span id="L33"><a href="#L33">  33</a> # Scatter points</span>
+<span id="L34"><a href="#L34">  34</a> ax.scatter(log2fc[ns], neg_log_p[ns], c=COLORS[&#x27;neutral&#x27;], alpha=0.35, s=8,</span>
+<span id="L35"><a href="#L35">  35</a>            label=f&#x27;NS ({ns.sum()})&#x27;, zorder=2)</span>
+<span id="L36"><a href="#L36">  36</a> ax.scatter(log2fc[sig_up], neg_log_p[sig_up], c=PALETTE[3], alpha=0.7, s=15,</span>
+<span id="L37"><a href="#L37">  37</a>            label=f&#x27;Up ({sig_up.sum()})&#x27;, edgecolors=&#x27;white&#x27;, linewidths=0.3, zorder=3)</span>
+<span id="L38"><a href="#L38">  38</a> ax.scatter(log2fc[sig_down], neg_log_p[sig_down], c=PALETTE[0], alpha=0.7, s=15,</span>
+<span id="L39"><a href="#L39">  39</a>            label=f&#x27;Down ({sig_down.sum()})&#x27;, edgecolors=&#x27;white&#x27;, linewidths=0.3, zorder=3)</span>
+<span id="L40"><a href="#L40">  40</a> </span>
+<span id="L41"><a href="#L41">  41</a> # Threshold lines</span>
+<span id="L42"><a href="#L42">  42</a> ax.axhline(2, color=COLORS[&#x27;ref_line&#x27;], linestyle=&#x27;--&#x27;, linewidth=0.8, alpha=0.7)</span>
+<span id="L43"><a href="#L43">  43</a> ax.axvline(1, color=COLORS[&#x27;ref_line&#x27;], linestyle=&#x27;--&#x27;, linewidth=0.8, alpha=0.7)</span>
+<span id="L44"><a href="#L44">  44</a> ax.axvline(-1, color=COLORS[&#x27;ref_line&#x27;], linestyle=&#x27;--&#x27;, linewidth=0.8, alpha=0.7)</span>
+<span id="L45"><a href="#L45">  45</a> </span>
+<span id="L46"><a href="#L46">  46</a> # Gene labels for top hits (top 5 by significance)</span>
+<span id="L47"><a href="#L47">  47</a> all_sig = np.where(sig_up | sig_down)[0]</span>
+<span id="L48"><a href="#L48">  48</a> if len(all_sig) &gt; 0:</span>
+<span id="L49"><a href="#L49">  49</a>     top_idx = all_sig[np.argsort(neg_log_p[all_sig])[-5:]]</span>
+<span id="L50"><a href="#L50">  50</a>     for idx in top_idx:</span>
+<span id="L51"><a href="#L51">  51</a>         ax.annotate(gene_names[idx],</span>
+<span id="L52"><a href="#L52">  52</a>                     xy=(log2fc[idx], neg_log_p[idx]),</span>
+<span id="L53"><a href="#L53">  53</a>                     xytext=(log2fc[idx] + 0.3 * np.sign(log2fc[idx]),</span>
+<span id="L54"><a href="#L54">  54</a>                             neg_log_p[idx] + 0.5),</span>
+<span id="L55"><a href="#L55">  55</a>                     fontsize=7, fontstyle=&#x27;italic&#x27;,</span>
+<span id="L56"><a href="#L56">  56</a>                     color=COLORS[&#x27;text&#x27;],</span>
+<span id="L57"><a href="#L57">  57</a>                     arrowprops=dict(arrowstyle=&#x27;-&gt;&#x27;, color=COLORS[&#x27;text&#x27;], lw=0.7),</span>
+<span id="L58"><a href="#L58">  58</a>                     bbox=dict(boxstyle=&#x27;round,pad=0.15&#x27;, facecolor=&#x27;white&#x27;,</span>
+<span id="L59"><a href="#L59">  59</a>                               edgecolor=COLORS[&#x27;neutral&#x27;], alpha=0.85))</span>
+<span id="L60"><a href="#L60">  60</a> </span>
+<span id="L61"><a href="#L61">  61</a> ax.set_xlabel(&#x27;$\\log_2$(Fold Change)&#x27;, fontsize=11)</span>
+<span id="L62"><a href="#L62">  62</a> ax.set_ylabel(&#x27;$-\\log_{10}$(p-value)&#x27;, fontsize=11)</span>
+<span id="L63"><a href="#L63">  63</a> ax.legend(frameon=False, labelspacing=0.35, handlelength=1.6, fontsize=8, loc=&#x27;best&#x27;,</span>
+<span id="L64"><a href="#L64">  64</a>           fancybox=True)</span>
+<span id="L65"><a href="#L65">  65</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L66"><a href="#L66">  66</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L67"><a href="#L67">  67</a> fig.tight_layout()</span>
+<span id="L68"><a href="#L68">  68</a> save_fig(fig, &#x27;figures/fig_volcano.pdf&#x27;)</span>
+</pre>

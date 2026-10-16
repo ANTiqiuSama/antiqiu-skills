@@ -1,0 +1,83 @@
+<meta charset="utf-8"><style>body{font:14px monospace}span:target{background:#fff0a0}a{color:#888;text-decoration:none}span{display:inline-block;min-width:100%}</style><pre><span id="L1"><a href="#L1">   1</a> import numpy as np</span>
+<span id="L2"><a href="#L2">   2</a> import matplotlib.pyplot as plt</span>
+<span id="L3"><a href="#L3">   3</a> from matplotlib.patches import Arc</span>
+<span id="L4"><a href="#L4">   4</a> from _utils.plot_utils import setup_style, save_fig, PALETTE, COLORS, _lighten, smart_labels</span>
+<span id="L5"><a href="#L5">   5</a> setup_style()</span>
+<span id="L6"><a href="#L6">   6</a> </span>
+<span id="L7"><a href="#L7">   7</a> # === Example data (replace with your model evaluation results) ===</span>
+<span id="L8"><a href="#L8">   8</a> # Reference (observed) statistics</span>
+<span id="L9"><a href="#L9">   9</a> ref_std = 1.0  # normalized</span>
+<span id="L10"><a href="#L10">  10</a> </span>
+<span id="L11"><a href="#L11">  11</a> # Model results: (correlation, normalized_std)</span>
+<span id="L12"><a href="#L12">  12</a> models = {</span>
+<span id="L13"><a href="#L13">  13</a>     &#x27;Ours&#x27;:        (0.95, 1.02),</span>
+<span id="L14"><a href="#L14">  14</a>     &#x27;LSTM&#x27;:        (0.88, 0.85),</span>
+<span id="L15"><a href="#L15">  15</a>     &#x27;XGBoost&#x27;:     (0.91, 1.15),</span>
+<span id="L16"><a href="#L16">  16</a>     &#x27;SVR&#x27;:         (0.82, 0.78),</span>
+<span id="L17"><a href="#L17">  17</a>     &#x27;Linear Reg&#x27;:  (0.75, 1.30),</span>
+<span id="L18"><a href="#L18">  18</a> }</span>
+<span id="L19"><a href="#L19">  19</a> </span>
+<span id="L20"><a href="#L20">  20</a> fig, ax = plt.subplots(figsize=(7, 7))</span>
+<span id="L21"><a href="#L21">  21</a> </span>
+<span id="L22"><a href="#L22">  22</a> # Draw reference arcs (constant correlation lines)</span>
+<span id="L23"><a href="#L23">  23</a> max_std = 1.6</span>
+<span id="L24"><a href="#L24">  24</a> for corr in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99]:</span>
+<span id="L25"><a href="#L25">  25</a>     theta = np.arccos(corr)</span>
+<span id="L26"><a href="#L26">  26</a>     r_vals = np.linspace(0, max_std, 100)</span>
+<span id="L27"><a href="#L27">  27</a>     x_arc = r_vals * np.cos(theta)</span>
+<span id="L28"><a href="#L28">  28</a>     y_arc = r_vals * np.sin(theta)</span>
+<span id="L29"><a href="#L29">  29</a>     ax.plot(x_arc, y_arc, color=COLORS[&#x27;grid&#x27;], linewidth=0.5, alpha=0.6)</span>
+<span id="L30"><a href="#L30">  30</a>     ax.text(max_std * np.cos(theta) * 1.03, max_std * np.sin(theta) * 1.03,</span>
+<span id="L31"><a href="#L31">  31</a>             f&#x27;{corr}&#x27;, fontsize=7, color=COLORS[&#x27;ref_line&#x27;], ha=&#x27;center&#x27;, va=&#x27;center&#x27;,</span>
+<span id="L32"><a href="#L32">  32</a>             rotation=np.degrees(theta) - 90)</span>
+<span id="L33"><a href="#L33">  33</a> </span>
+<span id="L34"><a href="#L34">  34</a> # Draw std arcs (centered at origin)</span>
+<span id="L35"><a href="#L35">  35</a> for s in [0.25, 0.5, 0.75, 1.0, 1.25, 1.5]:</span>
+<span id="L36"><a href="#L36">  36</a>     theta_range = np.linspace(0, np.pi / 2, 100)</span>
+<span id="L37"><a href="#L37">  37</a>     ax.plot(s * np.cos(theta_range), s * np.sin(theta_range),</span>
+<span id="L38"><a href="#L38">  38</a>             color=COLORS[&#x27;grid&#x27;], linewidth=0.5, linestyle=&#x27;--&#x27;)</span>
+<span id="L39"><a href="#L39">  39</a> </span>
+<span id="L40"><a href="#L40">  40</a> # Draw RMSE arcs (centered at reference point) —— 暖橙色</span>
+<span id="L41"><a href="#L41">  41</a> ref_x, ref_y = ref_std, 0</span>
+<span id="L42"><a href="#L42">  42</a> for rmse in [0.25, 0.5, 0.75, 1.0, 1.25]:</span>
+<span id="L43"><a href="#L43">  43</a>     theta_range = np.linspace(0, np.pi, 200)</span>
+<span id="L44"><a href="#L44">  44</a>     cx = ref_x + rmse * np.cos(theta_range)</span>
+<span id="L45"><a href="#L45">  45</a>     cy = rmse * np.sin(theta_range)</span>
+<span id="L46"><a href="#L46">  46</a>     mask = (cx &gt;= 0) &amp; (cy &gt;= 0) &amp; (np.sqrt(cx**2 + cy**2) &lt;= max_std)</span>
+<span id="L47"><a href="#L47">  47</a>     if mask.any():</span>
+<span id="L48"><a href="#L48">  48</a>         ax.plot(cx[mask], cy[mask], color=COLORS[&#x27;highlight&#x27;], linewidth=0.5,</span>
+<span id="L49"><a href="#L49">  49</a>                 alpha=0.4, linestyle=&#x27;:&#x27;)</span>
+<span id="L50"><a href="#L50">  50</a> </span>
+<span id="L51"><a href="#L51">  51</a> # Reference point</span>
+<span id="L52"><a href="#L52">  52</a> ax.scatter(ref_std, 0, s=150, color=COLORS[&#x27;text&#x27;], marker=&#x27;*&#x27;, zorder=10, label=&#x27;Observed&#x27;)</span>
+<span id="L53"><a href="#L53">  53</a> </span>
+<span id="L54"><a href="#L54">  54</a> # ── 绘制模型点：浅色填充+原色边框 标记</span>
+<span id="L55"><a href="#L55">  55</a> label_xs, label_ys, label_texts, label_colors = [], [], [], []</span>
+<span id="L56"><a href="#L56">  56</a> for i, (name, (corr, std)) in enumerate(models.items()):</span>
+<span id="L57"><a href="#L57">  57</a>     theta = np.arccos(corr)</span>
+<span id="L58"><a href="#L58">  58</a>     x = std * np.cos(theta)</span>
+<span id="L59"><a href="#L59">  59</a>     y = std * np.sin(theta)</span>
+<span id="L60"><a href="#L60">  60</a>     color = PALETTE[i % len(PALETTE)]</span>
+<span id="L61"><a href="#L61">  61</a>     marker = &#x27;D&#x27; if i == 0 else &#x27;o&#x27;</span>
+<span id="L62"><a href="#L62">  62</a>     size = 140 if i == 0 else 90</span>
+<span id="L63"><a href="#L63">  63</a>     # 浅色填充 + 原色边框</span>
+<span id="L64"><a href="#L64">  64</a>     ax.scatter(x, y, s=size, color=_lighten(color, 0.35), marker=marker, zorder=5,</span>
+<span id="L65"><a href="#L65">  65</a>                edgecolors=color, linewidths=1.8, label=name)</span>
+<span id="L66"><a href="#L66">  66</a>     label_xs.append(x); label_ys.append(y)</span>
+<span id="L67"><a href="#L67">  67</a>     label_texts.append(name); label_colors.append(color)</span>
+<span id="L68"><a href="#L68">  68</a> </span>
+<span id="L69"><a href="#L69">  69</a> # Smart labels to avoid overlap</span>
+<span id="L70"><a href="#L70">  70</a> smart_labels(ax, label_xs, label_ys, label_texts, colors=label_colors,</span>
+<span id="L71"><a href="#L71">  71</a>              fontsize=8.5, fontweight=&#x27;bold&#x27;, offset=(8, 5))</span>
+<span id="L72"><a href="#L72">  72</a> </span>
+<span id="L73"><a href="#L73">  73</a> ax.set_xlim(0, max_std)</span>
+<span id="L74"><a href="#L74">  74</a> ax.set_ylim(0, max_std)</span>
+<span id="L75"><a href="#L75">  75</a> ax.set_aspect(&#x27;equal&#x27;)</span>
+<span id="L76"><a href="#L76">  76</a> ax.set_xlabel(&#x27;标准差（归一化）&#x27;, fontsize=11)</span>
+<span id="L77"><a href="#L77">  77</a> ax.set_ylabel(&#x27;标准差（归一化）&#x27;, fontsize=11)</span>
+<span id="L78"><a href="#L78">  78</a> ax.spines[&#x27;top&#x27;].set_visible(False)</span>
+<span id="L79"><a href="#L79">  79</a> ax.spines[&#x27;right&#x27;].set_visible(False)</span>
+<span id="L80"><a href="#L80">  80</a> ax.legend(loc=&#x27;upper left&#x27;, fontsize=9, frameon=False, edgecolor=COLORS[&#x27;grid&#x27;])</span>
+<span id="L81"><a href="#L81">  81</a> fig.tight_layout()</span>
+<span id="L82"><a href="#L82">  82</a> save_fig(fig, &#x27;figures/fig_taylor.pdf&#x27;)</span>
+</pre>

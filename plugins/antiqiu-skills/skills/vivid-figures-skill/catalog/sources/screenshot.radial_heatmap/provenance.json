@@ -1,0 +1,23 @@
+{
+  "source_type": "code",
+  "status": "代码截图恢复与适配",
+  "attribution": "小明的代码美学",
+  "figure_page": 98,
+  "code_pages": [
+    99,
+    100,
+    101,
+    102
+  ],
+  "all_pages": [
+    98,
+    99,
+    100,
+    101,
+    102
+  ],
+  "changes": [
+    "显式align=edge统一环形单元角度边界与缺口；设置半径下界0保留中心空白。"
+  ],
+  "archive_manifest": "../../screenshot-source-manifest.json"
+}
