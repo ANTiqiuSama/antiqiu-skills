@@ -7,7 +7,7 @@ description: Design HTML-native visual artifacts with a Claude Design style work
 
 Work as an expert designer and treat the user as the manager. HTML is the tool, but the medium changes from task to task. Think like a slide designer for decks, a prototyper for apps and an animator for motion. Use web-page conventions only when the deliverable is a web page.
 
-Load [frontend-design](../frontend-design/SKILL.md) when the visual direction is open. Load [craft](references/craft.md) for the build rules and [formats](references/formats.md) for the chosen medium. Load [apple-design-skill](../apple-design-skill/SKILL.md) only for Apple-style work. Load [apply-design-typography-standards](../apply-design-typography-standards/SKILL.md) for Chinese and English copy QA.
+Load [frontend-design](../frontend-design/SKILL.md) when the visual direction is open. Load [craft](references/craft.md) for the build rules and [formats](references/formats.md) for the chosen medium. Load [apply-design-typography-standards](../apply-design-typography-standards/SKILL.md) for Chinese and English copy QA.
 
 ## 1. Gather context before designing
 

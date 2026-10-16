@@ -18,14 +18,13 @@ ORIGINAL = {
     "human-writing",
     "herdr-orchestrator",
     "keep-task-in-scope",
-    "native-hybrid-agents",
     "plan-work",
     "refine-text",
     "trim-agent-instructions",
     "write-action-first",
 }
 SYNCED = {
-    "academic-humanizer", "apple-design-skill", "apply-design-typography-standards",
+    "academic-humanizer", "apply-design-typography-standards",
     "audit-research-release", "build-project-wiki", "designing-studies",
     "discovering-literature", "game-the-llm-reviewer", "refine-text",
     "reverse-engineer-anything", "rolling-goal-prompt", "run-research-program",
@@ -99,11 +98,6 @@ def main() -> int:
     names = {path.name for path in skill_dirs}
     if names != EXPECTED:
         errors.append(f"skill set mismatch: expected={sorted(EXPECTED)} actual={sorted(names)}")
-    bundled_apple_fonts = list((SKILLS / "apple-design-skill").rglob("PingFang*.[ot]tf")) + list(
-        (SKILLS / "apple-design-skill").rglob("PingFang*.woff*")
-    )
-    if bundled_apple_fonts:
-        errors.append(f"proprietary Apple font files bundled: {bundled_apple_fonts}")
     if names & LEGACY:
         errors.append(f"legacy skills still enabled: {sorted(names & LEGACY)}")
 
@@ -183,7 +177,6 @@ def main() -> int:
         SKILLS / "human-writing" / "LICENSE",
         SKILLS / "write-action-first" / "LICENSE",
         SKILLS / "academic-humanizer" / "LICENSE",
-        SKILLS / "apple-design-skill" / "LICENSE",
         SKILLS / "frontend-design" / "LICENSE.txt",
         SKILLS / "frontend-app-builder" / "LICENSE",
         SKILLS / "vivid-figures-skill" / "LICENSE",

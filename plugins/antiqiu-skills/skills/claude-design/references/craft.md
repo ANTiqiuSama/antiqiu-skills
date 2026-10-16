@@ -26,6 +26,7 @@ Use the sections the artifact needs. These rules fill gaps. They never override 
 - Keep running text near 65 characters wide, and under 80. Serif body text gets slightly more line height.
 - Set a type scale and stick to it. Use `font-variant-numeric: tabular-nums` wherever digits line up.
 - Typical Chinese stack: system `PingFang SC` → `"Noto Sans SC"` or `"Source Han Sans SC"` → `sans-serif`. Load webfonts only from a host the target allows, and always declare a real fallback stack.
+- Apple-style or HIG requests: follow the HIG semantics (clarity, deference, depth, system materials, 44 pt targets, SF Symbols-like iconography drawn originally) and system font stacks. Never bundle SF Pro or PingFang files, or copy Apple.com assets.
 - Avoid these generated-page tells: one accented word in a headline, all-caps labels everywhere, and decorative labels above content.
 
 ## Colour and themes
