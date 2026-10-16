@@ -6,6 +6,8 @@
 示例使用 Herdr 0.8.2 的本机命令面。不同版本可能变化。运行命令前，先以
 `herdr --skill` 和各命令组的帮助为准。
 
+> 自 1.6.0 起，本仓库不再附带 Herdr 专用 Skill；本文仅作人工使用教程。需要混动审查与实施时使用 `$team`。
+
 ## 1. 先理解 Herdr 的边界
 
 Herdr 管理终端布局和 Agent 生命周期。它能创建 workspace、tab 和 pane，
@@ -332,7 +334,7 @@ Relay 可达。`agent start` 返回 `idle` 只证明进程启动。
 chair，也不要从 chair 自己所在的 pane 对自己调用 `herdr agent prompt`。
 
 ```text
-使用 $herdr-orchestrator。你是当前 Herdr workspace 的协调者，不要创建第二个
+你是当前 Herdr workspace 的协调者，不要创建第二个
 协调者，也不要修改论文。
 
 项目目录：<project-root>
@@ -553,7 +555,7 @@ codex plugin marketplace list
 安装 `antiqiu-skills` 后，使用：
 
 ```text
-使用 $herdr-orchestrator，在当前 Herdr workspace 中建立 Codex、Claude 和
+在当前 Herdr workspace 中建立 Codex、Claude 和
 Antigravity 的论文工作流。先检查环境与连通性，不修改论文。
 ```
 

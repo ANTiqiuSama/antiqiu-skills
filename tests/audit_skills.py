@@ -16,22 +16,21 @@ ORIGINAL = {
     "diagnose-work",
     "execute-work",
     "human-writing",
-    "herdr-orchestrator",
     "keep-task-in-scope",
-    "native-hybrid-agents",
     "plan-work",
     "refine-text",
     "trim-agent-instructions",
     "write-action-first",
 }
 SYNCED = {
-    "academic-humanizer", "apple-design-skill", "apply-design-typography-standards",
+    "academic-humanizer", "apply-design-typography-standards",
     "audit-research-release", "build-project-wiki", "designing-studies",
     "discovering-literature", "game-the-llm-reviewer", "refine-text",
     "reverse-engineer-anything", "rolling-goal-prompt", "run-research-program",
     "team", "vivid-figures-skill", "write-research-paper", "zhihu", "zhihu-public-reader",
 }
-EXPECTED = ORIGINAL | SYNCED
+CLAUDE_DESIGN = {"claude-design", "frontend-design", "frontend-app-builder"}
+EXPECTED = ORIGINAL | SYNCED | CLAUDE_DESIGN
 LEGACY = {
     "brainstorming",
     "executing-plans",
@@ -121,6 +120,25 @@ def main() -> int:
             errors.append(f"placeholder remains: {directory.name}")
         if directory.name in ORIGINAL and not (directory / "agents" / "openai.yaml").is_file():
             errors.append(f"missing agents/openai.yaml: {directory.name}")
+        if len(description) > 1024:
+            errors.append(f"description exceeds 1024 characters: {directory.name}")
+        block = text.split("---\n", 2)[1]
+        for line in block.splitlines():
+            key, _, value = line.partition(":")
+            value = value.strip()
+            # Plain YAML scalars cannot contain ": "; strict loaders reject the skill.
+            if not line.startswith((" ", "\t")) and value and value[0] not in "'\"|>[{" and ": " in value:
+                errors.append(f"unquoted colon in frontmatter {key}: {directory.name}")
+        if directory.name != "vivid-figures-skill" and not (directory / "agents" / "openai.yaml").is_file():
+            errors.append(f"missing agents/openai.yaml: {directory.name}")
+        for ref in sorted((directory / "references").glob("*.md")):
+            ref_text = ref.read_text(encoding="utf-8")
+            if (
+                directory.name != "vivid-figures-skill"
+                and len(ref_text.splitlines()) > 100
+                and not re.search(r"(?im)^#+\s*(contents|目录)\s*$", ref_text)
+            ):
+                errors.append(f"long reference lacks a table of contents: {ref.relative_to(ROOT)}")
         metadata = f"{name}\n{description}".encode("utf-8")
         metadata_bytes += len(metadata)
         if directory.name in ORIGINAL:
@@ -177,8 +195,8 @@ def main() -> int:
         SKILLS / "human-writing" / "LICENSE",
         SKILLS / "write-action-first" / "LICENSE",
         SKILLS / "academic-humanizer" / "LICENSE",
-        SKILLS / "apple-design-skill" / "LICENSE",
-        SKILLS / "apple-design-skill" / "assets" / "fonts" / "PingFangSC" / "LICENSE.refinec-PingFangSC",
+        SKILLS / "frontend-design" / "LICENSE.txt",
+        SKILLS / "frontend-app-builder" / "LICENSE",
         SKILLS / "vivid-figures-skill" / "LICENSE",
     ]
     for path in required_files:
@@ -188,6 +206,15 @@ def main() -> int:
     plugin = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
     if plugin.get("name") != "antiqiu-skills" or plugin.get("skills") != "./skills/":
         errors.append("plugin manifest does not point to the skill bundle")
+    portable = json.loads((PLUGIN / "plugin.json").read_text(encoding="utf-8"))
+    for key in ("name", "version", "description"):
+        if portable.get(key) != plugin.get(key):
+            errors.append(f"portable and Codex manifests disagree on {key}")
+    inline = portable.get("extensions", {}).get("com.openai", {}).get("interface", {})
+    legacy = dict(plugin.get("interface", {}))
+    legacy["defaultPrompt"] = [legacy.get("defaultPrompt")]
+    if inline != legacy:
+        errors.append("portable manifest interface drifted from .codex-plugin overlay")
     marketplace = json.loads(
         (ROOT / ".agents" / "plugins" / "marketplace.json").read_text(encoding="utf-8")
     )

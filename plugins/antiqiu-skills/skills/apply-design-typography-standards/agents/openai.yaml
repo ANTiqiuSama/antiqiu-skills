@@ -1,0 +1,4 @@
+interface:
+  display_name: "Typography Standards"
+  short_description: "Chinese-English typography and design QA"
+  default_prompt: "Use $apply-design-typography-standards to audit spacing, punctuation, and typography in this copy or design."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "知乎开放平台"
+  short_description: "知乎搜索、热榜、直答与本人数据"
+  default_prompt: "使用 $zhihu 搜索知乎上的相关讨论并返回原始来源。"

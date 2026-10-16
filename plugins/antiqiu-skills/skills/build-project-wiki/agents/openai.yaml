@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Wiki"
+  short_description: "Build or update a source-backed project Wiki"
+  default_prompt: "Use $build-project-wiki to build or update the source-backed Wiki for this project."

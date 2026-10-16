@@ -2,14 +2,25 @@
 
 个人 Agent Skills 集合，覆盖科研、写作、设计、逆向分析、知乎和 Agent 协作。
 
-2026-10-16 从本机用户级 Skills 目录同步 **17 个 Skill**，并保留仓库已有的其他 **9 个 Skill**，当前插件共 **26 个 Skill**，版本 **1.5.0**。同步保留正文、脚本、参考材料、模板、图片和许可证；不收录系统 Skill、插件缓存、Python 缓存或本机账号配置。两个安装位置中相同的 `reverse-engineer-anything` 合并为一份。
+当前插件共 **26 个 Skill**，版本 **1.6.0**：2026-10-16 从本机用户级目录同步的 16 个、仓库原有的 7 个，以及 1.6.0 新增的 3 个 Claude 风格设计 Skill。1.6.0 用 Claude 风格设计 Skill 取代了 `apple-design-skill`，删除了被 `team` 覆盖的 `native-hybrid-agents`，并删除了 `herdr-orchestrator`，多 Agent 协作统一走 `team`。同步保留正文、脚本、参考材料、模板、图片和许可证，不收录系统 Skill、插件缓存、Python 缓存或本机账号配置。
+
+## Claude 风格设计 Skills（1.6.0）
+
+| Skill | 来源 | 用途 |
+| --- | --- | --- |
+| [frontend-design](plugins/antiqiu-skills/skills/frontend-design/SKILL.md) | Anthropic 官方 [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/frontend-design)，Apache-2.0，原文收录 | 为新 UI 选择有辨识度的视觉方向，避开模板化默认样式 |
+| [claude-design](plugins/antiqiu-skills/skills/claude-design/SKILL.md) | 参照公开流传的 Claude Design 工作方式重新撰写，未逐字收录其提示词 | HTML 原生的幻灯片、原型、文档、海报、邮件和多方案画布 |
+| [frontend-app-builder](plugins/antiqiu-skills/skills/frontend-app-builder/SKILL.md) | 改写自 OpenAI `build-web-apps:frontend-app-builder`（MIT） | 前端应用与网站：先做 token 方案、以代码实现，Image Gen 概念图改为可选，验收只看一次 |
+
+路由：视觉方向用 `frontend-design`；独立 HTML 交付物用 `claude-design`；仓库内的应用或网站用 `frontend-app-builder`；Apple 风格也由 `claude-design` 按 HIG 处理；中英文排版检查用 `apply-design-typography-standards`；科研图表用 `vivid-figures-skill`。
+
+同时安装了 OpenAI 的 Build Web Apps 插件时，请在 Codex 中停用其自带的 `frontend-app-builder`，避免两个同名 Skill 同时触发。
 
 ## 本次同步的 Skills
 
 | Skill | 用途 |
 | --- | --- |
 | [academic-humanizer](plugins/antiqiu-skills/skills/academic-humanizer/SKILL.md) | 学术与专业文本润色，保留事实、数字、引用和作者声音 |
-| [apple-design-skill](plugins/antiqiu-skills/skills/apple-design-skill/SKILL.md) | Apple 设计语言与 HIG 参考，附带设计资源 |
 | [apply-design-typography-standards](plugins/antiqiu-skills/skills/apply-design-typography-standards/SKILL.md) | 中英文排版与设计规范检查 |
 | [audit-research-release](plugins/antiqiu-skills/skills/audit-research-release/SKILL.md) | 只读审查研究材料、证据和发布条件 |
 | [build-project-wiki](plugins/antiqiu-skills/skills/build-project-wiki/SKILL.md) | 基于源码证据建立、维护和查询项目 Wiki |
@@ -41,8 +52,6 @@
 | [trim-agent-instructions](plugins/antiqiu-skills/skills/trim-agent-instructions/SKILL.md) | 审查并精简已有 Agent 指令链 |
 | [human-writing](plugins/antiqiu-skills/skills/human-writing/SKILL.md) | 自然中文文章与叙事 |
 | [write-action-first](plugins/antiqiu-skills/skills/write-action-first/SKILL.md) | 显式调用的行动优先回复模式 |
-| [herdr-orchestrator](plugins/antiqiu-skills/skills/herdr-orchestrator/SKILL.md) | Herdr 跨厂商 Agent 编排 |
-| [native-hybrid-agents](plugins/antiqiu-skills/skills/native-hybrid-agents/SKILL.md) | 原有 Antigravity/Grok CLI 协作入口 |
 
 这些保留项不表示本机当前仍安装或使用它们。优先遵循本轮用户指令和对应 Skill 的适用范围；`team` 仅在显式请求混动时使用。
 
@@ -65,9 +74,9 @@ plugins/antiqiu-skills/skills/refine-text
 python tests/audit_skills.py
 ```
 
-检查 Skill 集合、名称和描述、许可证、文档相对链接、Python 语法和插件清单。既有工作流的收敛预算单独计算，不把新增的领域 Skill 算成历史预算回归。`agents/openai.yaml` 对本次同步项按原安装状态保留，不为上传额外生成。
+检查 Skill 集合、名称和描述、许可证、文档相对链接、Python 语法、插件清单。既有工作流的收敛预算单独计算，不把新增的领域 Skill 算成历史预算回归。`agents/openai.yaml` 对同步项按原安装状态保留，不为上传额外生成。
 
-`tests/run_behavior_tests.py` 和 `tests/behavior_cases.json` 保留既有工作流的模型行为用例；它们不构成新增 17 个 Skill 的完整模型验收。本次同步不自动发起付费模型调用。
+`tests/run_behavior_tests.py` 和 `tests/behavior_cases.json` 保留既有工作流的模型行为用例；它们不构成同步的 Skill 的完整模型验收。本次同步不自动发起付费模型调用。
 
 历史材料保留在 [docs/](docs/)，包括 [原审查记录](docs/SKILL_AUDIT.md)、[原测试记录](docs/TEST_RESULTS.md) 和 [Herdr 教程](docs/HERDR_TUTORIAL_ZH.md)。其中旧版计数、模型和行为结论仅对应记录当时的版本。
 

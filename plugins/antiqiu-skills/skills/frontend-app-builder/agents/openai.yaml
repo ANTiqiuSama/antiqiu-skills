@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend App Builder (Claude-aligned)"
+  short_description: "Plan tokens, build code-native UI, verify the render once"
+  default_prompt: "Use $frontend-app-builder to design and build this frontend with a subject-specific token plan."

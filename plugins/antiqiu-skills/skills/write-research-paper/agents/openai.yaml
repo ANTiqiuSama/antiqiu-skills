@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Research Paper"
+  short_description: "Draft a full manuscript from study evidence"
+  default_prompt: "Use $write-research-paper to draft this manuscript from the traceable study evidence."

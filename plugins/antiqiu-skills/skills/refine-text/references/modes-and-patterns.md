@@ -2,6 +2,12 @@
 
 Use only the sections relevant to the current request.
 
+## Contents
+
+- Modes
+- Document patterns
+- Compression levels
+
 ## Modes
 
 ### Polish

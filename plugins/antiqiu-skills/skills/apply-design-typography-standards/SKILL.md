@@ -5,7 +5,7 @@ description: Apply the bundled Chinese-English typography and design standard fo
 
 # Apply Design and Typography Standards
 
-Apply the requested product style while preserving meaning, official names and technical notation. Use the relevant [standard](references/standards.md), not invented dimensions or thresholds; authoring/rendering belongs to the actual output-format skill.
+Apply the requested product style while preserving meaning, official names and technical notation. Use the relevant [standard](references/standards.md), not invented dimensions or thresholds; authoring/rendering belongs to the actual output-format skill; new visual direction belongs to [frontend-design](../frontend-design/SKILL.md) or [claude-design](../claude-design/SKILL.md).
 
 Choose the requested action: review only, correct copy, design critique or delivery QA. A correction request authorizes the edits; findings-only stays read-only. Infer medium, language, audience and official spellings, asking only about choices that materially change the result.
 

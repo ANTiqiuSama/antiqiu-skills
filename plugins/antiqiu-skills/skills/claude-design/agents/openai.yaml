@@ -1,0 +1,4 @@
+interface:
+  display_name: "Claude Design"
+  short_description: "HTML-native decks, prototypes, docs, posters and option canvases"
+  default_prompt: "Use $claude-design to design this as an HTML artifact."

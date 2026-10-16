@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Design (Anthropic)"
+  short_description: "Distinctive aesthetic direction that avoids templated defaults"
+  default_prompt: "Use $frontend-design to choose a distinctive visual direction for this UI."

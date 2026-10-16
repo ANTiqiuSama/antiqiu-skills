@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reverse Engineer Anything"
+  short_description: "Explain shipped artifacts with REA evidence"
+  default_prompt: "Use $reverse-engineer-anything to analyze this shipped artifact and explain how the feature works."

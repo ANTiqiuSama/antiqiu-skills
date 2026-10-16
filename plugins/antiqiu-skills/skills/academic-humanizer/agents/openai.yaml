@@ -1,0 +1,4 @@
+interface:
+  display_name: "Academic Humanizer"
+  short_description: "Polish AI-assisted academic prose and proposals"
+  default_prompt: "Use $academic-humanizer to improve this academic text while keeping numbers, results, and citations unchanged."
