@@ -10,7 +10,7 @@
   "interface": {
     "displayName": "ANTiqiu Skills",
     "shortDescription": "Personal skills for research, writing, design, and agent work.",
-    "longDescription": "Twenty-six skills: sixteen synced from the user-level installation (team now includes the Herdr orchestration mode), seven retained workflows, and three Claude-aligned design skills (frontend-design, claude-design, frontend-app-builder).",
+    "longDescription": "Twenty-six skills: sixteen synced from the user-level installation, seven retained workflows, and three Claude-aligned design skills (frontend-design, claude-design, frontend-app-builder).",
     "developerName": "ANTiqiuSama",
     "category": "Productivity",
     "capabilities": [],
