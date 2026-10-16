@@ -176,7 +176,6 @@ Apple.com CSS 中使用的 opacity 值（完整提取）：
     "SF Pro SC",          /* Apple 中文字体 */
     "SF Pro Text",
     "SF Pro Icons",
-    "Apple PingFang SC Fallback", /* 非 Apple 设备内置 fallback */
     "Noto Sans SC",       /* 跨平台中文回退（Google） */
     "Helvetica Neue",
     "Helvetica",
@@ -228,7 +227,7 @@ Apple.com CSS 中使用的 opacity 值（完整提取）：
 }
 ```
 
-> **跨平台提示**：SF Pro 是 Apple 专有字体，Web 上仅 Apple 域名可合法加载。中文优先使用 Apple 设备系统 `PingFang SC`；非 Apple 设备需要统一中文观感时，可按 [06-fonts.md](06-fonts.md) 引入内置 `Apple PingFang SC Fallback`。
+> **跨平台提示**：SF Pro 是 Apple 专有字体，Web 上仅 Apple 域名可合法加载。中文优先使用 Apple 设备系统 `PingFang SC`；非 Apple 设备回退到开源的 Noto Sans SC / 思源黑体，见 [06-fonts.md](06-fonts.md)。
 
 ### 2.2 字号阶梯
 

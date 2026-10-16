@@ -24,14 +24,14 @@ metadata:
 
 # Apple Design Language
 
-Use Apple design guidance when requested or when it is already the product's design language. Keep user choices and the existing design system primary. Ordinary frontend work does not automatically load this skill; optional companion skills are not installation prerequisites.
+Use Apple design guidance when requested or when it is already the product's design language. Keep user choices and the existing design system primary. Ordinary frontend work does not automatically load this skill; use [frontend-design](../frontend-design/SKILL.md) for non-Apple visual direction and [claude-design](../claude-design/SKILL.md) for HTML artifacts.
 
 Transfer hierarchy, spacing, semantic color, readable type, feedback, motion and accessibility across platforms. Apple-only hardware, interactions and resources require real platform support and appropriate rights; otherwise use a neutral fallback. Do not treat Apple.com's token values as universal rules.
 
 ## Load only the needed reference
 
 - Foundations: [philosophy](references/00-philosophy.md), [tokens](references/01-tokens.md), [components](references/02-components.md), [page patterns](references/03-patterns.md).
-- Implementation: [accessibility](references/04-accessibility.md), [Tailwind/CSS](references/05-tailwind-config.md), [fonts](references/06-fonts.md).
+- Implementation: [accessibility](references/04-accessibility.md), [Tailwind/CSS](references/05-tailwind-config.md), [fonts and licensing](references/06-fonts.md). Never bundle SF Pro or PingFang files.
 - Motion: [motion tokens](references/07-motion.md) and [examples](references/09-motion-templates.md); respect reduced-motion settings.
 - Official guidance: [coverage map](references/08-apple-docs-coverage.md), [official links](references/10-apple-official-docs-map.md), [HIG foundations/patterns](references/11-hig-foundations-patterns.md), [HIG components/inputs](references/12-hig-components-inputs.md).
 - Platform, resources and branding: [platform boundaries](references/13-platform-resources-technologies.md).

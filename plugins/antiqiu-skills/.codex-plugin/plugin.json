@@ -1,6 +1,6 @@
 {
   "name": "antiqiu-skills",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Personal skills for research, writing, design, reverse engineering, Zhihu, and agent workflows.",
   "author": {
     "name": "ANTiqiuSama",
@@ -10,7 +10,7 @@
   "interface": {
     "displayName": "ANTiqiu Skills",
     "shortDescription": "Personal skills for research, writing, design, and agent work.",
-    "longDescription": "Twenty-six skills, including seventeen synced from the current user-level installation and nine retained workflows from earlier releases.",
+    "longDescription": "Twenty-nine skills: seventeen synced from the user-level installation, nine retained workflows, and three Claude-aligned design skills (frontend-design, claude-design, frontend-app-builder).",
     "developerName": "ANTiqiuSama",
     "category": "Productivity",
     "capabilities": [],

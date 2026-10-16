@@ -14,7 +14,6 @@
 | [Apple Style Guide](https://support.apple.com/zh-cn/guide/applestyleguide/welcome/web) | Apple 官方编辑与排版规范 |
 | Apple.com 页面结构 | 布局模式、间距规律的逆向分析 |
 | Motion 设计标准 | Apple HIG Motion/Loading/Materials、Liquid Glass、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN |
-| [refinec/PingFangSC](https://github.com/refinec/PingFangSC) | PingFang SC fallback 字体文件，MIT License |
 
 > **注意**：Apple、Apple Logo、Human Interface Guidelines 等为 Apple Inc. 的商标或版权内容。本项目仅作为设计学习与参考用途，不隶属于 Apple Inc.，也未获得其endorsement。
 
@@ -46,8 +45,6 @@ git clone https://github.com/LukeSONG2000/apple-design-skill.git \
 apple-design-skill/
 ├── agents/
 │   └── openai.yaml              # Codex UI 元数据
-├── assets/
-│   └── fonts/PingFangSC/        # woff2 + ttf 跨平台中文字体
 ├── SKILL.md                    # Skill 主文件（Design Token + 组件模式）
 ├── references/                 # 详细实现参考
 │   ├── 00-philosophy.md        # 设计哲学、HIG 六原则
@@ -56,7 +53,7 @@ apple-design-skill/
 │   ├── 03-patterns.md          # Hero 区、双栏、三栏、图文区等页面布局模式
 │   ├── 04-accessibility.md     # 色彩对比度、Focus 管理、ARIA、屏幕阅读器
 │   ├── 05-tailwind-config.md   # Tailwind CSS 配置、CSS 变量版
-│   ├── 06-fonts.md             # PingFang SC 跨平台字体打包方案
+│   ├── 06-fonts.md             # 中文字体栈与授权边界
 │   ├── 07-motion.md            # 独立 Motion Token、动效原则、reduced motion
 │   ├── 08-apple-docs-coverage.md # Apple 官方文档覆盖地图
 │   ├── 09-motion-templates.md  # Apple 风格动画模板库
@@ -68,15 +65,7 @@ apple-design-skill/
 
 ## 字体资源
 
-仓库内置 `PingFangSC` fallback 字体，用于非 Apple 设备保持统一中文观感；Apple 设备优先使用系统 `PingFang SC`，无需加载内置字体。
-
-| 平台 | 推荐格式 | 目录 |
-|---|---|---|
-| Web / PWA / Electron / Tauri WebView | `woff2` | `assets/fonts/PingFangSC/woff2` |
-| React Native / Flutter / Android / Windows 客户端 | `ttf` | `assets/fonts/PingFangSC/ttf` |
-| iOS / macOS 原生 | 系统字体 | 不需要打包 |
-
-Web 可直接引用 `assets/fonts/PingFangSC/pingfang-sc.css`。详细方案见 [references/06-fonts.md](references/06-fonts.md)。
+本副本不再附带 PingFang SC 字体文件。苹方是 Apple 随系统授权的专有字体，第三方仓库声明的 MIT 许可不能替代 Apple 的再分发授权。Apple 设备直接使用系统 `PingFang SC`；其他平台回退到 SIL OFL 授权的 Noto Sans SC / 思源黑体。详见 [references/06-fonts.md](references/06-fonts.md)。
 
 ## Motion 规范
 

@@ -31,7 +31,8 @@ SYNCED = {
     "reverse-engineer-anything", "rolling-goal-prompt", "run-research-program",
     "team", "vivid-figures-skill", "write-research-paper", "zhihu", "zhihu-public-reader",
 }
-EXPECTED = ORIGINAL | SYNCED
+CLAUDE_DESIGN = {"claude-design", "frontend-design", "frontend-app-builder"}
+EXPECTED = ORIGINAL | SYNCED | CLAUDE_DESIGN
 LEGACY = {
     "brainstorming",
     "executing-plans",
@@ -98,6 +99,11 @@ def main() -> int:
     names = {path.name for path in skill_dirs}
     if names != EXPECTED:
         errors.append(f"skill set mismatch: expected={sorted(EXPECTED)} actual={sorted(names)}")
+    bundled_apple_fonts = list((SKILLS / "apple-design-skill").rglob("PingFang*.[ot]tf")) + list(
+        (SKILLS / "apple-design-skill").rglob("PingFang*.woff*")
+    )
+    if bundled_apple_fonts:
+        errors.append(f"proprietary Apple font files bundled: {bundled_apple_fonts}")
     if names & LEGACY:
         errors.append(f"legacy skills still enabled: {sorted(names & LEGACY)}")
 
@@ -178,7 +184,8 @@ def main() -> int:
         SKILLS / "write-action-first" / "LICENSE",
         SKILLS / "academic-humanizer" / "LICENSE",
         SKILLS / "apple-design-skill" / "LICENSE",
-        SKILLS / "apple-design-skill" / "assets" / "fonts" / "PingFangSC" / "LICENSE.refinec-PingFangSC",
+        SKILLS / "frontend-design" / "LICENSE.txt",
+        SKILLS / "frontend-app-builder" / "LICENSE",
         SKILLS / "vivid-figures-skill" / "LICENSE",
     ]
     for path in required_files:
