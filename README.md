@@ -2,7 +2,7 @@
 
 个人 Agent Skills 集合，覆盖科研、写作、设计、逆向分析、知乎和 Agent 协作。
 
-当前插件共 **27 个 Skill**，版本 **1.6.0**：2026-10-16 从本机用户级目录同步的 16 个、仓库原有的 8 个，以及 1.6.0 新增的 3 个 Claude 风格设计 Skill。1.6.0 用 Claude 风格设计 Skill 取代了 `apple-design-skill`，并删除了被 `team` 覆盖的 `native-hybrid-agents`。同步保留正文、脚本、参考材料、模板、图片和许可证，不收录系统 Skill、插件缓存、Python 缓存或本机账号配置。
+当前插件共 **26 个 Skill**，版本 **1.6.0**：2026-10-16 从本机用户级目录同步的 16 个、仓库原有的 7 个，以及 1.6.0 新增的 3 个 Claude 风格设计 Skill。1.6.0 用 Claude 风格设计 Skill 取代了 `apple-design-skill`，删除了被 `team` 覆盖的 `native-hybrid-agents`，并把 `herdr-orchestrator` 合并为 `team` 的 Herdr 模式。同步保留正文、脚本、参考材料、模板、图片和许可证，不收录系统 Skill、插件缓存、Python 缓存或本机账号配置。
 
 ## Claude 风格设计 Skills（1.6.0）
 
@@ -31,7 +31,7 @@
 | [reverse-engineer-anything](plugins/antiqiu-skills/skills/reverse-engineer-anything/SKILL.md) | 使用 REA 分析原生、托管、JavaScript、固件和浏览器目标 |
 | [rolling-goal-prompt](plugins/antiqiu-skills/skills/rolling-goal-prompt/SKILL.md) | 明确要求时维护可恢复的跨会话目标记录 |
 | [run-research-program](plugins/antiqiu-skills/skills/run-research-program/SKILL.md) | 持续研究项目的状态、实验执行和证据管理 |
-| [team](plugins/antiqiu-skills/skills/team/SKILL.md) | 显式调用的混动团队路由、隔离实施和监看 |
+| [team](plugins/antiqiu-skills/skills/team/SKILL.md) | 显式调用的混动团队路由、隔离实施和监看；含 Herdr 跨厂商编排模式 |
 | [vivid-figures-skill](plugins/antiqiu-skills/skills/vivid-figures-skill/SKILL.md) | 科研图表、143 个源码配方、组合模板和绘图资源 |
 | [write-research-paper](plugins/antiqiu-skills/skills/write-research-paper/SKILL.md) | 基于可追溯研究证据起草或实质修改论文 |
 | [zhihu](plugins/antiqiu-skills/skills/zhihu/SKILL.md) | 知乎开放平台搜索、热榜、直答和本人内容读取 |
@@ -52,9 +52,8 @@
 | [trim-agent-instructions](plugins/antiqiu-skills/skills/trim-agent-instructions/SKILL.md) | 审查并精简已有 Agent 指令链 |
 | [human-writing](plugins/antiqiu-skills/skills/human-writing/SKILL.md) | 自然中文文章与叙事 |
 | [write-action-first](plugins/antiqiu-skills/skills/write-action-first/SKILL.md) | 显式调用的行动优先回复模式 |
-| [herdr-orchestrator](plugins/antiqiu-skills/skills/herdr-orchestrator/SKILL.md) | Herdr 跨厂商 Agent 编排 |
 
-这些保留项不表示本机当前仍安装或使用它们。优先遵循本轮用户指令和对应 Skill 的适用范围；`team` 仅在显式请求混动时使用。
+这些保留项不表示本机当前仍安装或使用它们。优先遵循本轮用户指令和对应 Skill 的适用范围；`team` 仅在显式请求混动或 Herdr 编排时使用。
 
 ## 安装
 

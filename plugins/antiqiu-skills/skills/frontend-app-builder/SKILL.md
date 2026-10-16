@@ -1,6 +1,6 @@
 ---
 name: frontend-app-builder
-description: Build new frontend apps, dashboards, games, creative websites, hero sections and requested redesigns. Follows a Claude-aligned process: ground the design in the subject, plan tokens, build code-native UI, and check the rendered result once. Image Gen concepts are optional. Replaces the build-web-apps plugin version. Skip small fixes inside an existing design system.
+description: "Build new frontend apps, dashboards, games, creative websites, hero sections, and requested redesigns as working code. Grounds the design in the subject, plans tokens, builds code-native UI, and checks the rendered result once; Image Gen concepts are optional. Use for new builds or explicit redesigns; skip small fixes inside an existing design system."
 ---
 
 # Frontend App Builder

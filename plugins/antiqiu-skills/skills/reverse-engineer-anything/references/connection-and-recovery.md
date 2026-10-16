@@ -9,6 +9,13 @@ invocation in `SKILL.md` when acquiring REA is authorized. Follow the connected
 server's schemas and the installed CLI's help rather than assuming repository
 main and an older release expose the same arguments.
 
+## Contents
+
+- Choose the remedy from the observed failure
+- Repair registration when needed
+- Codex tool approval is separate from REA readiness
+- Continue through an installed CLI
+
 ## Choose the remedy from the observed failure
 
 | Observation                                                     | Meaning and next step                                                                                                                                                                                            |

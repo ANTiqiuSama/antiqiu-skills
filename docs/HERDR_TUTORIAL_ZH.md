@@ -332,7 +332,7 @@ Relay 可达。`agent start` 返回 `idle` 只证明进程启动。
 chair，也不要从 chair 自己所在的 pane 对自己调用 `herdr agent prompt`。
 
 ```text
-使用 $herdr-orchestrator。你是当前 Herdr workspace 的协调者，不要创建第二个
+使用 $team 的 Herdr 模式。你是当前 Herdr workspace 的协调者，不要创建第二个
 协调者，也不要修改论文。
 
 项目目录：<project-root>
@@ -553,7 +553,7 @@ codex plugin marketplace list
 安装 `antiqiu-skills` 后，使用：
 
 ```text
-使用 $herdr-orchestrator，在当前 Herdr workspace 中建立 Codex、Claude 和
+使用 $team 的 Herdr 模式，在当前 Herdr workspace 中建立 Codex、Claude 和
 Antigravity 的论文工作流。先检查环境与连通性，不修改论文。
 ```
 

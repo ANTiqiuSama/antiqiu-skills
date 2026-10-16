@@ -1,9 +1,9 @@
 [
   {
-    "id": "herdr-orchestrator",
-    "skill": "herdr-orchestrator",
-    "include_files": ["references/paper-workflow.md", "references/providers.md", "references/recovery.md"],
-    "prompt": "Load and use $herdr-orchestrator. You may read its instructions, but do not call tools. Design a Herdr workflow where Codex and Claude independently debate a paper, Antigravity/Gemini applies accepted edits and creates figures, and no model may invent citations or experiment results. The coordinator must distinguish lifecycle state from delivery evidence. Return a concise role and acceptance plan.",
+    "id": "team-herdr",
+    "skill": "team",
+    "include_files": ["references/herdr.md", "references/herdr-paper-workflow.md", "references/herdr-providers.md", "references/herdr-recovery.md"],
+    "prompt": "Load and use $team in Herdr mode. You may read its instructions, but do not call tools. Design a Herdr workflow where Codex and Claude independently debate a paper, Antigravity/Gemini applies accepted edits and creates figures, and no model may invent citations or experiment results. The coordinator must distinguish lifecycle state from delivery evidence. Return a concise role and acceptance plan.",
     "must_contain": ["Codex", "Claude", "Antigravity"],
     "must_contain_any": [["artifact", "产物"], ["acceptance", "验收"], ["citation", "引用"], ["experiment", "实验"]],
     "must_not_contain": ["done means delivered", "all citations are verified", "the experiments are complete"]

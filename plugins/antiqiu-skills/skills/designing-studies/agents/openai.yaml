@@ -1,0 +1,4 @@
+interface:
+  display_name: "Designing Studies"
+  short_description: "Design experiments, benchmarks, and protocols"
+  default_prompt: "Use $designing-studies to design a prospective study protocol for this research question."

@@ -130,6 +130,8 @@ receiving-code-review + systematic-debugging
 
 ### 新增：`herdr-orchestrator`
 
+> 1.6.0 起已合并进 `team`，运行时内容位于 `team/references/herdr*.md`。
+
 - **作用**：在 Herdr 中组织跨厂商 Agent，明确协调、评审和写入角色，并按产物和验收证据判断完成。
 - **真实价值**：解决 `idle/done` 被误当成交付、`--wait` 超时后重复派活、自定义 Claude 端点未注入 tab、Antigravity 集成与 `agy` 命令混淆，以及多个 Agent 同时修改一个工作副本的问题。
 - **边界**：只在用户明确提到 Herdr 或要求跨 CLI 编排时触发。普通子 Agent 委托和单个小任务不触发。

@@ -25,6 +25,13 @@ in the same session. A returned `error.details.partial_observation` reference
 can be supplied directly to `inspect_analysis_view`. If the SDK cancels locally, retrieve its recorded ID from
 the Evidence bundle before inspecting the partial analysis.
 
+## Contents
+
+- Read a module without repeating analysis
+- Trace only the remaining question
+- Recover an oversized display
+- Reusing application Evidence
+
 ## Read a module without repeating analysis
 
 Use the actual returned parent ID, on the same connection, as `source.evidence_id`.
